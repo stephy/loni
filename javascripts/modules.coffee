@@ -50,7 +50,7 @@ window.sink = class sink
 
 window.dataSink = class dataSink
 	constructor: (@disp, e)->
-		@c = @disp.paper.circle(e.layerX,e.layerY,50)
+		@c = @disp.paper.circle(e.offsetX,e.offsetY,50)
 		@dxOld=0
 		@dyOld=0
 		@objs = []

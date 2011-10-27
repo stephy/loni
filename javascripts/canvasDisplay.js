@@ -21,12 +21,10 @@
       return this.glow = c.glow();
     };
     canvasDisplay.prototype.setHover = function() {
-      this.linkHover = true;
-      return console.log("hover SET");
+      return this.linkHover = true;
     };
     canvasDisplay.prototype.unsetHover = function() {
-      this.linkHover = false;
-      return console.log("hover unSET");
+      return this.linkHover = false;
     };
     canvasDisplay.prototype.isHover = function() {
       return this.linkHover;

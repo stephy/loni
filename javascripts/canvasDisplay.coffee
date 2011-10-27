@@ -15,9 +15,7 @@ window.canvasDisplay = class canvasDisplay
 		
 	setHover: ->
 		@linkHover = true
-		console.log "hover SET"
 	unsetHover: ->
 		@linkHover = false
-		console.log "hover unSET"
 	isHover: ->
 		return @linkHover

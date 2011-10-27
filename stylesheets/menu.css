@@ -13,6 +13,13 @@
 	webkit-border-radius:3px;
 	-moz-box-shadow: 0 0 20px 1px #CCC;
 	-webkit-box-shadow: 0 0 20px 1px #CCC;
+
+  /* Below: absolute positioning */
+  position:absolute;
+  top:100px;
+  left:100px;
+  z-index: 100;
+  display:none;
 }
 ul.menu, ul.menu ul{
 	margin: 10px 0;
@@ -51,6 +58,9 @@ ul.menu li:hover > ul{
 }
 .endBlock{
 	border-bottom:1px solid #DDD;
+}
+.endBlock ul{
+	background-color:#FFF;
 }
 
 

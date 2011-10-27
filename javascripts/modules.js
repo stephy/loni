@@ -79,7 +79,7 @@
       this.ztranslate = __bind(this.ztranslate, this);
       this.mDown = __bind(this.mDown, this);
       this.drag = __bind(this.drag, this);
-      this.c = this.disp.paper.circle(e.layerX, e.layerY, 50);
+      this.c = this.disp.paper.circle(e.offsetX, e.offsetY, 50);
       this.dxOld = 0;
       this.dyOld = 0;
       this.objs = [];
