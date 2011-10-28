@@ -1,3 +1,30 @@
+window.module = class module
+	constructor: (@disp, e)->
+		@c = @disp.paper.circle(e.offsetX,e.offsetY,50)
+		@dxOld=0
+		@dyOld=0
+		@objs = []
+		@objs.push(@)
+		@c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
+		@c.drag(@drag, @mDown)
+		@c.click(@click)
+	drag: (dx, dy) =>
+		for ele in @objs
+			ele.ztranslate(dx-@dxOld , dy-@dyOld)
+		if(@disp.glow != "") then @disp.glow.translate(dx-@dxOld,dy-@dyOld)
+		@dxOld = dx
+		@dyOld = dy
+	mDown: (x,y) =>
+		@dxOld=0
+		@dyOld=0
+		@disp.toggleGlow(@c)
+	ztranslate: (dx,dy) =>
+		@c.translate(dx,dy)
+		
+
+
+
+
 window.path = class path
 	constructor: (@startx, @starty, @endx, @endy, @disp) ->
 		@empty = false
@@ -50,7 +77,7 @@ window.sink = class sink
 
 window.dataSink = class dataSink
 	constructor: (@disp, e)->
-		@c = @disp.paper.circle(e.layerX,e.layerY,50)
+		@c = @disp.paper.circle(e.offsetX,e.offsetY,50)
 		@dxOld=0
 		@dyOld=0
 		@objs = []
