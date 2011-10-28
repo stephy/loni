@@ -11,13 +11,13 @@ window.module = class module
 	drag: (dx, dy) =>
 		for ele in @objs
 			ele.ztranslate(dx-@dxOld , dy-@dyOld)
-		if(@disp.glow != "") then @disp.glow.translate(dx-@dxOld,dy-@dyOld)
+		@disp.glow.translate(dx-@dxOld,dy-@dyOld)
 		@dxOld = dx
 		@dyOld = dy
 	mDown: (x,y) =>
 		@dxOld=0
 		@dyOld=0
-		@disp.toggleGlow(@c)
+		@disp.setGlow(@c)
 	ztranslate: (dx,dy) =>
 		@c.translate(dx,dy)
 		
