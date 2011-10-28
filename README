@@ -1,1 +1,6 @@
 Adding modules: in javascripts folder, create file.coffee file, then run coffee -watch -compile . to compile everything in that folder
+
+TODO:
+1) boundary conditions:
+  a) make new circle, make sure it have boundaries
+  b) drag: make sure we can't drag circle out of boundaries

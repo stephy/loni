@@ -1,6 +1,48 @@
 (function() {
-  var dataSink, path, sink;
+  var dataSink, module, path, sink;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  window.module = module = (function() {
+    function module(disp, e) {
+      this.disp = disp;
+      this.ztranslate = __bind(this.ztranslate, this);
+      this.mDown = __bind(this.mDown, this);
+      this.drag = __bind(this.drag, this);
+      this.c = this.disp.paper.circle(e.offsetX, e.offsetY, 50);
+      this.dxOld = 0;
+      this.dyOld = 0;
+      this.objs = [];
+      this.objs.push(this);
+      this.c.attr({
+        fill: '#ddf',
+        stroke: '#33f',
+        'stroke-width': 3
+      });
+      this.c.drag(this.drag, this.mDown);
+      this.c.click(this.click);
+    }
+    module.prototype.drag = function(dx, dy) {
+      var ele, _i, _len, _ref;
+      _ref = this.objs;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        ele = _ref[_i];
+        ele.ztranslate(dx - this.dxOld, dy - this.dyOld);
+      }
+      if (this.disp.glow !== "") {
+        this.disp.glow.translate(dx - this.dxOld, dy - this.dyOld);
+      }
+      this.dxOld = dx;
+      return this.dyOld = dy;
+    };
+    module.prototype.mDown = function(x, y) {
+      this.dxOld = 0;
+      this.dyOld = 0;
+      return this.disp.toggleGlow(this.c);
+    };
+    module.prototype.ztranslate = function(dx, dy) {
+      return this.c.translate(dx, dy);
+    };
+    return module;
+  })();
   window.path = path = (function() {
     function path(startx, starty, endx, endy, disp) {
       this.startx = startx;

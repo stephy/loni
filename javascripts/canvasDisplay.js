@@ -14,11 +14,18 @@
       var item;
       return item = new dataSink(this, e);
     };
-    canvasDisplay.prototype.setGlow = function(c) {
+    canvasDisplay.prototype.toggleGlow = function(c) {
       if (this.glow !== "") {
         this.glow.remove();
       }
       return this.glow = c.glow();
+    };
+    canvasDisplay.prototype.isSelected = function() {
+      if (this.glow !== "") {
+        return false;
+      } else {
+        return true;
+      }
     };
     canvasDisplay.prototype.setHover = function() {
       return this.linkHover = true;

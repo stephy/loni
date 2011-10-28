@@ -1,14 +1,35 @@
 $ ->
+	MAXWIDTH = $('#canvas').width()
+	MAXHEIGHT = $('#canvas').height()
+
 	items = []
 	location = ""
-	$('body').dblclick (e)->
-		location = e
-		$('#main-menu').toggle().css({top:e.offsetY, left:e.offsetX})
 	
+	# Disable right click
+	$(document).bind 'contextmenu' , (e) ->
+		location = e
+		posx = e.offsetX
+		posy = e.offsetY
+		menuWidth = $('#main-menu').width()
+		menuHeight = $('#main-menu').height()
+		if( (posx+menuWidth) > MAXWIDTH)
+			posx = MAXWIDTH - menuWidth
+			$('ul.menu li ul').css(left:-161)
+		else
+			$('ul.menu li ul').css(left:161)
+		if( (posy + menuHeight) > MAXHEIGHT )
+			posy = MAXHEIGHT- menuHeight
+			
+		if canvas.isSelected()
+			$('#main-menu').show().css({top:posy, left:posx})
+		else
+			$('#main-menu').show().css({top:0, left:0})
+		return false
+
 	$('body').click (e)->
 		$('#main-menu').hide()
 		
 	$('#option_module').click (e)->
-		canvas.newDataSink(location)
+		canvas.newModule(location)
 			
 	canvas = new canvasDisplay($('#canvas'))

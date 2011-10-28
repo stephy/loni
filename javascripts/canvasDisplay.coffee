@@ -1,4 +1,3 @@
-
 window.canvasDisplay = class canvasDisplay
 	constructor: (canvas) ->
 		@paper = Raphael(0, 0, canvas.width(), canvas.height())
@@ -9,10 +8,13 @@ window.canvasDisplay = class canvasDisplay
 	newDataSink: (e)->
 		item = new dataSink(@, e)
 
-	setGlow: (c) ->
+	toggleGlow: (c) ->
 		if (@glow!="") then @glow.remove()
 		@glow = c.glow()
-		
+	
+	isSelected: ->
+		if (@glow!="") then return false else return true		
+	
 	setHover: ->
 		@linkHover = true
 	unsetHover: ->
