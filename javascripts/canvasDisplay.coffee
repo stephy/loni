@@ -8,9 +8,14 @@ window.canvasDisplay = class canvasDisplay
 	newDataSink: (e)->
 		item = new dataSink(@, e)
 
-	toggleGlow: (c) ->
+	setGlow: (c) ->
 		if (@glow!="") then @glow.remove()
 		@glow = c.glow()
+		
+	removeGlow: ->
+		if (@glow!="")
+			@glow.remove()
+			@glow = ""
 	
 	isSelected: ->
 		if (@glow!="") then return false else return true		

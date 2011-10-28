@@ -23,11 +23,13 @@ $ ->
 		if canvas.isSelected()
 			$('#main-menu').show().css({top:posy, left:posx})
 		else
-			$('#main-menu').show().css({top:0, left:0})
+			$('#edit-menu').show().css({top:posy, left:posx})
 		return false
 
 	$('body').click (e)->
 		$('#main-menu').hide()
+		$('#edit-menu').hide()
+		canvas.removeGlow()
 		
 	$('#option_module').click (e)->
 		canvas.newModule(location)

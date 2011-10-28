@@ -27,16 +27,14 @@
         ele = _ref[_i];
         ele.ztranslate(dx - this.dxOld, dy - this.dyOld);
       }
-      if (this.disp.glow !== "") {
-        this.disp.glow.translate(dx - this.dxOld, dy - this.dyOld);
-      }
+      this.disp.glow.translate(dx - this.dxOld, dy - this.dyOld);
       this.dxOld = dx;
       return this.dyOld = dy;
     };
     module.prototype.mDown = function(x, y) {
       this.dxOld = 0;
       this.dyOld = 0;
-      return this.disp.toggleGlow(this.c);
+      return this.disp.setGlow(this.c);
     };
     module.prototype.ztranslate = function(dx, dy) {
       return this.c.translate(dx, dy);
