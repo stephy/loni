@@ -41,7 +41,7 @@
     $('body').click(function(e) {
       $('#main-menu').hide();
       $('#edit-menu').hide();
-      return canvas.removeGlow();
+     // return canvas.removeGlow();
     });
     $('#option_module').click(function(e) {
       return canvas.newModule(location);

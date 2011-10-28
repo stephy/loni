@@ -33,16 +33,20 @@
 				<string>DefaultTab</string>
 			</dict>
 			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/tabs.css</string>
 				<key>StateType</key>
-				<string>PreviewTab</string>
-				<key>Title</key>
-				<string>Untitled Document</string>
-				<key>URL</key>
-				<string>file:///Users/UCLAGirl/Dropbox/cs130/loni-github/menu_sample.html</string>
+				<string>DefaultTab</string>
 			</dict>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/tabs.css</string>
+				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/javascripts/onLoad.js</string>
+				<key>StateType</key>
+				<string>DefaultTab</string>
+			</dict>
+			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/javascripts/add_tabs.js</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>

@@ -16,7 +16,7 @@ jQuery(document).ready(function(){
 	//create new canvas on create_blank click
 	$('#add_new_canvas').click(function(){
 		var new_canvas_index = nextCanvasIndex();
-		$('<li>untitled</li>').insertBefore('#add_new_canvas');
+		$('<li><img src="images/icon-area.gif" id="button-close" />untitled</li>').insertBefore('#add_new_canvas');
 		$('<div id="canvas-'+ new_canvas_index +'" class="canvas" width="300" height="300"></div>').appendTo('.canvae');
 		//display the new/recently created canvas only, hide all others
 		for(i=0; i<$('.canvas').length; i++){
