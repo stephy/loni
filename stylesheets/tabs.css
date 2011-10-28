@@ -1,0 +1,59 @@
+/* ------------------------------
+	
+	TABS MENU
+
+------------------------------- */
+#tabs-menu{
+	width: 100%;
+	margin: -10px;
+	height: 34px;
+	font-weight: bolder;
+}
+ul.tabs, ul.tabs ul{
+	list-style-type: none;
+}
+ul.tabs li:first-child{
+	background-color: #f4f4f4;
+	border: 1px solid #CCC;
+	border-radius: 5px 0px 0px 5px;
+	margin-right: -4px; //offset fixing
+}
+ul.tabs li:last-child{
+	background-color: #f4f4f4;
+	border: 1px solid #CCC;
+	border-radius: 0px 5px 5px 0px;
+}
+ul.tabs li{
+	display: inline-block; //display horizontally
+	height: 34px;
+	padding: 8px;
+	background-color: #f4f4f4;
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+}
+ul.tabs li:hover{
+	cursor: pointer;
+	color: #36F;
+}
+
+ul.tabs ul {
+	margin: 0;
+	display: none;
+}
+
+ul.tabs li:hover ul{
+	display: inline-block;
+	position: absolute;
+}
+
+input {
+	background-color:#f4f4f4 ;
+	border: none;
+	font-weight: bolder;
+	font-family: sans-serif;
+	font-size: 12px;
+}
+
+
+

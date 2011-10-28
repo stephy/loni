@@ -35,6 +35,16 @@
 			<dict>
 				<key>StateType</key>
 				<string>PreviewTab</string>
+				<key>Title</key>
+				<string>Untitled Document</string>
+				<key>URL</key>
+				<string>file:///Users/UCLAGirl/Dropbox/cs130/loni-github/menu_sample.html</string>
+			</dict>
+			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/tabs.css</string>
+				<key>StateType</key>
+				<string>DefaultTab</string>
 			</dict>
 		</array>
 	</dict>
