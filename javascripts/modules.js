@@ -8,17 +8,26 @@
       this.mDown = __bind(this.mDown, this);
       this.drag = __bind(this.drag, this);
       this.c = this.disp.paper.circle(e.offsetX, e.offsetY, 50);
-      this.dxOld = 0;
-      this.dyOld = 0;
+      this.dxOld = e.offsetX;
+      this.dyOld = e.offsetY;
       this.objs = [];
       this.objs.push(this);
+      this.name = "Sexy Stephy";
       this.c.attr({
         fill: '#ddf',
         stroke: '#33f',
         'stroke-width': 3
       });
-      this.c.drag(this.drag, this.mDown);
+      this.c.drag(this.drag, this.mDown, this.mUp);
       this.c.click(this.click);
+      this.c.mouseover(__bind(function(e) {
+        var dim;
+        dim = this.c.getBBox();
+        return this.text = this.disp.paper.text(dim.x + dim.width / 2, dim.y + dim.height / 2, this.name);
+      }, this));
+      this.c.mouseout(__bind(function(e) {
+        return this.text.remove();
+      }, this));
     }
     module.prototype.drag = function(dx, dy) {
       var ele, _i, _len, _ref;
@@ -29,12 +38,15 @@
       }
       this.disp.glow.translate(dx - this.dxOld, dy - this.dyOld);
       this.dxOld = dx;
-      return this.dyOld = dy;
+      this.dyOld = dy;
+      return this.text.remove();
     };
     module.prototype.mDown = function(x, y) {
+      this.text.remove();
       this.dxOld = 0;
       this.dyOld = 0;
-      return this.disp.setGlow(this.c);
+      this.disp.setGlow(this.c);
+      return false;
     };
     module.prototype.ztranslate = function(dx, dy) {
       return this.c.translate(dx, dy);

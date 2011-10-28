@@ -10,7 +10,7 @@ window.canvasDisplay = class canvasDisplay
 
 	setGlow: (c) ->
 		if (@glow!="") then @glow.remove()
-		@glow = c.glow()
+		@glow = c.glow({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
@@ -19,6 +19,9 @@ window.canvasDisplay = class canvasDisplay
 	
 	isSelected: ->
 		if (@glow!="") then return false else return true		
+	
+	select: (x, y, w, h) ->
+		@paper.rect(x, y, w, h)
 	
 	setHover: ->
 		@linkHover = true

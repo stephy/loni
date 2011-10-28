@@ -26,11 +26,13 @@
         posy = MAXHEIGHT - menuHeight;
       }
       if (canvas.isSelected()) {
+        $('#edit-menu').hide();
         $('#main-menu').show().css({
           top: posy,
           left: posx
         });
       } else {
+        $('#main-menu').hide();
         $('#edit-menu').show().css({
           top: posy,
           left: posx
@@ -41,7 +43,9 @@
     $('body').click(function(e) {
       $('#main-menu').hide();
       $('#edit-menu').hide();
-      return canvas.removeGlow();
+      if (e.target.nodeName !== "circle") {
+        return canvas.removeGlow();
+      }
     });
     $('#option_module').click(function(e) {
       return canvas.newModule(location);

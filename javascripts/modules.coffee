@@ -1,26 +1,37 @@
 window.module = class module
 	constructor: (@disp, e)->
 		@c = @disp.paper.circle(e.offsetX,e.offsetY,50)
-		@dxOld=0
-		@dyOld=0
+		@dxOld=e.offsetX
+		@dyOld=e.offsetY
 		@objs = []
 		@objs.push(@)
+		@name = "Sexy Stephy"
 		@c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
-		@c.drag(@drag, @mDown)
+		@c.drag(@drag, @mDown, @mUp)
 		@c.click(@click)
+		@c.mouseover (e)=>
+			dim = @c.getBBox()
+			@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @name)
+		@c.mouseout (e)=>
+			@text.remove()
 	drag: (dx, dy) =>
 		for ele in @objs
 			ele.ztranslate(dx-@dxOld , dy-@dyOld)
 		@disp.glow.translate(dx-@dxOld,dy-@dyOld)
 		@dxOld = dx
 		@dyOld = dy
+		@text.remove()
 	mDown: (x,y) =>
+		@text.remove()
 		@dxOld=0
 		@dyOld=0
 		@disp.setGlow(@c)
+		return false
 	ztranslate: (dx,dy) =>
 		@c.translate(dx,dy)
 		
+	
+	
 
 
 

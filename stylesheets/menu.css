@@ -55,6 +55,7 @@ ul.menu li:hover > ul{
 	display: block;
 	left: 161px;
 	top: -5px;
+	margin-left:-1px;
 }
 .endBlock{
 	border-bottom:1px solid #DDD;

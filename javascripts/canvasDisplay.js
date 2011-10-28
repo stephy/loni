@@ -18,7 +18,9 @@
       if (this.glow !== "") {
         this.glow.remove();
       }
-      return this.glow = c.glow();
+      return this.glow = c.glow({
+        color: '#000'
+      });
     };
     canvasDisplay.prototype.removeGlow = function() {
       if (this.glow !== "") {
@@ -32,6 +34,9 @@
       } else {
         return true;
       }
+    };
+    canvasDisplay.prototype.select = function(x, y, w, h) {
+      return this.paper.rect(x, y, w, h);
     };
     canvasDisplay.prototype.setHover = function() {
       return this.linkHover = true;
