@@ -1,5 +1,5 @@
 html {
-	margin: 0;
+	margin: 10px 0 0 0;
 	font-family: sans-serif;
 	font-size: 12px;
 }
@@ -8,16 +8,44 @@ html {
 	background-color: #e4e4e4;
 	padding: 20px 3px 3px 3px;
 	border-radius:5px;
-	
+	border: 1px solid #CCC;
+	margin: -20px 0 0 0;
 }
 
 #module-groupings{
-	padding: 10px;
+	padding: 12px;
 	background-color: #ededed;
 	border: 1px solid #a0a0a0;
 	height: 15px;
 }
+#module-title{
+	float: left;
+	text-align: left;
+	width: 90%;
+	
+}
+#module-settings{
+	float: right;
+	text-align: right;
+	width: 10%;
+}
+#button-settings{
+	cursor: pointer;
+}
+#button-close{
+	background-image: url(../images/close-icon.gif);
+	margin-right: 10px;
+}
+#button-close:hover{
+	background-image: url(../images/close-icon-hover.gif);
+}
 
+#button-add{
+	background-image: url(../images/add-icon.gif);
+}
+#button-add:hover{
+	background-image: url(../images/add-icon-hover.gif);
+}
 #canvas-body{
 	border: 1px solid #a0a0a0;
 	height: 300px;
