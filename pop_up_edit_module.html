@@ -16,8 +16,15 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
   eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
   if (restore) selObj.selectedIndex=0;
 }
-
 $(function() {
+		// $( "#info_inner2" ).accordion();
+	});
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+$(function() {
+		//$( ".info_inner" ).accordion();
 		$( "#info_inner" ).accordion();
 	});
 function MM_jumpMenu(targ,selObj,restore){ //v3.0
@@ -26,7 +33,14 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 }
 
 $(function() {
-                $( "#executions_inner" ).accordion();
+                $( "#executions_inner" ).accordion({ autoHeight: false });
+        });
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+$(function() {
+                $( "#info_module_inner" ).accordion({ autoHeight: false });
         });
 function MM_jumpMenu(targ,selObj,restore){ //v3.0
   eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
@@ -41,85 +55,99 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
   
 <div id="module">
     <h3><a href="#">Info</a></h3>
-    <div>
-    
-    
-    <div id="info_inner">
-    	<h3><a href="#">Module</a></h3>
-   		<div>
-    
-    Module creation date: Sun Oct 30 14:52:44 PDT 2011</br>
-    Executable Authors: None Entered </br>
-    Module Described by: None Entered </br>
-    <label for="module_name">Name</label><input name="module_name" type="text" value="" ></br>
-    <label for="module_package">Package: </label> <input name="module_package" type="text" value=""></br>
-    <label for="module_pkg_version">Package Version: </label> <input name="module_pkg_version" type="text" value=""></br>
- <label for="data_source_exec_version">Executable Version: </label> <input name="data_source_exec_version" type="text" value=""></br>
-    <label for="data_source_tags">Tags:</label> <input name="data_source_tags" type="text" value=""></br>
-    <label for="data_source_description">Description:</label> <input name="data_source_description" type="text" value=""></br>
-    
-    
-    <fieldset><legend>Citations</legend>
-    </fieldset>
-    <input name="Edit" type="button" value="Edit ...">
- </div>
+		<div>
+			<div id="info_inner">
+    		<h3><a href="#">Module</a></h3>
+   			
+				<div>
+    			Module creation date: Sun Oct 30 14:52:44 PDT 2011</br>
+    			Executable Authors: None Entered </br>
+    			Module Described by: None Entered </br>
+    			<label for="module_name">Name</label><input name="module_name" type="text" value="" ></br>
+    			<label for="module_package">Package: </label> <input name="module_package" type="text" 	value=""></br>
+    			<label for="module_pkg_version">Package Version: </label> <input name="module_pkg_version" type="text" value=""></br>
+ 					<label for="data_source_exec_version">Executable Version: </label> <input name="data_source_exec_version" type="text" value=""></br>
+    			<label for="data_source_tags">Tags:</label> <input name="data_source_tags" type="text" value=""></br>
+    			<label for="data_source_description">Description:</label> <input name="data_source_description" type="text" value=""></br>
+    			<input name="Edit" type="button" value="Edit ...">
 
-        <h3><a href="#">Provenance</a></h3>
-                <div>
-        asdasdda
-        </div>
-    </div>
+					<div id = "info_module_inner">
+			<!--- INSIDE MODULE -->
+				     <h3><a href="#">Website</a></h3>
+							<div>
+								<label for="module_info_website">Website: </label> <input name="module_info_website" type="text" value="">
+		       			<input name="Website_Edit" type="button" value="Edit ...">
+							</div>
+				      <h3><a href="#">Citations</a></h3>
+							<div>
+									<fieldset><legend>Citations</legend>
+				    			</fieldset>
+				    			<input name="Citations_Edit" type="button" value="Edit ...">
+							</div>
+							<h3><a href="#">License</a></h3>
+							<div>
+									<input name="License_Edit" type="button" value="Edit ...">
+				    			<input name="License_Expand" type="button" value="Expand ...">
+							</div>
+		    <!--- INSIDE MODULE -->
+					</div>
+				</div>
+				
+				<h3><a href="#">Provenance</a></h3>
+				<div>
+					asdasdda
+				</div>
+				
+			</div>
+		</div>
 
 
-
-</div>
+<!-- PARAMETERS TAB -->
     <h3><a href="#">Parameters</a></h3>
     <div>
-    Server Address
+			Server Address
       <select name="server_address" id="server_address">
         <option selected>localhost</option>
         <option>cranium.loni.ucla.edu</option>
       </select>
-  <input type="checkbox" name="directory_source" id="directory_source">Directory Source </br>
-  <textarea name="output_items" cols="60" rows="10"></textarea>
+  		<input type="checkbox" name="directory_source" id="directory_source">Directory Source </br>
+  		<textarea name="output_items" cols="60" rows="10"></textarea>
     
-    </br>
-    Number of input Items: 0
-    </br>
+    	</br>
+    	Number of input Items: 0
+    	</br>
      <input name="find_replace" type="button" value="Find and Replace">
      <input name="browse" type="button" value="Browse">
      <input name="clear_all" type="button" value="Clear All">
      
-    </br></br>
-    <hr>
+    	</br></br>
+    	<hr>
       <label for="data_type">Data type:</label>
-   <select name="data_type" id="data_type">
-    <option>File</option>
-    <option>Directory</option>
-    <option>Number</option>
-    <option>String</option>
-  </select>
-  </div>
+   	<select name="data_type" id="data_type">
+	    <option>File</option>
+	    <option>Directory</option>
+	    <option>Number</option>
+	    <option>String</option>
+	  </select>
+  	</div>
   
+		<!-- end of params TAB -->
+
+
    <h3><a href="#">Executions</a></h3>
    <div>
+			<div id = "executions_inner">
 	<!--- INSIDE EXECUTION -->
-		   <div id="executions_inner">
-       
 		     <h3><a href="#">Execution Environment</a></h3>
-		      <div>
-			
-			FUCK THIS SHIT
-		      	<label for="module_program_loc">Package Version: </label> <input name="module_program_loc" type="text" value=""></br>
-			      <input name="browse" type="button" value="Browse..."><input type="checkbox" name="remote" id="directory_source">Remote</br>
-		     </div>
-       
+					<div>
+						<label for="module_program_loc">Package Version: </label> <input name="module_program_loc" type="text" value=""> <input name="browse" type="button" value="Browse..."><input type="checkbox" name="remote" id="directory_source">Remote</br>
+       		</div>
 		      <h3><a href="#">Looping Condition</a></h3>
-		      <div>        
-		       jkjkkjjk
-			 </div>
-		 </div>
+					<div>
+							jkjkkjjk
+					</div>
     <!--- INSIDE EXECUTION -->
+		</div>
 	</div>
 </div>
 </body>
