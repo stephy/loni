@@ -3,18 +3,18 @@ window.canvasDisplay = class canvasDisplay
 		@paper = Raphael(0, 0, canvas.width(), canvas.height())
 		@glow = ""
 		@linkHover = false
-	newModule: (e)->
-		item = new module(@, e)
-	newDataSink: (e)->
-		item = new dataSink(@, e)
+	newModule: (coord)->
+		item = new module(@, coord)
+	newDataSink: (coord)->
+		item = new dataSink(@, coord)
 
-	setGlow: (c) ->
-		if (@glow!="") then @glow.remove()
-		@glow = c.glow({color:'#000'})
+	setGlow: (obj) ->
+		if (@glow!="") then @glow.removeAll()
+		@glow = obj.glowAll({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
-			@glow.remove()
+			@glow.removeAll()
 			@glow = ""
 	
 	isSelected: ->

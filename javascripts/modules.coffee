@@ -1,15 +1,20 @@
-window.module = class module
-	constructor: (@disp, e)->
-		@c = @disp.paper.circle(e.offsetX,e.offsetY,50)
-		@dxOld=e.offsetX
-		@dyOld=e.offsetY
+# Descrip: Every object has children. When the object glows, his children glows. When the object moves, his children should also move.
+# Children can be moved, have glow
+
+class baseModule
+	constructor: (@disp, @prevCoord)->
+		@dim = {width: 50, height:50}
+		@c = @draw()
 		@objs = []
-		@objs.push(@)
 		@name = "Sexy Stephy"
-		@c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
-			
+	draw: ->
+		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,25)
+		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
+		return c
+	insertChildren: (obj)->
+		@objs.push(obj)
 	hoverIn: =>
 		dim = @c.getBBox()
 		@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @name)
@@ -17,110 +22,127 @@ window.module = class module
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
-		for ele in @objs
-			ele.ztranslate(dx-@dxOld , dy-@dyOld)
-		@disp.glow.translate(dx-@dxOld,dy-@dyOld)
-		@dxOld = dx
-		@dyOld = dy
+		@disp.glow.ztranslate(dx-@prevCoord.x,dy-@prevCoord.y)
+		@prevCoord = {x: dx, y: dy}
 		@text.remove()
 	mDown: (x,y) =>
 		@text.remove()
-		@dxOld=0
-		@dyOld=0
-		@disp.setGlow(@c)
+		@prevCoord = {x:0, y:0}
+		@disp.setGlow(@)
 		return false
-	ztranslate: (dx,dy) =>
-		@c.translate(dx,dy)
-		
-	
-	
-
-
-
-
-window.path = class path
-	constructor: (@startx, @starty, @endx, @endy, @disp) ->
-		@empty = false
-		@path = @disp.paper.path(@getStringPath())
-	setStart: (x, y) ->
-		@startx = x
-		@starty = y
-	setEnd: (x,y) ->
-		@endx = x
-		@endy = y
-	getStringPath: ->
-		return "M #{@startx} #{@starty} l #{@endx} #{@endy}"
-	makePath: ->
-		@path.remove()
-		@path = @disp.paper.path(@getStringPath())
-	destroy: ->
-		@empty= true
-		@path.remove()
-		
-
-window.sink = class sink
-	constructor: (@disp, @dim) ->
-		@d = @disp.paper.circle(dim.x+dim.width/2,dim.y,10)
-		@d.attr("fill", '#faa')
-		@d.attr('stroke', '#000')
-		@d.hover =>
-			@disp.setGlow(@d)
-			@disp.setHover()
-		, =>
-			@disp.unsetHover()
-		@d.drag(@drag, @mDown, @mUp)
-		@path = new path(0,0,0,0, @disp)
-	drag: (dx, dy) =>
-		@path.setEnd(dx,dy)
-		@path.makePath()
-		
-	mDown: (x,y) =>
-		@path.setStart(x, y)
-		@disp.setGlow(@d)
-		
-	mUp: (x, y) =>
-		if !@disp.isHover()
-			@path.destroy()
-	ztranslate: (x,y) =>
-		@path.setStart(@path.startx+x, @path.starty+y)
-		@path.setEnd(@path.endx-x, @path.endy-y)
-		@path.makePath()
-		@d.translate(x,y)
-		
-
-window.dataSink = class dataSink
-	constructor: (@disp, e)->
-		@c = @disp.paper.circle(e.offsetX,e.offsetY,50)
-		@dxOld=0
-		@dyOld=0
-		@objs = []
-		@objs.push(@)
-		@initialize()
-		
-	initialize: ->
-		@c.attr("fill", '#f00')
-		@c.attr('stroke', '#000')
-		@disp.setGlow(@c)
-		
-		@sink = new sink(@disp, @c.getBBox())
-		@objs.push(@sink)
-		
-		@c.hover =>
-			@disp.setGlow(@c)
-
-		@c.drag(@drag, @mDown)
-			
-	drag: (dx, dy) =>
+	glowAll: (attr) ->
+		@glowing = @c.glow(attr)
 		for ele in @objs
-			ele.ztranslate(dx-@dxOld , dy-@dyOld)
-		if(@disp.glow != "") then @disp.glow.translate(dx-@dxOld,dy-@dyOld)
-		@dxOld = dx
-		@dyOld = dy
-	mDown: (x,y) =>
-		@dxOld=0
-		@dyOld=0
-		@disp.setGlow(@c)
+			ele.glowAll(attr)
+		return @
+	removeAll: ->
+		@glowing.remove()
+		for ele in @objs
+			ele.removeAll()
+		return @
+		
 	ztranslate: (dx,dy) =>
+		if @glowing
+			@glowing.translate(dx, dy)
 		@c.translate(dx,dy)
+		for ele in @objs
+			ele.ztranslate(dx, dy)
+
+window.module = class module extends baseModule
+	
+window.sink = class sink extends baseModule
+	draw: ->
+		connectDim = {x: @dim.width/2 +  @prevCoord.x , y:  @prevCoord.y - @dim.height/2}
+		c = @disp.paper.circle(connectDim.x,connectDim.y,10)
+		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':1)
+		return c
+
+window.dataSink = class dataSink extends baseModule
+	constructor: (@disp, @prevCoord)->
+		super(@disp, @prevCoord)
+		@objs.push(new sink(@disp, @prevCoord))
+	draw: ->
+		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
+		c.attr({stroke:'#00f', fill:'#0f0'})
+		return c
+		
+	# constructor: (@disp, coord)->
+	# 	@dim = {width: 50, height:50}
+	# 	@tri = @disp.paper.path("M #{coord.x} #{coord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
+	# 	@tri.attr({stroke:'#00f', fill:'#0f0'})
+	# 	
+	# 	# Draw connector
+	# 	@connectDim = {x: @dim.width/2 + coord.x, y: coord.y - @dim.height/2}
+	# 	@connect = @disp.paper.circle(@connectDim.x,@connectDim.y,10)
+	# 
+	# 	# @c = @disp.paper.circle(coord.x,coord.y,50)
+	# 	@dxOld=0
+	# 	@dyOld=0
+	# 	@objs = []
+	# 	@objs.push(@)
+		
+	# initialize: ->
+	# 	@c.attr("fill", '#f00')
+	# 	@c.attr('stroke', '#000')
+	# 	@disp.setGlow(@c)
+	# 	
+	# 	@sink = new sink(@disp, @c.getBBox())
+	# 	@objs.push(@sink)
+	# 	
+	# 	@c.hover =>
+	# 		@disp.setGlow(@c)
+	# 
+	# 	@c.drag(@drag, @mDown)
 		
 		
+
+
+
+# window.path = class path
+# 	constructor: (@startx, @starty, @endx, @endy, @disp) ->
+# 		@empty = false
+# 		@path = @disp.paper.path(@getStringPath())
+# 	setStart: (x, y) ->
+# 		@startx = x
+# 		@starty = y
+# 	setEnd: (x,y) ->
+# 		@endx = x
+# 		@endy = y
+# 	getStringPath: ->
+# 		return "M #{@startx} #{@starty} l #{@endx} #{@endy}"
+# 	makePath: ->
+# 		@path.remove()
+# 		@path = @disp.paper.path(@getStringPath())
+# 	destroy: ->
+# 		@empty= true
+# 		@path.remove()
+		
+# window.sink = class sink
+# 	constructor: (@disp, @dim) ->
+# 		@d = @disp.paper.circle(dim.x+dim.width/2,dim.y,10)
+# 		@d.attr("fill", '#faa')
+# 		@d.attr('stroke', '#000')
+# 		@d.hover =>
+# 			@disp.setGlow(@d)
+# 			@disp.setHover()
+# 		, =>
+# 			@disp.unsetHover()
+# 		@d.drag(@drag, @mDown, @mUp)
+# 		@path = new path(0,0,0,0, @disp)
+# 	drag: (dx, dy) =>
+# 		@path.setEnd(dx,dy)
+# 		@path.makePath()
+# 		
+# 	mDown: (x,y) =>
+# 		@path.setStart(x, y)
+# 		@disp.setGlow(@d)
+# 		
+# 	mUp: (x, y) =>
+# 		if !@disp.isHover()
+# 			@path.destroy()
+# 	ztranslate: (x,y) =>
+# 		@path.setStart(@path.startx+x, @path.starty+y)
+# 		@path.setEnd(@path.endx-x, @path.endy-y)
+# 		@path.makePath()
+# 		@d.translate(x,y)
+

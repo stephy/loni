@@ -6,25 +6,25 @@
       this.glow = "";
       this.linkHover = false;
     }
-    canvasDisplay.prototype.newModule = function(e) {
+    canvasDisplay.prototype.newModule = function(coord) {
       var item;
-      return item = new module(this, e);
+      return item = new module(this, coord);
     };
-    canvasDisplay.prototype.newDataSink = function(e) {
+    canvasDisplay.prototype.newDataSink = function(coord) {
       var item;
-      return item = new dataSink(this, e);
+      return item = new dataSink(this, coord);
     };
-    canvasDisplay.prototype.setGlow = function(c) {
+    canvasDisplay.prototype.setGlow = function(obj) {
       if (this.glow !== "") {
-        this.glow.remove();
+        this.glow.removeAll();
       }
-      return this.glow = c.glow({
+      return this.glow = obj.glowAll({
         color: '#000'
       });
     };
     canvasDisplay.prototype.removeGlow = function() {
       if (this.glow !== "") {
-        this.glow.remove();
+        this.glow.removeAll();
         return this.glow = "";
       }
     };

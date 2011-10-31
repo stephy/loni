@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var CANVASBOX, canvas, coordAfterBoundary, getBox, getCoord, items, location;
+    var canvas, coordAfterBoundary, getBox, getCoord, items, location;
     items = [];
     location = "";
     getCoord = function(e) {
@@ -30,17 +30,16 @@
           left: menuBox.width
         });
       }
-      if ((coord.y + menuBox.height) > CANVASBOX.height) {
-        coord.y = CANVASBOX.height - menuBox.height;
+      if ((coord.y + menuBox.height) > boundary.height) {
+        coord.y = boundary.height - menuBox.height;
       }
       return coord;
     };
-    CANVASBOX = getBox($('#canvas'));
     $(document).bind('contextmenu', function(e) {
       var coord, menuBox;
-      location = e;
+      location = getCoord(e);
       menuBox = getBox($('#main-menu'));
-      coord = coordAfterBoundary(getCoord(e), menuBox, CANVASBOX);
+      coord = coordAfterBoundary(getCoord(e), menuBox, getBox($('#canvas')));
       if (canvas.isSelected()) {
         $('#edit-menu').hide();
         $('#main-menu').show().css({
@@ -59,12 +58,15 @@
     $('body').click(function(e) {
       $('#main-menu').hide();
       $('#edit-menu').hide();
-      if (e.target.nodeName !== "circle") {
+      if (e.target.nodeName !== "circle" && e.target.nodeName !== "path") {
         return canvas.removeGlow();
       }
     });
     $('#option_module').click(function(e) {
       return canvas.newModule(location);
+    });
+    $('#option_data_sink').click(function(e) {
+      return canvas.newDataSink(location);
     });
     return canvas = new canvasDisplay($('#canvas'));
   });
