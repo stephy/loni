@@ -7,6 +7,8 @@
       this.ztranslate = __bind(this.ztranslate, this);
       this.mDown = __bind(this.mDown, this);
       this.drag = __bind(this.drag, this);
+      this.hoverOut = __bind(this.hoverOut, this);
+      this.hoverIn = __bind(this.hoverIn, this);
       this.c = this.disp.paper.circle(e.offsetX, e.offsetY, 50);
       this.dxOld = e.offsetX;
       this.dyOld = e.offsetY;
@@ -19,16 +21,16 @@
         'stroke-width': 3
       });
       this.c.drag(this.drag, this.mDown, this.mUp);
-      this.c.click(this.click);
-      this.c.mouseover(__bind(function(e) {
-        var dim;
-        dim = this.c.getBBox();
-        return this.text = this.disp.paper.text(dim.x + dim.width / 2, dim.y + dim.height / 2, this.name);
-      }, this));
-      this.c.mouseout(__bind(function(e) {
-        return this.text.remove();
-      }, this));
+      this.c.hover(this.hoverIn, this.hoverOut);
     }
+    module.prototype.hoverIn = function() {
+      var dim;
+      dim = this.c.getBBox();
+      return this.text = this.disp.paper.text(dim.x + dim.width / 2, dim.y + dim.height / 2, this.name);
+    };
+    module.prototype.hoverOut = function() {
+      return this.text.remove();
+    };
     module.prototype.drag = function(dx, dy) {
       var ele, _i, _len, _ref;
       _ref = this.objs;

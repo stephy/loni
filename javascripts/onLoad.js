@@ -1,41 +1,57 @@
 (function() {
   $(function() {
-    var MAXHEIGHT, MAXWIDTH, canvas, items, location;
-    MAXWIDTH = $('#canvas').width();
-    MAXHEIGHT = $('#canvas').height();
+    var CANVASBOX, canvas, coordAfterBoundary, getBox, getCoord, items, location;
     items = [];
     location = "";
-    $(document).bind('contextmenu', function(e) {
-      var menuHeight, menuWidth, posx, posy;
-      location = e;
-      posx = e.offsetX;
-      posy = e.offsetY;
-      menuWidth = $('#main-menu').width();
-      menuHeight = $('#main-menu').height();
-      if ((posx + menuWidth) > MAXWIDTH) {
-        posx = MAXWIDTH - menuWidth;
+    getCoord = function(e) {
+      var coord;
+      coord = {
+        x: e.offsetX,
+        y: e.offsetY
+      };
+      return coord;
+    };
+    getBox = function(obj) {
+      var box;
+      box = {
+        width: obj.width(),
+        height: obj.height()
+      };
+      return box;
+    };
+    coordAfterBoundary = function(coord, menuBox, boundary) {
+      if ((coord.x + menuBox.width) > boundary.width) {
+        coord.x = boundary.width - menuBox.width;
         $('ul.menu li ul').css({
-          left: -161
+          left: -menuBox.width
         });
       } else {
         $('ul.menu li ul').css({
-          left: 161
+          left: menuBox.width
         });
       }
-      if ((posy + menuHeight) > MAXHEIGHT) {
-        posy = MAXHEIGHT - menuHeight;
+      if ((coord.y + menuBox.height) > CANVASBOX.height) {
+        coord.y = CANVASBOX.height - menuBox.height;
       }
+      return coord;
+    };
+    CANVASBOX = getBox($('#canvas'));
+    $(document).bind('contextmenu', function(e) {
+      var coord, menuBox;
+      location = e;
+      menuBox = getBox($('#main-menu'));
+      coord = coordAfterBoundary(getCoord(e), menuBox, CANVASBOX);
       if (canvas.isSelected()) {
         $('#edit-menu').hide();
         $('#main-menu').show().css({
-          top: posy,
-          left: posx
+          top: coord.y,
+          left: coord.x
         });
       } else {
         $('#main-menu').hide();
         $('#edit-menu').show().css({
-          top: posy,
-          left: posx
+          top: coord.y,
+          left: coord.x
         });
       }
       return false;

@@ -1,31 +1,46 @@
 $ ->
-	MAXWIDTH = $('#canvas').width()
-	MAXHEIGHT = $('#canvas').height()
-
 	items = []
 	location = ""
+	
+	getCoord = (e) ->
+		# Need to take into account mozilla
+		coord = {x: e.offsetX, y:e.offsetY}
+		return coord
+	
+	getBox = (obj) ->
+		box = {width: obj.width(), height: obj.height()}
+		return box
+		
+	coordAfterBoundary = (coord, menuBox, boundary) ->
+		if( (coord.x+menuBox.width) > boundary.width)
+			coord.x = boundary.width - menuBox.width
+			$('ul.menu li ul').css(left: -(menuBox.width))
+		else
+			$('ul.menu li ul').css(left:(menuBox.width))
+			
+		if( (coord.y + menuBox.height) > CANVASBOX.height )
+			coord.y = CANVASBOX.height- menuBox.height
+		return coord
+	
+	CANVASBOX = getBox($('#canvas'))
 	
 	# Disable right click
 	$(document).bind 'contextmenu' , (e) ->
 		location = e
-		posx = e.offsetX
-		posy = e.offsetY
-		menuWidth = $('#main-menu').width()
-		menuHeight = $('#main-menu').height()
-		if( (posx+menuWidth) > MAXWIDTH)
-			posx = MAXWIDTH - menuWidth
-			$('ul.menu li ul').css(left:-161)
-		else
-			$('ul.menu li ul').css(left:161)
-		if( (posy + menuHeight) > MAXHEIGHT )
-			posy = MAXHEIGHT- menuHeight
-			
+		menuBox = getBox($('#main-menu'))
+		
+		
+		
+		# Checking Boundaries, modify menu position so it does not show out of scope
+		coord = coordAfterBoundary(getCoord(e), menuBox, CANVASBOX)
+		
+		# Show Edit or new depending if object is selected
 		if canvas.isSelected()
 			$('#edit-menu').hide()
-			$('#main-menu').show().css({top:posy, left:posx})
+			$('#main-menu').show().css({top:coord.y, left:coord.x})
 		else
 			$('#main-menu').hide()
-			$('#edit-menu').show().css({top:posy, left:posx})
+			$('#edit-menu').show().css({top:coord.y, left:coord.x})
 		return false
 
 	$('body').click (e)->
@@ -56,6 +71,7 @@ $ ->
 	# 			selectRect.remove()
 	# 			selectRect = canvas.select(orig_x, orig_y, e.offsetX-orig_x , e.offsetY-orig_y)
 	# 	
+	
 	$('#option_module').click (e)->
 		canvas.newModule(location)
 			

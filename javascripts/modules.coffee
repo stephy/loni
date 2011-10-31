@@ -8,12 +8,14 @@ window.module = class module
 		@name = "Sexy Stephy"
 		@c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
 		@c.drag(@drag, @mDown, @mUp)
-		@c.click(@click)
-		@c.mouseover (e)=>
-			dim = @c.getBBox()
-			@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @name)
-		@c.mouseout (e)=>
-			@text.remove()
+		@c.hover(@hoverIn, @hoverOut)
+			
+	hoverIn: =>
+		dim = @c.getBBox()
+		@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @name)
+	
+	hoverOut: =>
+		@text.remove()
 	drag: (dx, dy) =>
 		for ele in @objs
 			ele.ztranslate(dx-@dxOld , dy-@dyOld)
