@@ -45,10 +45,8 @@ jQuery(document).ready(function(){
 	//this tab can't be deleted, and this tab does 
 	//not have an attribute tag 
 	$('li:eq(0)').click(function(){
-		console.log("first one!!" + this);
 		$('.canvas').hide();
 		$('.canvas:eq(0)').show();
-		console.log("WTF");
 	});
 	
 	
