@@ -21,6 +21,12 @@ window.canvasDisplay = class canvasDisplay
 	
 	startStartPath: (obj) ->
 		@startPathCoord = obj
+		
+	drawPath: (coord) ->
+		console.log "draw path"
+		
+	removePath: ->
+		console.log "removed Path"
 	
 	isSelected: ->
 		if (@glow!="") then return false else return true		

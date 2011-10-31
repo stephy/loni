@@ -34,6 +34,12 @@
     canvasDisplay.prototype.startStartPath = function(obj) {
       return this.startPathCoord = obj;
     };
+    canvasDisplay.prototype.drawPath = function(coord) {
+      return console.log("draw path");
+    };
+    canvasDisplay.prototype.removePath = function() {
+      return console.log("removed Path");
+    };
     canvasDisplay.prototype.isSelected = function() {
       if (this.glow !== "") {
         return false;

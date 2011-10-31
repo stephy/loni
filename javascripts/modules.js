@@ -143,6 +143,7 @@
         x: dx,
         y: dy
       };
+      this.disp.drawPath(this.prevCoord);
       console.log("DRAGGGINGGG.....");
       return this.text.remove();
     };
@@ -156,7 +157,9 @@
       this.disp.startStartPath(this.c.getBBox());
       return false;
     };
-    sink.prototype.mUp = function(e) {};
+    sink.prototype.mUp = function(e) {
+      return this.disp.removePath();
+    };
     sink.prototype.otherMouseUp = function(e) {
       if (this.c.getBBox() === this.disp.startPathCoord) {
         return console.log("same!!!");

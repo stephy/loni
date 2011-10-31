@@ -64,6 +64,7 @@ window.sink = class sink extends baseModule
 	
 	drag: (dx, dy) =>
 		@prevCoord = {x: dx, y: dy}
+		@disp.drawPath(@prevCoord)
 		console.log "DRAGGGINGGG....."
 		@text.remove()
 	mDown: (x,y) =>
@@ -73,6 +74,7 @@ window.sink = class sink extends baseModule
 		@disp.startStartPath(@c.getBBox())
 		return false
 	mUp:(e) =>
+		@disp.removePath()
 		
 	otherMouseUp: (e) =>
 		if @c.getBBox() == @disp.startPathCoord
