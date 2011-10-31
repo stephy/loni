@@ -32,11 +32,11 @@ html {
 #button-settings{
 	cursor: pointer;
 }
-#button-close{
+.button-close{
 	background-image: url(../images/close-icon.gif);
 	margin-right: 10px;
 }
-#button-close:hover{
+.button-close:hover{
 	background-image: url(../images/close-icon-hover.gif);
 }
 

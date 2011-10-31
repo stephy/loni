@@ -13,10 +13,10 @@ function nextCanvasIndex(){
 }
 jQuery(document).ready(function(){
 	
-	//create new canvas on create_blank click
+	//create new canvas on create_blank (+ tab button) click
 	$('#add_new_canvas').click(function(){
 		var new_canvas_index = nextCanvasIndex();
-		$('<li><img src="images/icon-area.gif" id="button-close" />untitled</li>').insertBefore('#add_new_canvas');
+		$('<li><img src="images/icon-area.gif" class="button-close" id="close-canvas-'+ new_canvas_index +'" />Untitled</li>').insertBefore('#add_new_canvas');
 		$('<div id="canvas-'+ new_canvas_index +'" class="canvas" width="300" height="300"></div>').appendTo('.canvae');
 		//display the new/recently created canvas only, hide all others
 		for(i=0; i<$('.canvas').length; i++){
@@ -28,4 +28,12 @@ jQuery(document).ready(function(){
 			}	
 		}
 	});
+	
+	
+	//close canvas on close ( x tab button) click
+	$('#close-canvas-1').click(function(){
+		$('#close-canvas-1').closest('li').remove();
+		$('#canvas-1').remove();
+	});
+	
 });

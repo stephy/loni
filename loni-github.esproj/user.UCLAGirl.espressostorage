@@ -4,43 +4,36 @@
 <dict>
 	<key>ESProjectShowHiddenFilesKey</key>
 	<false/>
+	<key>ESProjectWindowState</key>
+	<dict>
+		<key>ContentSize</key>
+		<string>{1715, 830}</string>
+		<key>ProjectURL</key>
+		<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/loni-github.esproj/</string>
+		<key>StateType</key>
+		<string>ProjectWindow</string>
+		<key>TopLeftPoint</key>
+		<string>{37, 1178}</string>
+	</dict>
+	<key>com.macrabbit.Espresso.FileManager.DisclosureCollapsed</key>
+	<false/>
+	<key>com.macrabbit.Espresso.FileManager.FileControllerState</key>
+	<dict>
+		<key>ExpandedURLs</key>
+		<array>
+			<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/javascripts</string>
+			<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets</string>
+		</array>
+	</dict>
+	<key>com.macrabbit.Espresso.Publisher.DisclosureCollapsed</key>
+	<false/>
 	<key>com.macrabbit.Espresso.Workspace.Tabs</key>
 	<dict>
 		<key>Tabs</key>
 		<array>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/tabs_sample.html</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/master.css</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/menu.css</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/menu_sample.html</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/tabs.css</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/javascripts/onLoad.js</string>
+				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/project.html</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>
@@ -50,7 +43,15 @@
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>
+			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/UCLAGirl/Dropbox/cs130/loni-github/stylesheets/master.css</string>
+				<key>StateType</key>
+				<string>DefaultTab</string>
+			</dict>
 		</array>
 	</dict>
+	<key>com.macrabbit.Espresso.WorkspaceTabs.DisclosureCollapsed</key>
+	<false/>
 </dict>
 </plist>

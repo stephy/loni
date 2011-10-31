@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Untitled Document</title>
+<link href="stylesheets/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src='javascripts/jquery-1.6.4.min.js'></script>
+<script type="text/javascript" src='javascripts/jquery-ui-1.8.16.custom.min.js' ></script>
+<link href="stylesheets/forms.css" rel="stylesheet" type="text/css">
+
+<script>
+$(function() {
+		$( "#data_sink" ).accordion();
+	});
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+
+$(function() {
+		$( "#data_sink_inner" ).accordion();
+	});
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+</script>
+
+
+</head>
+
+<body>
+  
+<div id="data_sink">
+    <h3><a href="#">Info</a></h3>
+    <div>
+    
+    
+    <div id="data_sink_inner">
+    	<h3><a href="#">Info1</a></h3>
+   		<div>
+        asdasda
+        </div>
+        <h3><a href="#">Info2</a></h3>
+   		<div>
+        asdasdda
+        </div>
+    </div>
+    
+    
+    
+    Module creation date: Sun Oct 30 14:52:44 PDT 2011</br>
+    Module Described by: None Entered </br>
+    <label for="data_sink_name">Name</label><input name="data_sink_name" type="text" value="" ></br>
+    <label for="data_sink_package">Package: </label> <input name="data_sink_package" type="text" value=""></br>
+    <label for="data_sink_pkg_version">Package Version: </label> <input name="data_sink_pkg_version" type="text" value=""></br>
+    <label for="data_sink_tags">Tags:</label> <input name="data_sink_tags" type="text" value=""></br>
+    <label for="data_sink_description">Description:</label> <input name="data_sink_description" type="text" value=""></br>
+    <label for="data_sink_website">Website:</label> <input name="data_sink_website" type="text" value=""></br>
+    
+    
+    <fieldset><legend>Citations</legend>
+    </fieldset>
+    <input name="Edit" type="button" value="Edit ...">
+</div>
+    <h3><a href="#">Outputs</a></h3>
+    <div>
+    Server Address
+      <select name="server_address" id="server_address">
+        <option selected>localhost</option>
+        <option>cranium.loni.ucla.edu</option>
+        <option>pws.loni.ucla.edu</option>
+      </select>
+  <input type="checkbox" name="directory_source" id="directory_source">Directory Source </br>
+  <textarea name="output_items" cols="60" rows="10"></textarea>
+    
+    </br>
+    Number of output Items: 0
+    </br>
+     <input name="find_replace" type="button" value="Find and Replace">
+     <input name="browse" type="button" value="Browse">
+     <input name="clear_all" type="button" value="Clear All">
+     
+    </br></br>
+    <hr>
+      <label for="data_type">Data type:</label>
+   <select name="data_type" id="data_type">
+    <option>File</option>
+    <option>Directory</option>
+  </select>
+ 
+  
+  </div>
+</div>
+</body>
+</html>
