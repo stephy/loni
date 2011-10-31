@@ -36,9 +36,9 @@ window.canvasDisplay = class canvasDisplay
 	
 	savePath: (coord, endObj)->
 		# Start obj is @startObj, end obj is endObj
-		newcoord = {x: @startPathCoord.x + coord.x, y: @startPathCoord.y + coord.y}
-		@paths.push(new path(@paper, @startPathCoord, newcoord))
-		console.log @paths
+		@startObj.c.drag(pathdragger,pathmove,pathup)
+		endObj.c.drag(pathdragger,pathmove,pathup)
+		@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
 		return @startPathCoord
 	
 	isSelected: ->

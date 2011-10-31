@@ -52,13 +52,9 @@
       return this.path.remPath(this.path.getPath());
     };
     canvasDisplay.prototype.savePath = function(coord, endObj) {
-      var newcoord;
-      newcoord = {
-        x: this.startPathCoord.x + coord.x,
-        y: this.startPathCoord.y + coord.y
-      };
-      this.paths.push(new path(this.paper, this.startPathCoord, newcoord));
-      console.log(this.paths);
+      this.startObj.c.drag(pathdragger, pathmove, pathup);
+      endObj.c.drag(pathdragger, pathmove, pathup);
+      this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
       return this.startPathCoord;
     };
     canvasDisplay.prototype.isSelected = function() {
