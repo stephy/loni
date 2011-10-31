@@ -2,6 +2,7 @@ window.canvasDisplay = class canvasDisplay
 	constructor: (canvas) ->
 		position = canvas.position()
 		@paper = Raphael(position.left, position.top, canvas.width(), canvas.height())
+		@offsetCoord = {dx: position.left, dy:position.top}
 		@glow = ""
 		@linkHover = false
 		@pathStartCoord = {}
@@ -19,28 +20,29 @@ window.canvasDisplay = class canvasDisplay
 		if (@glow!="")
 			@glow.removeAll()
 			@glow = ""
-	
-	startStartPath: (obj, startObj) ->
-		@startPathCoord = obj
+
+# ------ Drawing paths ------
+	startStartPath: (boxCoord, startObj, startCoord) ->
+		@startPathCoord = boxCoord
 		@startObj = startObj
-		console.log @startPathCoord
 		
 	drawPath: (coord) ->
 		if @path
 			@path.remPath(@path.getPath())
-		newcoord = {x: @startPathCoord.x + coord.x, y: @startPathCoord.y + coord.y}
-		@path = new path(@paper, @startPathCoord, newcoord)
+		@path = new path(@paper, @startPathCoord, {x:coord.x-@offsetCoord.dx, y:coord.y-@offsetCoord.dy})
 		
 	removePath: ->
 		@path.remPath(@path.getPath())
 	
 	savePath: (coord, endObj)->
 		# Start obj is @startObj, end obj is endObj
-		@startObj.c.drag(pathdragger,pathmove,pathup)
-		endObj.c.drag(pathdragger,pathmove,pathup)
 		@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
 		return @startPathCoord
-	
+	translatePaths: ->
+		for ele in @paths
+			@paper.connection2(ele)
+# ------ end of Drawing paths ------
+
 	isSelected: ->
 		if (@glow!="") then return false else return true		
 	

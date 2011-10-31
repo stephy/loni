@@ -62,16 +62,15 @@ window.sink = class sink extends baseModule
 		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':1)
 		return c
 	
-	drag: (dx, dy) =>
+	drag: (dx, dy, x, y) =>
 		@prevCoord = {x: dx, y: dy}
-		@disp.drawPath(@prevCoord)
-		console.log "DRAGGGINGGG....."
+		@disp.drawPath({x:x, y:y})
 		@text.remove()
 	mDown: (x,y) =>
 		@text.remove()
 		@prevCoord = {x:0, y:0}
 		@disp.setGlow(@)
-		@disp.startStartPath(@c.getBBox(), @)
+		@disp.startStartPath(@c.getBBox(), @, {x:x, y:y})
 		return false
 	mUp:(e) =>
 		@disp.removePath()
@@ -84,6 +83,10 @@ window.sink = class sink extends baseModule
 		@text = @disp.paper.text(dim.x+dim.width, dim.y+dim.height, @name)
 	hoverOut: =>
 		@text.remove()
+	ztranslate: (dx,dy) =>
+		super(dx, dy)
+		@disp.translatePaths()
+
 
 window.dataSink = class dataSink extends baseModule
 	constructor: (@disp, @prevCoord)->

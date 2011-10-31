@@ -5,6 +5,10 @@
       var position;
       position = canvas.position();
       this.paper = Raphael(position.left, position.top, canvas.width(), canvas.height());
+      this.offsetCoord = {
+        dx: position.left,
+        dy: position.top
+      };
       this.glow = "";
       this.linkHover = false;
       this.pathStartCoord = {};
@@ -32,30 +36,35 @@
         return this.glow = "";
       }
     };
-    canvasDisplay.prototype.startStartPath = function(obj, startObj) {
-      this.startPathCoord = obj;
-      this.startObj = startObj;
-      return console.log(this.startPathCoord);
+    canvasDisplay.prototype.startStartPath = function(boxCoord, startObj, startCoord) {
+      this.startPathCoord = boxCoord;
+      return this.startObj = startObj;
     };
     canvasDisplay.prototype.drawPath = function(coord) {
-      var newcoord;
       if (this.path) {
         this.path.remPath(this.path.getPath());
       }
-      newcoord = {
-        x: this.startPathCoord.x + coord.x,
-        y: this.startPathCoord.y + coord.y
-      };
-      return this.path = new path(this.paper, this.startPathCoord, newcoord);
+      return this.path = new path(this.paper, this.startPathCoord, {
+        x: coord.x - this.offsetCoord.dx,
+        y: coord.y - this.offsetCoord.dy
+      });
     };
     canvasDisplay.prototype.removePath = function() {
       return this.path.remPath(this.path.getPath());
     };
     canvasDisplay.prototype.savePath = function(coord, endObj) {
-      this.startObj.c.drag(pathdragger, pathmove, pathup);
-      endObj.c.drag(pathdragger, pathmove, pathup);
       this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
       return this.startPathCoord;
+    };
+    canvasDisplay.prototype.translatePaths = function() {
+      var ele, _i, _len, _ref, _results;
+      _ref = this.paths;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        ele = _ref[_i];
+        _results.push(this.paper.connection2(ele));
+      }
+      return _results;
     };
     canvasDisplay.prototype.isSelected = function() {
       if (this.glow !== "") {

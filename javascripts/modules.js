@@ -114,6 +114,7 @@
     function sink(disp, prevCoord) {
       this.disp = disp;
       this.prevCoord = prevCoord;
+      this.ztranslate = __bind(this.ztranslate, this);
       this.hoverOut = __bind(this.hoverOut, this);
       this.hoverIn = __bind(this.hoverIn, this);
       this.otherMouseUp = __bind(this.otherMouseUp, this);
@@ -138,13 +139,15 @@
       });
       return c;
     };
-    sink.prototype.drag = function(dx, dy) {
+    sink.prototype.drag = function(dx, dy, x, y) {
       this.prevCoord = {
         x: dx,
         y: dy
       };
-      this.disp.drawPath(this.prevCoord);
-      console.log("DRAGGGINGGG.....");
+      this.disp.drawPath({
+        x: x,
+        y: y
+      });
       return this.text.remove();
     };
     sink.prototype.mDown = function(x, y) {
@@ -154,7 +157,10 @@
         y: 0
       };
       this.disp.setGlow(this);
-      this.disp.startStartPath(this.c.getBBox(), this);
+      this.disp.startStartPath(this.c.getBBox(), this, {
+        x: x,
+        y: y
+      });
       return false;
     };
     sink.prototype.mUp = function(e) {
@@ -170,6 +176,10 @@
     };
     sink.prototype.hoverOut = function() {
       return this.text.remove();
+    };
+    sink.prototype.ztranslate = function(dx, dy) {
+      sink.__super__.ztranslate.call(this, dx, dy);
+      return this.disp.translatePaths();
     };
     return sink;
   })();
