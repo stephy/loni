@@ -5,6 +5,7 @@ window.canvasDisplay = class canvasDisplay
 		@glow = ""
 		@linkHover = false
 		@pathStartCoord = {}
+		@paths = []
 	newModule: (coord)->
 		item = new module(@, coord)
 	newDataSink: (coord)->
@@ -19,14 +20,26 @@ window.canvasDisplay = class canvasDisplay
 			@glow.removeAll()
 			@glow = ""
 	
-	startStartPath: (obj) ->
+	startStartPath: (obj, startObj) ->
 		@startPathCoord = obj
+		@startObj = startObj
+		console.log @startPathCoord
 		
 	drawPath: (coord) ->
-		console.log "draw path"
+		if @path
+			@path.remPath(@path.getPath())
+		newcoord = {x: @startPathCoord.x + coord.x, y: @startPathCoord.y + coord.y}
+		@path = new path(@paper, @startPathCoord, newcoord)
 		
 	removePath: ->
-		console.log "removed Path"
+		@path.remPath(@path.getPath())
+	
+	savePath: (coord, endObj)->
+		# Start obj is @startObj, end obj is endObj
+		newcoord = {x: @startPathCoord.x + coord.x, y: @startPathCoord.y + coord.y}
+		@paths.push(new path(@paper, @startPathCoord, newcoord))
+		console.log @paths
+		return @startPathCoord
 	
 	isSelected: ->
 		if (@glow!="") then return false else return true		

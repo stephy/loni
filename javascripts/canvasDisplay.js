@@ -8,6 +8,7 @@
       this.glow = "";
       this.linkHover = false;
       this.pathStartCoord = {};
+      this.paths = [];
     }
     canvasDisplay.prototype.newModule = function(coord) {
       var item;
@@ -31,14 +32,34 @@
         return this.glow = "";
       }
     };
-    canvasDisplay.prototype.startStartPath = function(obj) {
-      return this.startPathCoord = obj;
+    canvasDisplay.prototype.startStartPath = function(obj, startObj) {
+      this.startPathCoord = obj;
+      this.startObj = startObj;
+      return console.log(this.startPathCoord);
     };
     canvasDisplay.prototype.drawPath = function(coord) {
-      return console.log("draw path");
+      var newcoord;
+      if (this.path) {
+        this.path.remPath(this.path.getPath());
+      }
+      newcoord = {
+        x: this.startPathCoord.x + coord.x,
+        y: this.startPathCoord.y + coord.y
+      };
+      return this.path = new path(this.paper, this.startPathCoord, newcoord);
     };
     canvasDisplay.prototype.removePath = function() {
-      return console.log("removed Path");
+      return this.path.remPath(this.path.getPath());
+    };
+    canvasDisplay.prototype.savePath = function(coord, endObj) {
+      var newcoord;
+      newcoord = {
+        x: this.startPathCoord.x + coord.x,
+        y: this.startPathCoord.y + coord.y
+      };
+      this.paths.push(new path(this.paper, this.startPathCoord, newcoord));
+      console.log(this.paths);
+      return this.startPathCoord;
     };
     canvasDisplay.prototype.isSelected = function() {
       if (this.glow !== "") {

@@ -154,18 +154,14 @@
         y: 0
       };
       this.disp.setGlow(this);
-      this.disp.startStartPath(this.c.getBBox());
+      this.disp.startStartPath(this.c.getBBox(), this);
       return false;
     };
     sink.prototype.mUp = function(e) {
       return this.disp.removePath();
     };
     sink.prototype.otherMouseUp = function(e) {
-      if (this.c.getBBox() === this.disp.startPathCoord) {
-        return console.log("same!!!");
-      } else {
-        return console.log("NEW PATH!");
-      }
+      return this.disp.savePath(this.c.getBBox(), this);
     };
     sink.prototype.hoverIn = function() {
       var dim;

@@ -71,16 +71,13 @@ window.sink = class sink extends baseModule
 		@text.remove()
 		@prevCoord = {x:0, y:0}
 		@disp.setGlow(@)
-		@disp.startStartPath(@c.getBBox())
+		@disp.startStartPath(@c.getBBox(), @)
 		return false
 	mUp:(e) =>
 		@disp.removePath()
 		
 	otherMouseUp: (e) =>
-		if @c.getBBox() == @disp.startPathCoord
-			console.log "same!!!"
-		else
-			console.log "NEW PATH!"
+		@disp.savePath(@c.getBBox(), @)
 		
 	hoverIn: =>
 		dim = @c.getBBox()

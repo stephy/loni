@@ -2,13 +2,11 @@ window.path = class path
 	
 	existingLine = {}
 	
-	constructor: (r, prevpos, pos) ->
-		existingLine = r.connection(prevpos, pos, "#fff")		
+	constructor: (r, @startPos, @endPos) ->
+		existingLine = r.connection(@startPos, @endPos, "#000")
 	
 	getPath: () ->
 		return existingLine
-		
 	
 	remPath: (existPath) ->
 		existPath.line.remove()
-		
