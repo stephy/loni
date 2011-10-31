@@ -1,0 +1,20 @@
+@charset "UTF-8";
+/* CSS Document */
+#data_sink{
+	font-size:10px;
+}
+label {
+	margin-top: 10px;
+	width: 9em;
+	float: left;
+	text-align: left;
+	margin-right: 0.5em;
+	display: block
+}
+input {
+	font-size:10px;
+	margin-top: 10px;
+}
+.submit input {
+	margin-left: 4.5em;
+}
