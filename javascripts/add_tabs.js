@@ -29,8 +29,13 @@ jQuery(document).ready(function(){
 	$('.button-close').live('click', function(){
 		var value = $(this).parent();
 		var canvas_id = $(value).attr('canvas-id');
-		$(value).remove();
-		$('#'+canvas_id).remove();
+		var tabs_size = $('li').length -1;
+		if (tabs_size >1){ //don't remove tabs if there's only one tab left
+			$(value).remove(); 
+			$('#'+canvas_id).remove();
+		}
+		
+		
 	});
 	
 	//display canvas for the selected tab
@@ -45,10 +50,8 @@ jQuery(document).ready(function(){
 	//this tab can't be deleted, and this tab does 
 	//not have an attribute tag 
 	$('li:eq(0)').click(function(){
-		console.log("first one!!" + this);
 		$('.canvas').hide();
 		$('.canvas:eq(0)').show();
-		console.log("WTF");
 	});
 	
 	
