@@ -49,9 +49,8 @@ html {
 #canvas-body{
 	border: 1px solid #a0a0a0;
 	height: 300px;
-	background-color: #FFF;
+	background-color: #fff;
 }
-
 .canvas{
-	display:block;
+	height: 300px;
 }

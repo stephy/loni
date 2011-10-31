@@ -6,6 +6,7 @@ class baseModule
 		@dim = {width: 50, height:50}
 		@c = @draw()
 		@objs = []
+		@id = 0
 		@name = "Sexy Stephy"
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
@@ -18,7 +19,6 @@ class baseModule
 	hoverIn: =>
 		dim = @c.getBBox()
 		@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @name)
-	
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
@@ -51,11 +51,40 @@ class baseModule
 window.module = class module extends baseModule
 	
 window.sink = class sink extends baseModule
+	constructor: (@disp, @prevCoord)->
+		super(@disp, @prevCoord)
+		@connectable = true
+		@c.mouseup(@otherMouseUp)
+		
 	draw: ->
 		connectDim = {x: @dim.width/2 +  @prevCoord.x , y:  @prevCoord.y - @dim.height/2}
 		c = @disp.paper.circle(connectDim.x,connectDim.y,10)
 		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':1)
 		return c
+	
+	drag: (dx, dy) =>
+		@prevCoord = {x: dx, y: dy}
+		console.log "DRAGGGINGGG....."
+		@text.remove()
+	mDown: (x,y) =>
+		@text.remove()
+		@prevCoord = {x:0, y:0}
+		@disp.setGlow(@)
+		@disp.startStartPath(@c.getBBox())
+		return false
+	mUp:(e) =>
+		
+	otherMouseUp: (e) =>
+		if @c.getBBox() == @disp.startPathCoord
+			console.log "same!!!"
+		else
+			console.log "NEW PATH!"
+		
+	hoverIn: =>
+		dim = @c.getBBox()
+		@text = @disp.paper.text(dim.x+dim.width, dim.y+dim.height, @name)
+	hoverOut: =>
+		@text.remove()
 
 window.dataSink = class dataSink extends baseModule
 	constructor: (@disp, @prevCoord)->

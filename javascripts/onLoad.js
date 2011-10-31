@@ -35,11 +35,11 @@
       }
       return coord;
     };
-    $(document).bind('contextmenu', function(e) {
+    $('svg').live('contextmenu', function(e) {
       var coord, menuBox;
       location = getCoord(e);
       menuBox = getBox($('#main-menu'));
-      coord = coordAfterBoundary(getCoord(e), menuBox, getBox($('#canvas')));
+      coord = location;
       if (canvas.isSelected()) {
         $('#edit-menu').hide();
         $('#main-menu').show().css({
@@ -68,6 +68,14 @@
     $('#option_data_sink').click(function(e) {
       return canvas.newDataSink(location);
     });
-    return canvas = new canvasDisplay($('#canvas'));
+    canvas = new canvasDisplay($('#canvas-1'));
+    canvas.newDataSink({
+      x: 100,
+      y: 200
+    });
+    return canvas.newDataSink({
+      x: 450,
+      y: 250
+    });
   });
 }).call(this);

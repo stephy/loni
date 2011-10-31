@@ -1,8 +1,10 @@
 window.canvasDisplay = class canvasDisplay
 	constructor: (canvas) ->
-		@paper = Raphael(0, 0, canvas.width(), canvas.height())
+		position = canvas.position()
+		@paper = Raphael(position.left, position.top, canvas.width(), canvas.height())
 		@glow = ""
 		@linkHover = false
+		@pathStartCoord = {}
 	newModule: (coord)->
 		item = new module(@, coord)
 	newDataSink: (coord)->
@@ -16,6 +18,9 @@ window.canvasDisplay = class canvasDisplay
 		if (@glow!="")
 			@glow.removeAll()
 			@glow = ""
+	
+	startStartPath: (obj) ->
+		@startPathCoord = obj
 	
 	isSelected: ->
 		if (@glow!="") then return false else return true		

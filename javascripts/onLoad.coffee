@@ -24,12 +24,14 @@ $ ->
 		return coord
 	
 	# Disable right click
-	$(document).bind 'contextmenu' , (e) ->
+	$('svg').live 'contextmenu' , (e) ->
 		location = getCoord(e)
 		menuBox = getBox($('#main-menu'))
 		
 		# Checking Boundaries, modify menu position so it does not show out of scope
-		coord = coordAfterBoundary(getCoord(e), menuBox, getBox($('#canvas')) )
+		# Broken: please fix-- someone?
+		# coord = coordAfterBoundary(getCoord(e), menuBox, getBox($('#canvas')) )
+		coord = location
 		
 		# Show Edit or new depending if object is selected
 		if canvas.isSelected()
@@ -47,11 +49,12 @@ $ ->
 		if(e.target.nodeName != "circle" and e.target.nodeName != "path" )
 			canvas.removeGlow()
 
-	
 	$('#option_module').click (e)->
 		canvas.newModule(location)
 		
 	$('#option_data_sink').click (e) ->
 		canvas.newDataSink(location)
-			
-	canvas = new canvasDisplay($('#canvas'))
+
+	canvas = new canvasDisplay($('#canvas-1'))
+	canvas.newDataSink({x:100, y:200})
+	canvas.newDataSink({x:450, y:250})

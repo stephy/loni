@@ -2,9 +2,12 @@
   var canvasDisplay;
   window.canvasDisplay = canvasDisplay = (function() {
     function canvasDisplay(canvas) {
-      this.paper = Raphael(0, 0, canvas.width(), canvas.height());
+      var position;
+      position = canvas.position();
+      this.paper = Raphael(position.left, position.top, canvas.width(), canvas.height());
       this.glow = "";
       this.linkHover = false;
+      this.pathStartCoord = {};
     }
     canvasDisplay.prototype.newModule = function(coord) {
       var item;
@@ -27,6 +30,9 @@
         this.glow.removeAll();
         return this.glow = "";
       }
+    };
+    canvasDisplay.prototype.startStartPath = function(obj) {
+      return this.startPathCoord = obj;
     };
     canvasDisplay.prototype.isSelected = function() {
       if (this.glow !== "") {

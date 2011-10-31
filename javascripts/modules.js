@@ -23,6 +23,7 @@
       };
       this.c = this.draw();
       this.objs = [];
+      this.id = 0;
       this.name = "Sexy Stephy";
       this.c.drag(this.drag, this.mDown, this.mUp);
       this.c.hover(this.hoverIn, this.hoverOut);
@@ -110,8 +111,18 @@
   })();
   window.sink = sink = (function() {
     __extends(sink, baseModule);
-    function sink() {
-      sink.__super__.constructor.apply(this, arguments);
+    function sink(disp, prevCoord) {
+      this.disp = disp;
+      this.prevCoord = prevCoord;
+      this.hoverOut = __bind(this.hoverOut, this);
+      this.hoverIn = __bind(this.hoverIn, this);
+      this.otherMouseUp = __bind(this.otherMouseUp, this);
+      this.mUp = __bind(this.mUp, this);
+      this.mDown = __bind(this.mDown, this);
+      this.drag = __bind(this.drag, this);
+      sink.__super__.constructor.call(this, this.disp, this.prevCoord);
+      this.connectable = true;
+      this.c.mouseup(this.otherMouseUp);
     }
     sink.prototype.draw = function() {
       var c, connectDim;
@@ -126,6 +137,40 @@
         'stroke-width': 1
       });
       return c;
+    };
+    sink.prototype.drag = function(dx, dy) {
+      this.prevCoord = {
+        x: dx,
+        y: dy
+      };
+      console.log("DRAGGGINGGG.....");
+      return this.text.remove();
+    };
+    sink.prototype.mDown = function(x, y) {
+      this.text.remove();
+      this.prevCoord = {
+        x: 0,
+        y: 0
+      };
+      this.disp.setGlow(this);
+      this.disp.startStartPath(this.c.getBBox());
+      return false;
+    };
+    sink.prototype.mUp = function(e) {};
+    sink.prototype.otherMouseUp = function(e) {
+      if (this.c.getBBox() === this.disp.startPathCoord) {
+        return console.log("same!!!");
+      } else {
+        return console.log("NEW PATH!");
+      }
+    };
+    sink.prototype.hoverIn = function() {
+      var dim;
+      dim = this.c.getBBox();
+      return this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, this.name);
+    };
+    sink.prototype.hoverOut = function() {
+      return this.text.remove();
     };
     return sink;
   })();
