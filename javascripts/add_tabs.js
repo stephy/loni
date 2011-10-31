@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
 	$('#add_new_canvas').click(function(){
 		var new_canvas_index = nextCanvasIndex();
 		var new_canvas_id = 'canvas-'+ new_canvas_index;
-		$('.tabs li:eq(0)').clone().insertBefore('#add_new_canvas');
+		$('.tabs li:eq(0)').clone().insertBefore('#add_new_canvas').attr("canvas-id", new_canvas_id);
 		$('<div id="'+ new_canvas_id +'" class="canvas"></div>').appendTo('.canvae');
 		//display the new/recently created canvas only, hide all others
 		$('.canvas').hide();
@@ -25,10 +25,31 @@ jQuery(document).ready(function(){
 	});
 	
 	
-	//close canvas on close ( x tab button) click
-	$('.button-close').click(function(){
-		$(this).parent().remove()
-		//$('#canvas-1').remove();
+	//close canvas and tab on close ( x tab button) click
+	$('.button-close').live('click', function(){
+		var value = $(this).parent();
+		var canvas_id = $(value).attr('canvas-id');
+		$(value).remove();
+		$('#'+canvas_id).remove();
 	});
+	
+	//display canvas for the selected tab
+	$('li:not(:first-child)').live('click', function(){
+		var selected_canvas = $(this).attr('canvas-id');
+		console.log(selected_canvas);
+		$('.canvas').hide();
+		$('#'+selected_canvas).show();
+	});
+	
+	//adjstment for first tab
+	//this tab can't be deleted, and this tab does 
+	//not have an attribute tag 
+	$('li:eq(0)').click(function(){
+		console.log("first one!!" + this);
+		$('.canvas').hide();
+		$('.canvas:eq(0)').show();
+		console.log("WTF");
+	});
+	
 	
 });
