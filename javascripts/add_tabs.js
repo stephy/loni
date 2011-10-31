@@ -29,8 +29,13 @@ jQuery(document).ready(function(){
 	$('.button-close').live('click', function(){
 		var value = $(this).parent();
 		var canvas_id = $(value).attr('canvas-id');
-		$(value).remove();
-		$('#'+canvas_id).remove();
+		var tabs_size = $('li').length -1;
+		if (tabs_size >1){
+			$(value).remove();
+			$('#'+canvas_id).remove();
+		}
+		
+		
 	});
 	
 	//display canvas for the selected tab
