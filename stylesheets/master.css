@@ -54,7 +54,17 @@ html {
 .canvas{
 	height: 300px;
 }
-// POPUP STYLES
+.popup-controller-title{
+	
+}
+.popup-controller{
+	position:absolute;
+	width:440px;
+	height: auto;
+	background-color:#ededed;
+	padding: 10px;
+	border: 1px solid #999;
+}
 .popup{
 	width: 500px;
 	background-color: #290;

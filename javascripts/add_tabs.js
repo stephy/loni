@@ -33,9 +33,7 @@ jQuery(document).ready(function(){
 		if (tabs_size >1){ //don't remove tabs if there's only one tab left
 			$(value).remove(); 
 			$('#'+canvas_id).remove();
-		}
-		
-		
+		}	
 	});
 	
 	//display canvas for the selected tab
