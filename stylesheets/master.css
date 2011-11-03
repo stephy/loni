@@ -121,3 +121,15 @@ for IE8 we give its native filter.
   top: 20px;
   z-index:200;
 }
+#play-buttons{
+	margin-left:40%;
+	left: -50%;
+}
+#play-bt{
+	background-image:url(../images/button-play.gif);
+	background-repeat:no-repeat;
+}
+#play-bt:hover{
+	background-image:url(../images/button-play-hover.gif);
+	background-repeat:no-repeat;
+}
