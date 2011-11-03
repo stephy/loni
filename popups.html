@@ -3,19 +3,94 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Untitled Document</title>
-<link href="stylesheets/tabs.css" rel="stylesheet" type="text/css">
+
 <link href="stylesheets/master.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/tabs.css" rel="stylesheet" type="text/css">
 <link href="stylesheets/forms.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-<div id="popup-module" class="popup">
-<ul class="tabs" >
-    	<li>Info</li>
+<!-- M O D U L E   P O P U P  -->
+<div id="popup-module">
+	<ul class="tabs" >
+    	<li class="selected">Info</li>
         <li>Parameters</li>
         <li>Execution</li>
         <li>Metadata</li>
 	</ul>
-</div>
+    <div class="popup-content">
+    <!-- MODULE TAB CONTENT AREA -->
+    	<!-- INFO CONTENT AREA -->
+    	<div id="module-info" class="popup-tab">
+        	<ul class="tabs" >
+    			<li class="selected">Module</li>
+        		<li>Provenance</li>
+			</ul>
+            <div class="popup-content">
+            	<!--INFO TAB MODULE -->
+            	<div id="module-info-module" class="popup-tab">
+            		
+                	
+                    
+                    Module creation date: Sun Oct 30 14:52:44 PDT 2011</br>
+    			Executable Authors: None Entered </br>
+    			Module Described by: None Entered </br>
+    			<label for="module_name">Name</label><input name="module_name" type="text" value="" ></br>
+    			<label for="module_package">Package: </label> <input name="module_package" type="text" 	value=""></br>
+    			<label for="module_pkg_version">Package Version: </label> <input name="module_pkg_version" type="text" value=""></br>
+ 					<label for="data_source_exec_version">Executable Version: </label> <input name="data_source_exec_version" type="text" value=""></br>
+    			<label for="data_source_tags">Tags:</label> <input name="data_source_tags" type="text" value=""></br>
+    			<label for="data_source_description">Description:</label> <textarea name="data_source_description" type="text" value=""></textarea>
+    			
+                    
+                    
+                    
+                		<!-- WEBSITE-CITATION-LICENSE -->
+                		<ul class="tabs">
+                			<li>Website</li>
+                			<li>Citations</li>
+                			<li>License</li>
+                		</ul>
+                		<div class="popup-content">
+                			<div id="module-info-module-website" class="popup-tab">
+                			<input name="Edit" type="button" value="Edit ...">
+                			</div>
+                			<div id="module-info-module-citations" class="popup-tab">
+                			</div>
+                			<div id="module-info-module-license" class="popup-area">
+                			</div>
+                		
+                		</div>
+                
+            	</div>
+                <!-- INFO TAB PROVENANCE -->
+                <div id="module-info-provenence">
+                <!-- to be added later -->
+                </div>
+            
+            </div>
+    	</div>
+        
+        
+        <!--METADATA CONTENT AREA -->
+        <div id="module-parameters" class="popup-tab">
+        	parameters
+        </div>
+        
+        <!--EXECUTION CONTENT AREA -->
+        <div id="module-execution" class="popup-tab">
+        	Execution
+        </div>
+        
+        
+        <!--METADATA CONTENT AREA -->
+        <div id="module-metadata" class="popup-tab">
+        	Metadada
+        </div>
+      <!-- MODULE TAB CONTENT AREA -->
+    </div>
+</div> <!--end of popup module -->
+
+
 </body>
 </html>

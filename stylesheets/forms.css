@@ -14,7 +14,7 @@ label {
 	width: 12em;
 	float: left;
 	text-align: left;
-	margin-right: 0.5em;
+	margin-right: -2em;
 	display: block
 }
 input {
@@ -24,3 +24,7 @@ input {
 .submit input {
 	margin-left: 4.5em;
 }
+textarea{
+	margin-top: 10px;
+}
+

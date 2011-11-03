@@ -54,3 +54,26 @@ html {
 .canvas{
 	height: 300px;
 }
+// POPUP STYLES
+.popup{
+	width: 500px;
+	background-color: #290;
+}
+
+.popup-content{
+	background-color: #e4e4e4;
+	padding: 20px 3px 3px 3px;
+	border-radius:5px;
+	border: 1px solid #CCC;
+	margin: -20px 0 0 0;
+	width:98%;
+}
+.popup-tab{
+	margin-top:-5px;
+	padding: 5px 10px 5px 10px;
+	background-color:#ededed;
+}
+
+#popup-module{
+	width: 440px;
+}
