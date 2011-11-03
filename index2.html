@@ -13,7 +13,11 @@
 	<script type="text/javascript" src='javascripts/path.js'></script>
 	<script type="text/javascript" src='javascripts/canvasDisplay.js'></script>
 	<script type="text/javascript" src='javascripts/graf.js'></script>
-		
+  
+  <!-- Forms -->
+  <script src="javascripts/popups.js" type="text/javascript"></script>
+  <link href="stylesheets/forms.css" rel="stylesheet" type="text/css">
+
   <link href="stylesheets/menu.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/master.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/tabs.css" rel="stylesheet" type="text/css">
@@ -40,6 +44,10 @@
 		</div>
 		<!-- other canvases may be added  here -->
 	</div>
+    <div id="play-buttons">
+    <img src="images/button-stop.gif" width="74" height="40">
+    <img src="images/button-play.gif" width="74" height="40">
+    </div>
 </div>
 
 <!-- Right click menus -->
@@ -81,6 +89,140 @@
       </ul>
   </div>
 <!-- End of right click menu -->
+
+
+<!-- Start of New Module -->
+<div id="popup-module" style="display:none;" class="popUpObjectBox">
+  
+  <div class="popup-controller-title">
+ <img src="images/close-popup-area.gif" width="14" height="12" class="close-popup" id="close-popup-module"> Module Definition </div>
+<div class="popup-controller">
+
+
+
+	<ul class="tabs" >
+    	<li id="module-info-bt">Info</li>
+        <li id="module-parameters-bt">Parameters</li>
+        <li id="module-execution-bt">Execution</li>
+        <li id="module-metadata-bt">Metadata</li>
+	</ul>
+    <div class="popup-content">
+    <!-- MODULE TAB CONTENT AREA -->
+    	<!-- INFO CONTENT AREA -->
+    	<div id="module-info" class="popup-tab">
+        	<ul class="tabs" >
+    			<li id="module-info-module-bt">Module</li>
+        		<li id="module-info-provenence-bt">Provenance</li>
+			</ul>
+            <div class="popup-content">
+            	<!--INFO TAB MODULE -->
+            	<div id="module-info-module" class="popup-tab">
+            		
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2">Module creation date: Sun Oct 30 14:52:44 PDT 2011</td>
+    <td width="22%" colspan="2" rowspan="4">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+          <td >Executable Authors: None Entered</td>
+          <td width="10"><input type="button" value="   ...   " /></td>
+        </tr>
+    </table></td>
+    </tr>
+  <tr>
+    <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>Module Described by: None Entered </td>
+        <td width="10"><input type="button" value="   ...   " /></td>
+      </tr>
+    </table></td>
+    </tr>
+  <tr>
+    <td width="16%">Name:</td>
+    <td width="62%"><input name="module_name" type="text" value="" size="40" ></td>
+    </tr>
+  <tr>
+    <td>Package:</td>
+    <td colspan="3"><input name="module_package" type="text" 	value="" size="55"></td>
+    </tr>
+  <tr>
+    <td>Package Version:</td>
+    <td colspan="3"><input name="module_pkg_version" type="text" value="" size="10"> 
+      Executable Version:        <input name="data_source_exec_version" type="text" value="" size="10"></td>
+    </tr>
+  <tr>
+    <td>Tags:</td>
+    <td colspan="3"><input name="module_tags" type="text" value="" size="55"></td>
+    </tr>
+  <tr>
+    <td>Description:</td>
+    <td colspan="3"><textarea name="module_description" cols="40" type="text" value=""></textarea></td>
+    </tr>
+</table>
+	
+                    
+                    </br>
+    			 </br>
+    			
+    		
+
+    			<!-- WEBSITE-CITATION-LICENSE -->
+                		<ul class="tabs">
+                			<li id="mod-info-mod-website-bt">Website</li>
+                			<li id="mod-info-mod-citations-bt">Citations</li>
+                			<li id="mod-info-mod-license-bt">License</li>
+           		  </ul>
+                		<div class="popup-content">
+                			<div id="module-info-module-website" class="popup-tab">
+                			<input name="Edit" type="button" value="Edit ...">
+                			</div>
+                			<div id="module-info-module-citations" class="popup-tab" style="display:none">
+                            citations
+                			</div>
+                			<div id="module-info-module-license" class="popup-tab" style="display:none">
+                            license
+                			</div>
+                		
+                		</div>
+                
+           	  </div>
+                <!-- INFO TAB PROVENANCE -->
+                <div id="module-info-provenence" class="popup-tab" style="display:none">
+                	provenence
+                <!-- to be added later -->
+                </div>
+            
+            </div>
+    	</div>
+        
+        
+        <!--METADATA CONTENT AREA -->
+        <div id="module-parameters" class="popup-tab" style="display:none">
+        	parameters
+        </div>
+        
+        <!--EXECUTION CONTENT AREA -->
+        <div id="module-execution" class="popup-tab" style="display:none">
+        	Execution
+        </div>
+        
+        
+        <!--METADATA CONTENT AREA -->
+        <div id="module-metadata" class="popup-tab" style="display:none">
+        	Metadada
+        </div>
+      <!-- MODULE TAB CONTENT AREA -->
+ 
+<input type="button" value="Help"/>
+<input type="button" value="Cancel" class="cancelObjectButton"/>
+<input type="button" value="OK" class="createObjectButton"/>
+</div>
+
+   </div>
+</div> <!--end of popup module -->
+<!-- end of New Module -->
 
 </body>
 </html>

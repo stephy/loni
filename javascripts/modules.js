@@ -1,5 +1,5 @@
 (function() {
-  var baseModule, dataSink, module, sink;
+  var baseModule, dataSink, dataSource, module, sink;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -201,5 +201,24 @@
       return c;
     };
     return dataSink;
+  })();
+  window.dataSource = dataSource = (function() {
+    __extends(dataSource, baseModule);
+    function dataSource(disp, prevCoord) {
+      this.disp = disp;
+      this.prevCoord = prevCoord;
+      dataSource.__super__.constructor.call(this, this.disp, this.prevCoord);
+      this.objs.push(new sink(this.disp, this.prevCoord));
+    }
+    dataSource.prototype.draw = function() {
+      var c;
+      c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, this.dim.height / 2);
+      c.attr({
+        stroke: '#00f',
+        fill: '#0f0'
+      });
+      return c;
+    };
+    return dataSource;
   })();
 }).call(this);

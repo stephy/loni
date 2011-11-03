@@ -51,7 +51,6 @@ $ ->
 
 	$('#option_module').click (e)->
 		$('#popup-module').show()
-
 	$('.createObjectButton').click ->
 		canvas.newModule(location)
 		$(@).parents('.popUpObjectBox').hide()
@@ -59,9 +58,10 @@ $ ->
 		$(@).parents('.popUpObjectBox').hide()
 		
 		
-	$('#option_data_sink').click (e) ->
-		canvas.newDataSink(location)
+	$('#option_data_source').click (e) ->
+		canvas.newDataSource(location)
 
 	canvas = new canvasDisplay($('#canvas-1'))
 	canvas.newDataSink({x:100, y:200})
 	canvas.newDataSink({x:450, y:250})
+	canvas.newDataSource({x:400, y:250})

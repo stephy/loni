@@ -72,16 +72,20 @@
     $('.cancelObjectButton').click(function() {
       return $(this).parents('.popUpObjectBox').hide();
     });
-    $('#option_data_sink').click(function(e) {
-      return canvas.newDataSink(location);
+    $('#option_data_source').click(function(e) {
+      return canvas.newDataSource(location);
     });
     canvas = new canvasDisplay($('#canvas-1'));
     canvas.newDataSink({
       x: 100,
       y: 200
     });
-    return canvas.newDataSink({
+    canvas.newDataSink({
       x: 450,
+      y: 250
+    });
+    return canvas.newDataSource({
+      x: 400,
       y: 250
     });
   });

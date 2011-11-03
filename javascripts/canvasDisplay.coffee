@@ -11,6 +11,8 @@ window.canvasDisplay = class canvasDisplay
 		item = new module(@, coord)
 	newDataSink: (coord)->
 		item = new dataSink(@, coord)
+	newDataSource: (coord)->
+		item = new dataSource(@, coord)
 
 	setGlow: (obj) ->
 		if (@glow!="") then @glow.removeAll()

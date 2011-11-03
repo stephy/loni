@@ -22,6 +22,10 @@
       var item;
       return item = new dataSink(this, coord);
     };
+    canvasDisplay.prototype.newDataSource = function(coord) {
+      var item;
+      return item = new dataSource(this, coord);
+    };
     canvasDisplay.prototype.setGlow = function(obj) {
       if (this.glow !== "") {
         this.glow.removeAll();

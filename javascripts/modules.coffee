@@ -97,6 +97,17 @@ window.dataSink = class dataSink extends baseModule
 		c.attr({stroke:'#00f', fill:'#0f0'})
 		return c
 		
+
+window.dataSource = class dataSource extends baseModule
+	constructor: (@disp, @prevCoord)->
+		super(@disp, @prevCoord)
+		@objs.push(new sink(@disp, @prevCoord))
+	draw: ->
+		# c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
+		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)
+		c.attr({stroke:'#00f', fill:'#0f0'})
+		return c
+		
 	# constructor: (@disp, coord)->
 	# 	@dim = {width: 50, height:50}
 	# 	@tri = @disp.paper.path("M #{coord.x} #{coord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
