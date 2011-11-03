@@ -65,6 +65,7 @@ jQuery(document).ready(function(){
 	// --------------------------------------
 	
 	$('#data-sink-info-bt').click(function(){
+		$('.popup-tab').hide();
 		$('#data-sink-info.popup-tab').show();
 	});
 	$('#data-sink-outputs-bt').click(function(){
@@ -77,6 +78,7 @@ jQuery(document).ready(function(){
 	// --------------------------------------
 	
 	$('#data-source-info-bt').click(function(){
+		$('.popup-tab').hide();
 		$('#data-source-info.popup-tab').show();
 	});
 	$('#data-source-inputs-bt').click(function(){
