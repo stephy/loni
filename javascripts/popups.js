@@ -11,7 +11,6 @@ jQuery(document).ready(function(){
 		$('#module-info-module-website.popup-tab').show();
 	});
 	$('#module-parameters-bt').click(function(){
-		console.log('module-para tag clicked');
 		$('.popup-tab').hide();
 		$('#module-parameters.popup-tab').show();
 	});

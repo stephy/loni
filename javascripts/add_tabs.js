@@ -29,7 +29,7 @@ jQuery(document).ready(function(){
 	$('.button-close').live('click', function(){
 		var value = $(this).parent();
 		var canvas_id = $(value).attr('canvas-id');
-		var tabs_size = $('li').length -1;
+		var tabs_size = $('#tabs-menu ul.tabs li').length -1;
 		if (tabs_size >1){ //don't remove tabs if there's only one tab left
 			$(value).remove(); 
 			$('#'+canvas_id).remove();
