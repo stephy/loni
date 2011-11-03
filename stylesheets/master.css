@@ -113,3 +113,10 @@ for IE8 we give its native filter.
 .close-popup:hover{
 	background-image:url(../images/close-popup-hover.gif);
 }
+
+.popUpObjectBox{
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  z-index:200;
+}

@@ -65,12 +65,12 @@
     $('#option_module').click(function(e) {
       return $('#popup-module').show();
     });
-    $('#createModuleButton').click(function() {
+    $('.createObjectButton').click(function() {
       canvas.newModule(location);
-      return $(this).parents('#popup-module').hide();
+      return $(this).parents('.popUpObjectBox').hide();
     });
-    $('#cancelModuleButton').click(function() {
-      return $(this).parents('#popup-module').hide();
+    $('.cancelObjectButton').click(function() {
+      return $(this).parents('.popUpObjectBox').hide();
     });
     $('#option_data_sink').click(function(e) {
       return canvas.newDataSink(location);

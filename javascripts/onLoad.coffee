@@ -51,11 +51,12 @@ $ ->
 
 	$('#option_module').click (e)->
 		$('#popup-module').show()
-	$('#createModuleButton').click ->
+
+	$('.createObjectButton').click ->
 		canvas.newModule(location)
-		$(@).parents('#popup-module').hide()
-	$('#cancelModuleButton').click ->
-		$(@).parents('#popup-module').hide()
+		$(@).parents('.popUpObjectBox').hide()
+	$('.cancelObjectButton').click ->
+		$(@).parents('.popUpObjectBox').hide()
 		
 		
 	$('#option_data_sink').click (e) ->
