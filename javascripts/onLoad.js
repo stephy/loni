@@ -63,7 +63,14 @@
       }
     });
     $('#option_module').click(function(e) {
-      return canvas.newModule(location);
+      return $('#popup-module').show();
+    });
+    $('#createModuleButton').click(function() {
+      canvas.newModule(location);
+      return $(this).parents('#popup-module').hide();
+    });
+    $('#cancelModuleButton').click(function() {
+      return $(this).parents('#popup-module').hide();
     });
     $('#option_data_sink').click(function(e) {
       return canvas.newDataSink(location);

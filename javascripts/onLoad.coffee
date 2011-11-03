@@ -50,7 +50,13 @@ $ ->
 			canvas.removeGlow()
 
 	$('#option_module').click (e)->
+		$('#popup-module').show()
+	$('#createModuleButton').click ->
 		canvas.newModule(location)
+		$(@).parents('#popup-module').hide()
+	$('#cancelModuleButton').click ->
+		$(@).parents('#popup-module').hide()
+		
 		
 	$('#option_data_sink').click (e) ->
 		canvas.newDataSink(location)
