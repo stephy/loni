@@ -55,6 +55,26 @@ html {
 	height: 300px;
 }
 .popup-controller-title{
+	/* FF3.6 Firefox */
+	background-image:  -moz-linear-gradient(top, #dcdcdc, #c3c3c3); 
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #dcdcdc),color-stop(1, #c3c3c3)); 
+ 
+/* IE6,IE7
+For IE6 and IE7 we give the native Microsoft filter effect that has been specified by Microsoft for its browsers.
+*/
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#dcdcdc', EndColorStr='#c3c3c3'); 
+ 
+/* IE8
+for IE8 we give its native filter.
+*/
+ 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#dcdcdc', EndColorStr='#c3c3c3')";
+	height:8px;
+	width:440px;
+	padding: 10px;
+	border: 1px solid #999;
+	border-radius: 5px 5px 0 0;
+	font-weight:bold; 
+	text-shadow:0px 1px 0px #FFF;
 	
 }
 .popup-controller{
@@ -86,4 +106,10 @@ html {
 
 #popup-module{
 	width: 440px;
+}
+.close-popup{
+	background-image:url(../images/close-popup.gif);
+}
+.close-popup:hover{
+	background-image:url(../images/close-popup-hover.gif);
 }

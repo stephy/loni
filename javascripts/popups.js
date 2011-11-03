@@ -1,9 +1,11 @@
 // JavaScript Document
 
 jQuery(document).ready(function(){
-	//Show and hide tabs for module popup
+	// --------------------------------------
+	//SHOW AND HIDE TAGS FOR MODULE POPUP
+	// --------------------------------------
+	
 	$('#module-info-bt').click(function(){
-		console.log('module-info tag clicked');
 		$('#module-info.popup-tab').show();
 		$('#module-info-module.popup-tab').show();
 		$('#module-info-module-website.popup-tab').show();
@@ -56,5 +58,44 @@ jQuery(document).ready(function(){
 		$('#module-info-module.popup-tab').show();
 		$('#module-info-module-license.popup-tab').show();
 	});
+
+	
+	// --------------------------------------
+	//SHOW AND HIDE TAGS FOR DATA SINK POPUP
+	// --------------------------------------
+	
+	$('#data-sink-info-bt').click(function(){
+		$('#data-sink-info.popup-tab').show();
+	});
+	$('#data-sink-outputs-bt').click(function(){
+		$('.popup-tab').hide();
+		$('#data-sink-outputs.popup-tab').show();
+	});
+	
+	// --------------------------------------
+	//SHOW AND HIDE TAGS FOR DATA SOURCE POPUP
+	// --------------------------------------
+	
+	$('#data-source-info-bt').click(function(){
+		$('#data-source-info.popup-tab').show();
+	});
+	$('#data-source-inputs-bt').click(function(){
+		$('.popup-tab').hide();
+		$('#data-source-inputs.popup-tab').show();
+	});
+	
+	
+	//close popups
+	$('#close-popup-module').click(function(){
+		$('#popup-module').hide();
+	});
+	
+	$('#close-popup-data-sink').click(function(){
+		$('#popup-data-sink').hide();
+	});
+	
+	$('#close-popup-data-source').click(function(){
+		$('#popup-data-source').hide();
+	})
 	
 });
