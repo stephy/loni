@@ -115,8 +115,9 @@ for IE8 we give its native filter.
 }
 
 .popUpObjectBox{
+  margin-left:50%;
+  left: -220px;
   position: absolute;
   top: 20px;
-  right: 5%;
   z-index:200;
 }
