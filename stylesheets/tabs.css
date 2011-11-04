@@ -73,10 +73,12 @@ for IE8 we give its native filter.
 	color: #FFF;
 	text-shadow: 1px 1px 0px #000;
 }
-li.selected ul.tabs{
+ul.tabs li.tabSelected{
 	
-	background-image:  -moz-linear-gradient(top, #ccc, #a8a8a8); 
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ccc),color-stop(1, #a8a8a8));
+	background-image:  -moz-linear-gradient(top, #ccc, #000); 
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ccc),color-stop(1, #000));
+	color:#FFF;
+	text-shadow: 1px 1px 0px #999;
 }
 
 ul.tabs ul {
@@ -88,6 +90,7 @@ ul.tabs li:hover ul{
 	display: inline-block;
 	position: absolute;
 }
+
 
 
 

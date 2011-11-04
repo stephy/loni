@@ -14,14 +14,16 @@ function nextCanvasIndex(){
 jQuery(document).ready(function(){
 	
 	//create new canvas on create_blank (+ tab button) click
-	$('#add_new_canvas').click(function(){
+	$('#add_new_canvas').live('click', function(){
 		var new_canvas_index = nextCanvasIndex();
 		var new_canvas_id = 'canvas-'+ new_canvas_index;
-		$('.tabs li:eq(0)').clone().insertBefore('#add_new_canvas').attr("canvas-id", new_canvas_id);
+		$('li').removeClass('tabSelected');
+		$('.tabs li:eq(0)').clone().addClass('tabSelected').insertBefore('#add_new_canvas').attr("canvas-id", new_canvas_id);
+		
 		$('<div id="'+ new_canvas_id +'" class="canvas"></div>').appendTo('.canvae');
 		//display the new/recently created canvas only, hide all others
 		$('.canvas').hide();
-		$('#'+new_canvas_id).show();
+		$('#'+new_canvas_id).show();	
 	});
 	
 	
@@ -33,7 +35,9 @@ jQuery(document).ready(function(){
 		if (tabs_size >1){ //don't remove tabs if there's only one tab left
 			$(value).remove(); 
 			$('#'+canvas_id).remove();
-		}	
+		}
+		//add highlight for the last tab on the screen that is not the plus (add) button
+		// $("li:last-child").addClass('tabSelected');
 	});
 	
 	//display canvas for the selected tab
@@ -41,6 +45,8 @@ jQuery(document).ready(function(){
 		var selected_canvas = $(this).attr('canvas-id');
 		console.log(selected_canvas);
 		$('.canvas').hide();
+		$('li').removeClass('tabSelected');
+		$('[canvas-id='+ selected_canvas +']').addClass('tabSelected');//display highlighted tab
 		$('#'+selected_canvas).show();
 	});
 	
@@ -49,6 +55,8 @@ jQuery(document).ready(function(){
 	//not have an attribute tag 
 	$('li:eq(0)').click(function(){
 		$('.canvas').hide();
+		$('li').removeClass('tabSelected');
+		$('li:eq(0)').addClass('tabSelected');//display highlighted tab
 		$('.canvas:eq(0)').show();
 	});
 	
