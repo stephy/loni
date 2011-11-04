@@ -13,6 +13,7 @@
       this.linkHover = false;
       this.pathStartCoord = {};
       this.paths = [];
+      this.drawingPath = false;
     }
     canvasDisplay.prototype.newModule = function(coord) {
       var item;
@@ -40,9 +41,16 @@
         return this.glow = "";
       }
     };
+    canvasDisplay.prototype.isDrawing = function() {
+      return this.drawingPath;
+    };
+    canvasDisplay.prototype.startPathType = function() {
+      return this.startObj.getType();
+    };
     canvasDisplay.prototype.startStartPath = function(boxCoord, startObj, startCoord) {
       this.startPathCoord = boxCoord;
-      return this.startObj = startObj;
+      this.startObj = startObj;
+      return this.drawingPath = true;
     };
     canvasDisplay.prototype.drawPath = function(coord) {
       if (this.path) {
@@ -54,10 +62,14 @@
       });
     };
     canvasDisplay.prototype.removePath = function() {
+      this.drawingPath = false;
       return this.path.remPath(this.path.getPath());
     };
     canvasDisplay.prototype.savePath = function(coord, endObj) {
-      this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
+      if (this.startObj.getType() !== endObj.getType()) {
+        this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
+      }
+      this.drawingPath = false;
       return this.startPathCoord;
     };
     canvasDisplay.prototype.translatePaths = function() {

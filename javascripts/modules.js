@@ -1,5 +1,5 @@
 (function() {
-  var baseModule, dataSink, dataSource, module, sink;
+  var baseModule, dataSink, dataSource, module, sink, source;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -30,7 +30,7 @@
     }
     baseModule.prototype.draw = function() {
       var c;
-      c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, 25);
+      c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, 40);
       c.attr({
         fill: '#ddf',
         stroke: '#33f',
@@ -166,13 +166,23 @@
     sink.prototype.mUp = function(e) {
       return this.disp.removePath();
     };
+    sink.prototype.getType = function() {
+      return 'sink';
+    };
     sink.prototype.otherMouseUp = function(e) {
       return this.disp.savePath(this.c.getBBox(), this);
     };
     sink.prototype.hoverIn = function() {
       var dim;
       dim = this.c.getBBox();
-      return this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, this.name);
+      if (this.disp.isDrawing() && this.disp.startPathType() === this.getType()) {
+        this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, "Cannot Connect!");
+        return this.text.attr({
+          stroke: '#f00'
+        });
+      } else {
+        return this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, this.name);
+      }
     };
     sink.prototype.hoverOut = function() {
       return this.text.remove();
@@ -202,20 +212,48 @@
     };
     return dataSink;
   })();
+  window.source = source = (function() {
+    __extends(source, sink);
+    function source(disp, prevCoord) {
+      this.disp = disp;
+      this.prevCoord = prevCoord;
+      source.__super__.constructor.call(this, this.disp, this.prevCoord);
+      this.connectable = true;
+      this.c.mouseup(this.otherMouseUp);
+    }
+    source.prototype.draw = function() {
+      var c, start;
+      start = {
+        x: this.dim.width / 2 + this.prevCoord.x,
+        y: this.prevCoord.y - this.dim.height / 2
+      };
+      c = this.disp.paper.path("M " + this.prevCoord.x + " " + (this.prevCoord.y - this.dim.height) + " l " + (this.dim.width / 4) + " " + (this.dim.height / 4) + " l -" + (this.dim.width / 2) + " 0 z");
+      c.attr({
+        fill: '#ddf',
+        stroke: '#33f',
+        'stroke-width': 1
+      });
+      return c;
+    };
+    source.prototype.getType = function() {
+      return 'source';
+    };
+    return source;
+  })();
   window.dataSource = dataSource = (function() {
     __extends(dataSource, baseModule);
     function dataSource(disp, prevCoord) {
       this.disp = disp;
       this.prevCoord = prevCoord;
       dataSource.__super__.constructor.call(this, this.disp, this.prevCoord);
-      this.objs.push(new sink(this.disp, this.prevCoord));
+      this.objs.push(new source(this.disp, this.prevCoord));
     }
     dataSource.prototype.draw = function() {
       var c;
       c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, this.dim.height / 2);
       c.attr({
-        stroke: '#00f',
-        fill: '#0f0'
+        stroke: '#000',
+        fill: '#aaa'
       });
       return c;
     };

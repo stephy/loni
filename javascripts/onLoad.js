@@ -65,15 +65,19 @@
     $('#option_module').click(function(e) {
       return $('#popup-module').show();
     });
-    $('.createObjectButton').click(function() {
+    $('#option_data_sink').click(function(e) {
+      return $('#popup-data-sink').show();
+    });
+    $('#createModuleButton').click(function() {
       canvas.newModule(location);
+      return $(this).parents('.popUpObjectBox').hide();
+    });
+    $('#createDataSinkButton').click(function() {
+      canvas.newDataSink(location);
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('.cancelObjectButton').click(function() {
       return $(this).parents('.popUpObjectBox').hide();
-    });
-    $('#option_data_source').click(function(e) {
-      return canvas.newDataSource(location);
     });
     canvas = new canvasDisplay($('#canvas-1'));
     canvas.newDataSink({

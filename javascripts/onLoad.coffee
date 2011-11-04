@@ -51,15 +51,20 @@ $ ->
 
 	$('#option_module').click (e)->
 		$('#popup-module').show()
-	$('.createObjectButton').click ->
+	$('#option_data_sink').click (e) ->
+		$('#popup-data-sink').show()
+
+	$('#createModuleButton').click ->
 		canvas.newModule(location)
 		$(@).parents('.popUpObjectBox').hide()
+	$('#createDataSinkButton').click ->
+		canvas.newDataSink(location)
+		$(@).parents('.popUpObjectBox').hide()
+		
 	$('.cancelObjectButton').click ->
 		$(@).parents('.popUpObjectBox').hide()
 		
 		
-	$('#option_data_source').click (e) ->
-		canvas.newDataSource(location)
 
 	canvas = new canvasDisplay($('#canvas-1'))
 	canvas.newDataSink({x:100, y:200})
