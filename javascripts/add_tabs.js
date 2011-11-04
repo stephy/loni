@@ -40,12 +40,13 @@ jQuery(document).ready(function(){
 	});
 	
 	//display canvas for the selected tab
-	$('.tabs li:not(:first-child)').live('click', function(){
-		var selected_canvas = $(this).attr('canvas-id');
-		console.log(selected_canvas);
+	$('.tabs li:not(:first-child #add_new_canvas)').live('click', function(){
+    // var selected_canvas = $(this).attr('canvas-id');
+    // console.log(selected_canvas);
 		$('.canvas').hide();
-	//	$('.tabs li').removeClass('tabSelected');
-		$('[canvas-id='+ selected_canvas +']').addClass('tabSelected');//display highlighted tab
+    $('.tabs li').removeClass('tabSelected');
+    $(this).addClass('tabSelected')
+    // $('[canvas-id='+ selected_canvas +']').addClass('tabSelected');//display highlighted tab
 		$('#'+selected_canvas).show();
 	});
 	
