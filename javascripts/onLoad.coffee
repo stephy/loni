@@ -65,9 +65,9 @@ $ ->
 		$(@).parents('.popUpObjectBox').hide()
 		
 		
-	$('svg:last').attr('id', 'svg-canvas-1')
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}
 	window.currentCanvas = canvasHash['canvas-1']
+	$('svg:last').attr('id', 'svg-canvas-1')
 	
 	currentCanvas.newDataSink({x:100, y:200})
 	currentCanvas.newDataSink({x:450, y:250})

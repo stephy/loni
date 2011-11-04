@@ -38,33 +38,20 @@ jQuery(document).ready(function(){
      $(value).remove(); 
      $('#'+canvas_id).remove();
    }
-   //add highlight for the last tab on the screen that is not the plus (add) button
-   // $("li:last-child").addClass('tabSelected');
   });
   
   //display canvas for the selected tab
-  $('.tabs li:not(:first-child #add_new_canvas)').live('click', function(){
+  $('.tabs li:not(#add_new_canvas)').live('click', function(){
       var selected_canvas = $(this).attr('canvas-id');
-      console.log(selected_canvas)
       
       // Set Canvas to display
       currentCanvas = canvasHash[selected_canvas];
-    $("svg").hide();
-    $('#svg-'+selected_canvas).show()
+      $("svg").hide();
+      $('#svg-'+selected_canvas).show()
       
       //change tab color
       $('.tabs li').removeClass('tabSelected');
       $(this).addClass('tabSelected')
   });
-  
-  //adjstment for first tab
-  //this tab can't be deleted, and this tab does 
-  //not have an attribute tag 
-  $('.tabs li:eq(0)').click(function(){
-   $('.tabs li').removeClass('tabSelected');
-   $('.tabs li:eq(0)').addClass('tabSelected');//display highlighted tab
-   $('.canvas:eq(0)').show();
-  });
-  
-  
+
 });
