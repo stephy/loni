@@ -2,6 +2,7 @@ window.canvasDisplay = class canvasDisplay
 	constructor: (canvas) ->
 		position = canvas.position()
 		@paper = Raphael(position.left, position.top, canvas.width(), canvas.height())
+		console.log "height is:#{canvas.height()}, width is: #{canvas.width()}"
 		@offsetCoord = {dx: position.left, dy:position.top}
 		@glow = ""
 		@linkHover = false
