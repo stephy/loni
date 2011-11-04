@@ -34,7 +34,7 @@ $ ->
 		coord = location
 		
 		# Show Edit or new depending if object is selected
-		if canvas.isSelected()
+		if currentCanvas.isSelected()
 			$('#edit-menu').hide()
 			$('#main-menu').show().css({top:coord.y, left:coord.x})
 		else
@@ -47,7 +47,7 @@ $ ->
 		$('#edit-menu').hide()
 		# console.log e.target.nodeName
 		if(e.target.nodeName != "circle" and e.target.nodeName != "path" )
-			canvas.removeGlow()
+			currentCanvas.removeGlow()
 
 	$('#option_module').click (e)->
 		$('#popup-module').show()
@@ -55,18 +55,20 @@ $ ->
 		$('#popup-data-sink').show()
 
 	$('#createModuleButton').click ->
-		canvas.newModule(location)
+		currentCanvas.newModule(location)
 		$(@).parents('.popUpObjectBox').hide()
 	$('#createDataSinkButton').click ->
-		canvas.newDataSink(location)
+		currentCanvas.newDataSink(location)
 		$(@).parents('.popUpObjectBox').hide()
 		
 	$('.cancelObjectButton').click ->
 		$(@).parents('.popUpObjectBox').hide()
 		
 		
-
-	canvas = new canvasDisplay($('#canvas-1'))
-	canvas.newDataSink({x:100, y:200})
-	canvas.newDataSink({x:450, y:250})
-	canvas.newDataSource({x:400, y:250})
+	$('svg:last').attr('id', 'svg-canvas-1')
+	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}
+	window.currentCanvas = canvasHash['canvas-1']
+	
+	currentCanvas.newDataSink({x:100, y:200})
+	currentCanvas.newDataSink({x:450, y:250})
+	currentCanvas.newDataSource({x:400, y:250})

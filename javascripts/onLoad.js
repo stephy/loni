@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var canvas, coordAfterBoundary, getBox, getCoord, items, location;
+    var coordAfterBoundary, getBox, getCoord, items, location;
     items = [];
     location = "";
     getCoord = function(e) {
@@ -40,7 +40,7 @@
       location = getCoord(e);
       menuBox = getBox($('#main-menu'));
       coord = location;
-      if (canvas.isSelected()) {
+      if (currentCanvas.isSelected()) {
         $('#edit-menu').hide();
         $('#main-menu').show().css({
           top: coord.y,
@@ -59,7 +59,7 @@
       $('#main-menu').hide();
       $('#edit-menu').hide();
       if (e.target.nodeName !== "circle" && e.target.nodeName !== "path") {
-        return canvas.removeGlow();
+        return currentCanvas.removeGlow();
       }
     });
     $('#option_module').click(function(e) {
@@ -69,26 +69,30 @@
       return $('#popup-data-sink').show();
     });
     $('#createModuleButton').click(function() {
-      canvas.newModule(location);
+      currentCanvas.newModule(location);
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('#createDataSinkButton').click(function() {
-      canvas.newDataSink(location);
+      currentCanvas.newDataSink(location);
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('.cancelObjectButton').click(function() {
       return $(this).parents('.popUpObjectBox').hide();
     });
-    canvas = new canvasDisplay($('#canvas-1'));
-    canvas.newDataSink({
+    $('svg:last').attr('id', 'svg-canvas-1');
+    window.canvasHash = {
+      'canvas-1': new canvasDisplay($('#canvas-1'))
+    };
+    window.currentCanvas = canvasHash['canvas-1'];
+    currentCanvas.newDataSink({
       x: 100,
       y: 200
     });
-    canvas.newDataSink({
+    currentCanvas.newDataSink({
       x: 450,
       y: 250
     });
-    return canvas.newDataSource({
+    return currentCanvas.newDataSource({
       x: 400,
       y: 250
     });
