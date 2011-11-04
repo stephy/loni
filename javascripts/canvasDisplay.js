@@ -1,7 +1,9 @@
 (function() {
   var canvasDisplay;
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   window.canvasDisplay = canvasDisplay = (function() {
     function canvasDisplay(canvas) {
+      this.sremove = __bind(this.sremove, this);
       var position;
       position = canvas.position();
       this.paper = Raphael(position.left, position.top, canvas.width(), canvas.height());
@@ -100,6 +102,11 @@
     };
     canvasDisplay.prototype.isHover = function() {
       return this.linkHover;
+    };
+    canvasDisplay.prototype.sremove = function() {
+      console.log("removing...");
+      this.paper.clear();
+      return console.log("removed!");
     };
     return canvasDisplay;
   })();

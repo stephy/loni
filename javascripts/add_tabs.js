@@ -8,8 +8,11 @@
 // 3. Assign an unique id to the canvas 
 // 		which will be total_canvas+1
 // RETURN: next canvas index
+
+canvasCounter = 1
 function nextCanvasIndex(){
-	return $('svg').length +1;
+  canvasCounter += 1;
+	return canvasCounter;
 }
 jQuery(document).ready(function(){
 	
@@ -19,7 +22,7 @@ jQuery(document).ready(function(){
 		var new_canvas_id = 'canvas-'+ new_canvas_index;
 		console.log(new_canvas_id)
 		$('.tabs li').removeClass('tabSelected');
-		console.log( $('.tabs li:first').clone().attr("canvas-id", new_canvas_id).addClass('tabSelected').insertBefore('#add_new_canvas') );
+		$('.tabs li:first').clone().attr("canvas-id", new_canvas_id).addClass('tabSelected').insertBefore('#add_new_canvas');
 
     currentCanvas = new canvasDisplay($('#canvas-1'));
 		canvasHash[new_canvas_id]= currentCanvas;
@@ -30,14 +33,23 @@ jQuery(document).ready(function(){
 	
 	
   //close canvas and tab on close ( x tab button) click
-  $('.button-close').live('click', function(){
+  $('.button-close').live('click', function(event){
    var value = $(this).parent();
    var canvas_id = $(value).attr('canvas-id');
    var tabs_size = $('#tabs-menu ul.tabs li').length -1;
    if (tabs_size >1){ //don't remove tabs if there's only one tab left
-     $(value).remove(); 
-     $('#'+canvas_id).remove();
+    var selected = false;
+    if(value.is('.tabSelected')){
+      selected = true;
+    }
+    $(value).remove(); 
+    if(selected){
+      canvasHash[canvas_id].sremove();
+      $('.tabs li:first').click();
+      event.stopPropagation();
+    }
    }
+   return false;
   });
   
   //display canvas for the selected tab

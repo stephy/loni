@@ -67,3 +67,9 @@ window.canvasDisplay = class canvasDisplay
 		@linkHover = false
 	isHover: ->
 		return @linkHover
+		
+# ----remove
+	sremove: =>
+		console.log("removing...")
+		@paper.clear()
+		console.log("removed!")
