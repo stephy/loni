@@ -1,3 +1,8 @@
+body { 
+	margin:0; 
+	padding:0; 
+	height:100%; 
+}
 html {
 	margin: 10px 0 0 0;
 	font-family: sans-serif;
@@ -51,8 +56,11 @@ html {
 	height: 300px;
 	background-color: #fff;
 }
-.canvas{
-	height: 300px;
+.canvae{
+	height:100%;
+}
+.canvas-1{
+	height: 100%;
 }
 .popup-controller-title{
 	/* FF3.6 Firefox */

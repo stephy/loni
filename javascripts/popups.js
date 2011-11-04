@@ -1,5 +1,17 @@
 // JavaScript Document
-
+//defining height for canvas -- should be removed out of popup.js
+jQuery(document).ready(function(){
+	var offset_top = $('#tabs-menu').height()+ $('#module-groupings').height();
+	var offset_buttons = $('#play_buttons').height();
+	var browser_height = $(document).height() -offset_top;
+	var canvas_height =  browser_height - offset_top - offset_buttons-30;
+	
+	$('#wrapper').css('height', browser_height);
+	$('#canvas-body').css('height', canvas_height);
+	$('#canvas-1').css('height', canvas_height);
+	
+	
+});
 jQuery(document).ready(function(){
 	// --------------------------------------
 	//SHOW AND HIDE TAGS FOR MODULE POPUP
