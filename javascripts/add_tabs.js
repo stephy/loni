@@ -17,9 +17,8 @@ jQuery(document).ready(function(){
 	$('#add_new_canvas').live('click', function(){
 		var new_canvas_index = nextCanvasIndex();
 		var new_canvas_id = 'canvas-'+ new_canvas_index;
-		$('li').removeClass('tabSelected');
-		$('.tabs li:eq(0)').clone().addClass('tabSelected').insertBefore('#add_new_canvas').attr("canvas-id", new_canvas_id);
-		
+		$('.tabs li').removeClass('tabSelected');
+		$('.tabs li:first').clone().addClass('tabSelected').insertBefore('#add_new_canvas').attr("canvas-id", new_canvas_id);
 		$('<div id="'+ new_canvas_id +'" class="canvas"></div>').appendTo('.canvae');
 		//display the new/recently created canvas only, hide all others
 		$('.canvas').hide();
@@ -41,11 +40,11 @@ jQuery(document).ready(function(){
 	});
 	
 	//display canvas for the selected tab
-	$('li:not(:first-child)').live('click', function(){
+	$('.tabs li:not(:first-child)').live('click', function(){
 		var selected_canvas = $(this).attr('canvas-id');
 		console.log(selected_canvas);
 		$('.canvas').hide();
-		$('li').removeClass('tabSelected');
+	//	$('.tabs li').removeClass('tabSelected');
 		$('[canvas-id='+ selected_canvas +']').addClass('tabSelected');//display highlighted tab
 		$('#'+selected_canvas).show();
 	});
@@ -53,10 +52,10 @@ jQuery(document).ready(function(){
 	//adjstment for first tab
 	//this tab can't be deleted, and this tab does 
 	//not have an attribute tag 
-	$('li:eq(0)').click(function(){
+	$('.tabs li:eq(0)').click(function(){
 		$('.canvas').hide();
-		$('li').removeClass('tabSelected');
-		$('li:eq(0)').addClass('tabSelected');//display highlighted tab
+		$('.tabs li').removeClass('tabSelected');
+		$('.tabs li:eq(0)').addClass('tabSelected');//display highlighted tab
 		$('.canvas:eq(0)').show();
 	});
 	
