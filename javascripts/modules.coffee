@@ -7,7 +7,7 @@ class baseModule
 		@c = @draw()
 		@objs = []
 		@id = 0
-		@name = "Sexy Stephy"
+		@name = "A Module"
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
 	draw: ->

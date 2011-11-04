@@ -24,7 +24,7 @@
       this.c = this.draw();
       this.objs = [];
       this.id = 0;
-      this.name = "Sexy Stephy";
+      this.name = "A Module";
       this.c.drag(this.drag, this.mDown, this.mUp);
       this.c.hover(this.hoverIn, this.hoverOut);
     }

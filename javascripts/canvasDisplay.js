@@ -7,7 +7,6 @@
       var position;
       position = canvas.position();
       this.paper = Raphael(position.left, position.top, canvas.width(), canvas.height());
-      console.log("height is:" + (canvas.height()) + ", width is: " + (canvas.width()));
       this.offsetCoord = {
         dx: position.left,
         dy: position.top
