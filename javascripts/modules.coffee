@@ -6,6 +6,7 @@ class baseModule
 		@dim = {width: 50, height:50}
 		@c = @draw()
 		@objs = []
+		@coord = {x:0, y:0}
 		@id = 0
 		@name = "A Module"
 		@c.drag(@drag, @mDown, @mUp)
@@ -22,11 +23,39 @@ class baseModule
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
+		elmt = @c.getBBox()
+		tx = 0
+		ty = 0
+		#Calculating tx
+		if ( elmt.x + elmt.width > @disp.paper.width)
+			tx = -10
+		else if (elmt.x < 10)
+			tx = 10
+		else
+			tx = dx - @prevCoord.x
+		#Calculating ty	
+		if ( elmt.y + elmt.height > @disp.paper.height - 10)
+			ty = -10	
+		else if (elmt.y < 10)
+			ty = 10
+		else
+			ty = dy - @prevCoord.y
+		@disp.glow.ztranslate(tx, ty)
+		@prevCoord = {x: dx, y: dy}
+		@text.remove()
+	drag2: (dx, dy) =>
 		@disp.glow.ztranslate(dx-@prevCoord.x,dy-@prevCoord.y)
 		@prevCoord = {x: dx, y: dy}
 		@text.remove()
-	mDown: (x,y) =>
+	#Alternative
+	drag3:(dx, dy)=>
+		@c.attr({cx: Math.min(Math.max(@coord.x + dx, 55), @disp.paper.width-55), cy: Math.min(Math.max(@coord.y + dy, 55), @disp.paper.height-55)})
+		@disp.glow.ztranslate2(@c.attr("cx")-@prevCoord.x,@c.attr("cy")-@prevCoord.y)
 		@text.remove()
+		console.log "Current Coord #{@prevCoord}"
+	mDown: () =>
+		@text.remove()
+		@coord = {x: @c.attr("cx"), y: @c.attr("cy")}
 		@prevCoord = {x:0, y:0}
 		@disp.setGlow(@)
 		return false
@@ -47,7 +76,11 @@ class baseModule
 		@c.translate(dx,dy)
 		for ele in @objs
 			ele.ztranslate(dx, dy)
-
+	ztranslate2: (dx,dy) =>
+		if @glowing
+			@glowing.translate(dx, dy)
+		for ele in @objs
+			ele.ztranslate(dx, dy)
 window.module = class module extends baseModule
 	
 window.sink = class sink extends baseModule
@@ -103,11 +136,6 @@ window.dataSink = class dataSink extends baseModule
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
 		c.attr({stroke:'#00f', fill:'#0f0'})
 		return c
-		
-
-
-
-
 
 window.source = class source extends sink
 	constructor: (@disp, @prevCoord)->
