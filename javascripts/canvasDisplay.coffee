@@ -8,22 +8,30 @@ window.canvasDisplay = class canvasDisplay
 		@pathStartCoord = {}
 		@paths = []
 		@drawingPath = false
+		@rectangle = undefined
+		@holder = []
+		
 	newModule: (coord)->
 		item = new module(@, coord)
+		@holder.push(item)
 	newDataSink: (coord)->
 		item = new dataSink(@, coord)
+		@holder.push(item)
 	newDataSource: (coord)->
 		item = new dataSource(@, coord)
+		@holder.push(item)
 
 	setGlow: (obj) ->
-		if (@glow!="") then @glow.removeAll()
-		@glow = obj.glowAll({color:'#000'})
+		if (obj.moduleGlow!="") then obj.moduleGlow.removeAll()
+		if @rectangle.testRange(obj.c.getBBox())
+			obj.moduleGlow = obj.glowAll({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
 			@glow.removeAll()
 			@glow = ""
-
+			
+			
 # ------ Drawing paths ------
 	isDrawing: ->
 		return @drawingPath
@@ -47,7 +55,7 @@ window.canvasDisplay = class canvasDisplay
 	savePath: (coord, endObj)->
 		# Start obj is @startObj, end obj is endObj
 		if @startObj.getType() != endObj.getType()
-			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
+			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))	
 		@drawingPath = false
 		return @startPathCoord
 	translatePaths: ->
@@ -73,3 +81,7 @@ window.canvasDisplay = class canvasDisplay
 		console.log("removing...")
 		@paper.clear()
 		console.log("removed!")
+		
+	setLight: ->
+		for i in [0..@holder.length-1]
+			this.setGlow(@holder[i])

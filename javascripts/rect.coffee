@@ -3,7 +3,11 @@ window.rect = class rect
 	existingRect = {}
 	
 	
-	constructor: (r, @prevX, @prevY, @curX, @curY) ->
+	constructor: (r, @prev, @cur) ->
+		@prevX = @prev.x
+		@prevY = @prev.y
+		@curX = @cur.x
+		@curY = @cur.y
 		@height = @curY - @prevY
 		@width = @curX - @prevX
 		@newX = @prevX

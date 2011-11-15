@@ -16,26 +16,33 @@
       this.pathStartCoord = {};
       this.paths = [];
       this.drawingPath = false;
+      this.rectangle = void 0;
+      this.holder = [];
     }
     canvasDisplay.prototype.newModule = function(coord) {
       var item;
-      return item = new module(this, coord);
+      item = new module(this, coord);
+      return this.holder.push(item);
     };
     canvasDisplay.prototype.newDataSink = function(coord) {
       var item;
-      return item = new dataSink(this, coord);
+      item = new dataSink(this, coord);
+      return this.holder.push(item);
     };
     canvasDisplay.prototype.newDataSource = function(coord) {
       var item;
-      return item = new dataSource(this, coord);
+      item = new dataSource(this, coord);
+      return this.holder.push(item);
     };
     canvasDisplay.prototype.setGlow = function(obj) {
-      if (this.glow !== "") {
-        this.glow.removeAll();
+      if (obj.moduleGlow !== "") {
+        obj.moduleGlow.removeAll();
       }
-      return this.glow = obj.glowAll({
-        color: '#000'
-      });
+      if (this.rectangle.testRange(obj.c.getBBox())) {
+        return obj.moduleGlow = obj.glowAll({
+          color: '#000'
+        });
+      }
     };
     canvasDisplay.prototype.removeGlow = function() {
       if (this.glow !== "") {
@@ -107,6 +114,14 @@
       console.log("removing...");
       this.paper.clear();
       return console.log("removed!");
+    };
+    canvasDisplay.prototype.setLight = function() {
+      var i, _ref, _results;
+      _results = [];
+      for (i = 0, _ref = this.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        _results.push(this.setGlow(this.holder[i]));
+      }
+      return _results;
     };
     return canvasDisplay;
   })();

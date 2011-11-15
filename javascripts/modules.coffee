@@ -11,6 +11,8 @@ class baseModule
 		@name = "A Module"
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
+		@moduleGlow = ""
+		
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,40)
 		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
@@ -69,7 +71,7 @@ class baseModule
 		for ele in @objs
 			ele.removeAll()
 		return @
-		
+						
 	ztranslate: (dx,dy) =>
 		if @glowing
 			@glowing.translate(dx, dy)

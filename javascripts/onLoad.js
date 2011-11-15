@@ -1,8 +1,10 @@
 (function() {
   $(function() {
-    var coordAfterBoundary, getBox, getCoord, items, location;
+    var coordAfterBoundary, getBox, getCoord, items, location, rectLocation, startDraw;
     items = [];
     location = "";
+    rectLocation = "";
+    startDraw = false;
     getCoord = function(e) {
       var coord;
       coord = {
@@ -54,6 +56,24 @@
         });
       }
       return false;
+    });
+    $('svg').live('mousedown', function(e) {
+      rectLocation = getCoord(e);
+      return startDraw = true;
+    });
+    $('svg').live('mousemove', function(e) {
+      if (startDraw) {
+        if (currentCanvas.rectangle !== void 0) {
+          currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+        }
+        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
+        return currentCanvas.setLight();
+      }
+    });
+    $('svg').live('mouseup', function(e) {
+      startDraw = false;
+      currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+      return currentCanvas.rectangle = void 0;
     });
     $('body').click(function(e) {
       $('#main-menu').hide();

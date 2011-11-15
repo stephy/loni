@@ -1,6 +1,8 @@
 $ ->
 	items = []
 	location = ""
+	rectLocation = ""
+	startDraw = false
 	
 	getCoord = (e) ->
 		# Need to take into account mozilla
@@ -41,6 +43,21 @@ $ ->
 			$('#main-menu').hide()
 			$('#edit-menu').show().css({top:coord.y, left:coord.x})
 		return false
+		
+	$('svg').live 'mousedown', (e) ->
+		rectLocation = getCoord(e)
+		startDraw = true
+		
+	$('svg').live 'mousemove', (e) ->
+		if startDraw
+			if currentCanvas.rectangle != undefined
+				currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
+			currentCanvas.setLight()
+	$('svg').live 'mouseup', (e) ->
+		startDraw = false
+		currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+		currentCanvas.rectangle = undefined
 
 	$('body').click (e)->
 		$('#main-menu').hide()
