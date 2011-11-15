@@ -45,12 +45,11 @@ $ ->
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
-		if(currentCanvas.paper.getElementByPoint(e.offsetX+currentCanvas.offsetCoord.dx, e.offsetY+currentCanvas.offsetCoord.dy) == null)
-			rectLocation = getCoord(e)
+		rectLocation = getCoord(e)
+		if(currentCanvas.paper.getElementByPoint(rectLocation.x+currentCanvas.offsetCoord.dx, rectLocation.y+currentCanvas.offsetCoord.dy) == null)
 			startDraw = true
 		else
 			startDraw = false
-		
 	$('svg').live 'mousemove', (e) ->
 		if startDraw
 			if currentCanvas.rectangle != undefined
@@ -58,9 +57,11 @@ $ ->
 			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
 			currentCanvas.setLight()
 	$('svg').live 'mouseup', (e) ->
-		startDraw = false
-		currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-		currentCanvas.rectangle = undefined
+		if startDraw
+			startDraw = false
+		if currentCanvas.rectangle != undefined
+			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+			currentCanvas.rectangle = undefined
 
 	$('body').click (e)->
 		$('#main-menu').hide()

@@ -12,25 +12,21 @@ window.canvasDisplay = class canvasDisplay
 		@holder = []
 		
 	newModule: (coord)->
-		item = new module(@, coord)
-		@holder.push(item)
+		@holder.push(new module(@, coord))
 	newDataSink: (coord)->
-		item = new dataSink(@, coord)
-		@holder.push(item)
+		@holder.push(new dataSink(@, coord))
 	newDataSource: (coord)->
-		item = new dataSource(@, coord)
-		@holder.push(item)
+		@holder.push(new dataSource(@, coord))
 
 	setGlow: (obj) ->
 		if (obj.moduleGlow!="") then obj.moduleGlow.removeAll()
-		if @rectangle.testRange(obj.c.getBBox())
+		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())
 			obj.moduleGlow = obj.glowAll({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
 			@glow.removeAll()
 			@glow = ""
-			
 			
 # ------ Drawing paths ------
 	isDrawing: ->
@@ -78,9 +74,7 @@ window.canvasDisplay = class canvasDisplay
 		
 # ----remove
 	sremove: =>
-		console.log("removing...")
 		@paper.clear()
-		console.log("removed!")
 		
 	setLight: ->
 		for i in [0..@holder.length-1]

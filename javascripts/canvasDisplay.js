@@ -20,25 +20,19 @@
       this.holder = [];
     }
     canvasDisplay.prototype.newModule = function(coord) {
-      var item;
-      item = new module(this, coord);
-      return this.holder.push(item);
+      return this.holder.push(new module(this, coord));
     };
     canvasDisplay.prototype.newDataSink = function(coord) {
-      var item;
-      item = new dataSink(this, coord);
-      return this.holder.push(item);
+      return this.holder.push(new dataSink(this, coord));
     };
     canvasDisplay.prototype.newDataSource = function(coord) {
-      var item;
-      item = new dataSource(this, coord);
-      return this.holder.push(item);
+      return this.holder.push(new dataSource(this, coord));
     };
     canvasDisplay.prototype.setGlow = function(obj) {
       if (obj.moduleGlow !== "") {
         obj.moduleGlow.removeAll();
       }
-      if (this.rectangle.testRange(obj.c.getBBox())) {
+      if (this.rectangle !== void 0 && this.rectangle.testRange(obj.c.getBBox())) {
         return obj.moduleGlow = obj.glowAll({
           color: '#000'
         });
@@ -111,9 +105,7 @@
       return this.linkHover;
     };
     canvasDisplay.prototype.sremove = function() {
-      console.log("removing...");
-      this.paper.clear();
-      return console.log("removed!");
+      return this.paper.clear();
     };
     canvasDisplay.prototype.setLight = function() {
       var i, _ref, _results;

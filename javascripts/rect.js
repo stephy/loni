@@ -37,12 +37,9 @@
     rect.prototype.testRange = function(obj) {
       this.obj = obj;
       if (this.obj.x > this.newX + this.width || this.obj.x + this.obj.width < this.newX || this.obj.y + this.obj.height < this.newY || this.obj.y > this.newY + this.height) {
-        console.log("false");
         return false;
-      } else {
-        console.log("true");
-        return true;
       }
+      return true;
     };
     rect.prototype.setGlow = function(curObj, state) {
       this.c = curObj.glow();

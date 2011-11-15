@@ -36,11 +36,8 @@ window.rect = class rect
 		
 	testRange: (@obj) ->
 		if @obj.x > @newX+@width or @obj.x + @obj.width < @newX or @obj.y + @obj.height < @newY or @obj.y > @newY + @height
-			console.log("false")
 			return false
-		else 
-			console.log("true")
-			return true
+		return true
 			
 	setGlow:(curObj, state) ->
 		@c = curObj.glow()

@@ -12,7 +12,6 @@ class baseModule
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
 		@moduleGlow = ""
-		
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,40)
 		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
@@ -42,19 +41,9 @@ class baseModule
 			ty = 10
 		else
 			ty = dy - @prevCoord.y
-		# @disp.glow.ztranslate(tx, ty)
+		@ztranslate(tx, ty)
 		@prevCoord = {x: dx, y: dy}
 		@text.remove()
-	drag2: (dx, dy) =>
-		@disp.glow.ztranslate(dx-@prevCoord.x,dy-@prevCoord.y)
-		@prevCoord = {x: dx, y: dy}
-		@text.remove()
-	#Alternative
-	drag3:(dx, dy)=>
-		@c.attr({cx: Math.min(Math.max(@coord.x + dx, 55), @disp.paper.width-55), cy: Math.min(Math.max(@coord.y + dy, 55), @disp.paper.height-55)})
-		@disp.glow.ztranslate2(@c.attr("cx")-@prevCoord.x,@c.attr("cy")-@prevCoord.y)
-		@text.remove()
-		console.log "Current Coord #{@prevCoord}"
 	mDown: () =>
 		@text.remove()
 		@coord = {x: @c.attr("cx"), y: @c.attr("cy")}
@@ -73,16 +62,12 @@ class baseModule
 		return @
 						
 	ztranslate: (dx,dy) =>
-		if @glowing
-			@glowing.translate(dx, dy)
+		# if @glowing
+		# 	@glowing.translate(dx, dy)
 		@c.translate(dx,dy)
 		for ele in @objs
 			ele.ztranslate(dx, dy)
-	ztranslate2: (dx,dy) =>
-		if @glowing
-			@glowing.translate(dx, dy)
-		for ele in @objs
-			ele.ztranslate(dx, dy)
+			
 window.module = class module extends baseModule
 	
 window.sink = class sink extends baseModule

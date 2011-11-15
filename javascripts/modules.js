@@ -12,11 +12,8 @@
     function baseModule(disp, prevCoord) {
       this.disp = disp;
       this.prevCoord = prevCoord;
-      this.ztranslate2 = __bind(this.ztranslate2, this);
       this.ztranslate = __bind(this.ztranslate, this);
       this.mDown = __bind(this.mDown, this);
-      this.drag3 = __bind(this.drag3, this);
-      this.drag2 = __bind(this.drag2, this);
       this.drag = __bind(this.drag, this);
       this.hoverOut = __bind(this.hoverOut, this);
       this.hoverIn = __bind(this.hoverIn, this);
@@ -76,28 +73,12 @@
       } else {
         ty = dy - this.prevCoord.y;
       }
+      this.ztranslate(tx, ty);
       this.prevCoord = {
         x: dx,
         y: dy
       };
       return this.text.remove();
-    };
-    baseModule.prototype.drag2 = function(dx, dy) {
-      this.disp.glow.ztranslate(dx - this.prevCoord.x, dy - this.prevCoord.y);
-      this.prevCoord = {
-        x: dx,
-        y: dy
-      };
-      return this.text.remove();
-    };
-    baseModule.prototype.drag3 = function(dx, dy) {
-      this.c.attr({
-        cx: Math.min(Math.max(this.coord.x + dx, 55), this.disp.paper.width - 55),
-        cy: Math.min(Math.max(this.coord.y + dy, 55), this.disp.paper.height - 55)
-      });
-      this.disp.glow.ztranslate2(this.c.attr("cx") - this.prevCoord.x, this.c.attr("cy") - this.prevCoord.y);
-      this.text.remove();
-      return console.log("Current Coord " + this.prevCoord);
     };
     baseModule.prototype.mDown = function() {
       this.text.remove();
@@ -134,23 +115,7 @@
     };
     baseModule.prototype.ztranslate = function(dx, dy) {
       var ele, _i, _len, _ref, _results;
-      if (this.glowing) {
-        this.glowing.translate(dx, dy);
-      }
       this.c.translate(dx, dy);
-      _ref = this.objs;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        ele = _ref[_i];
-        _results.push(ele.ztranslate(dx, dy));
-      }
-      return _results;
-    };
-    baseModule.prototype.ztranslate2 = function(dx, dy) {
-      var ele, _i, _len, _ref, _results;
-      if (this.glowing) {
-        this.glowing.translate(dx, dy);
-      }
       _ref = this.objs;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {

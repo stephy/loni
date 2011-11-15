@@ -58,7 +58,6 @@ Raphael.fn.connection2 = function (obj1, obj2, line, bg) {
 var el;
 window.onload = function () {
     window.pathdragger = function () {
-				console.log("WKAKAKA")
         this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
         this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
         this.animate({"fill-opacity": .2}, 500);

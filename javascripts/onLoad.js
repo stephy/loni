@@ -58,8 +58,8 @@
       return false;
     });
     $('svg').live('mousedown', function(e) {
-      if (currentCanvas.paper.getElementByPoint(e.offsetX + currentCanvas.offsetCoord.dx, e.offsetY + currentCanvas.offsetCoord.dy) === null) {
-        rectLocation = getCoord(e);
+      rectLocation = getCoord(e);
+      if (currentCanvas.paper.getElementByPoint(rectLocation.x + currentCanvas.offsetCoord.dx, rectLocation.y + currentCanvas.offsetCoord.dy) === null) {
         return startDraw = true;
       } else {
         return startDraw = false;
@@ -75,9 +75,13 @@
       }
     });
     $('svg').live('mouseup', function(e) {
-      startDraw = false;
-      currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-      return currentCanvas.rectangle = void 0;
+      if (startDraw) {
+        startDraw = false;
+      }
+      if (currentCanvas.rectangle !== void 0) {
+        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+        return currentCanvas.rectangle = void 0;
+      }
     });
     $('body').click(function(e) {
       $('#main-menu').hide();
