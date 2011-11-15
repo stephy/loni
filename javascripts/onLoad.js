@@ -1,10 +1,11 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, getBox, getCoord, items, location, rectLocation, startDraw;
+    var attr, coordAfterBoundary, getBox, getCoord, items, location, rectLocation, startDraw, tempRect;
     items = [];
     location = "";
     rectLocation = "";
     startDraw = false;
+    tempRect = "";
     attr = {
       name: "Song!"
     };
@@ -62,11 +63,9 @@
     });
     $('svg').live('mousedown', function(e) {
       rectLocation = getCoord(e);
-      if (currentCanvas.paper.getElementByPoint(rectLocation.x + currentCanvas.offsetCoord.dx, rectLocation.y + currentCanvas.offsetCoord.dy) === null) {
-        return startDraw = true;
-      } else {
-        return startDraw = false;
-      }
+      startDraw = true;
+      currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
+      return currentCanvas.setLight();
     });
     $('svg').live('mousemove', function(e) {
       if (startDraw) {

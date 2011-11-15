@@ -3,6 +3,7 @@ $ ->
 	location = ""
 	rectLocation = ""
 	startDraw = false
+	tempRect = ""
 	# Testing:
 	attr = {name: "Song!"}
 	
@@ -48,10 +49,10 @@ $ ->
 		
 	$('svg').live 'mousedown', (e) ->
 		rectLocation = getCoord(e)
-		if(currentCanvas.paper.getElementByPoint(rectLocation.x+currentCanvas.offsetCoord.dx, rectLocation.y+currentCanvas.offsetCoord.dy) == null)
-			startDraw = true
-		else
-			startDraw = false
+		startDraw = true
+		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
+		currentCanvas.setLight()
+			
 	$('svg').live 'mousemove', (e) ->
 		if startDraw
 			if currentCanvas.rectangle != undefined
