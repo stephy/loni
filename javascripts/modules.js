@@ -76,7 +76,6 @@
       } else {
         ty = dy - this.prevCoord.y;
       }
-      this.disp.glow.ztranslate(tx, ty);
       this.prevCoord = {
         x: dx,
         y: dy

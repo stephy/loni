@@ -45,8 +45,11 @@ $ ->
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
-		rectLocation = getCoord(e)
-		startDraw = true
+		if(currentCanvas.paper.getElementByPoint(e.offsetX+currentCanvas.offsetCoord.dx, e.offsetY+currentCanvas.offsetCoord.dy) == null)
+			rectLocation = getCoord(e)
+			startDraw = true
+		else
+			startDraw = false
 		
 	$('svg').live 'mousemove', (e) ->
 		if startDraw

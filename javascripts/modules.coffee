@@ -42,7 +42,7 @@ class baseModule
 			ty = 10
 		else
 			ty = dy - @prevCoord.y
-		@disp.glow.ztranslate(tx, ty)
+		# @disp.glow.ztranslate(tx, ty)
 		@prevCoord = {x: dx, y: dy}
 		@text.remove()
 	drag2: (dx, dy) =>

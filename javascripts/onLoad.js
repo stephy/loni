@@ -58,8 +58,12 @@
       return false;
     });
     $('svg').live('mousedown', function(e) {
-      rectLocation = getCoord(e);
-      return startDraw = true;
+      if (currentCanvas.paper.getElementByPoint(e.offsetX + currentCanvas.offsetCoord.dx, e.offsetY + currentCanvas.offsetCoord.dy) === null) {
+        rectLocation = getCoord(e);
+        return startDraw = true;
+      } else {
+        return startDraw = false;
+      }
     });
     $('svg').live('mousemove', function(e) {
       if (startDraw) {
