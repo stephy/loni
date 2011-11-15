@@ -9,9 +9,10 @@
     return child;
   };
   baseModule = (function() {
-    function baseModule(disp, prevCoord) {
+    function baseModule(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
+      this.attr = attr;
       this.ztranslate = __bind(this.ztranslate, this);
       this.mDown = __bind(this.mDown, this);
       this.drag = __bind(this.drag, this);
@@ -28,7 +29,6 @@
         y: 0
       };
       this.id = 0;
-      this.name = "A Module";
       this.c.drag(this.drag, this.mDown, this.mUp);
       this.c.hover(this.hoverIn, this.hoverOut);
       this.moduleGlow = "";
@@ -49,7 +49,7 @@
     baseModule.prototype.hoverIn = function() {
       var dim;
       dim = this.c.getBBox();
-      return this.text = this.disp.paper.text(dim.x + dim.width / 2, dim.y + dim.height / 2, this.name);
+      return this.text = this.disp.paper.text(dim.x + dim.width / 2, dim.y + dim.height / 2, this.attr.name);
     };
     baseModule.prototype.hoverOut = function() {
       return this.text.remove();
@@ -135,9 +135,10 @@
   })();
   window.sink = sink = (function() {
     __extends(sink, baseModule);
-    function sink(disp, prevCoord) {
+    function sink(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
+      this.attr = attr;
       this.ztranslate = __bind(this.ztranslate, this);
       this.hoverOut = __bind(this.hoverOut, this);
       this.hoverIn = __bind(this.hoverIn, this);
@@ -145,7 +146,7 @@
       this.mUp = __bind(this.mUp, this);
       this.mDown = __bind(this.mDown, this);
       this.drag = __bind(this.drag, this);
-      sink.__super__.constructor.call(this, this.disp, this.prevCoord);
+      sink.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
       this.connectable = true;
       this.c.mouseup(this.otherMouseUp);
     }
@@ -205,7 +206,7 @@
           stroke: '#f00'
         });
       } else {
-        return this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, this.name);
+        return this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, this.attr.name);
       }
     };
     sink.prototype.hoverOut = function() {
@@ -219,10 +220,11 @@
   })();
   window.dataSink = dataSink = (function() {
     __extends(dataSink, baseModule);
-    function dataSink(disp, prevCoord) {
+    function dataSink(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
-      dataSink.__super__.constructor.call(this, this.disp, this.prevCoord);
+      this.attr = attr;
+      dataSink.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
       this.objs.push(new sink(this.disp, this.prevCoord));
     }
     dataSink.prototype.draw = function() {
@@ -238,10 +240,11 @@
   })();
   window.source = source = (function() {
     __extends(source, sink);
-    function source(disp, prevCoord) {
+    function source(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
-      source.__super__.constructor.call(this, this.disp, this.prevCoord);
+      this.attr = attr;
+      source.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
       this.connectable = true;
       this.c.mouseup(this.otherMouseUp);
     }
@@ -266,10 +269,11 @@
   })();
   window.dataSource = dataSource = (function() {
     __extends(dataSource, baseModule);
-    function dataSource(disp, prevCoord) {
+    function dataSource(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
-      dataSource.__super__.constructor.call(this, this.disp, this.prevCoord);
+      this.attr = attr;
+      dataSource.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
       this.objs.push(new source(this.disp, this.prevCoord));
     }
     dataSource.prototype.draw = function() {

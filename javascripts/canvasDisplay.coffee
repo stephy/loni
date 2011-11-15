@@ -11,12 +11,12 @@ window.canvasDisplay = class canvasDisplay
 		@rectangle = undefined
 		@holder = []
 		
-	newModule: (coord)->
-		@holder.push(new module(@, coord))
-	newDataSink: (coord)->
-		@holder.push(new dataSink(@, coord))
-	newDataSource: (coord)->
-		@holder.push(new dataSource(@, coord))
+	newModule: (coord, attr)->
+		@holder.push(new module(@, coord, attr))
+	newDataSink: (coord, attr)->
+		@holder.push(new dataSink(@, coord, attr))
+	newDataSource: (coord, attr)->
+		@holder.push(new dataSource(@, coord, attr))
 
 	setGlow: (obj) ->
 		if (obj.moduleGlow!="") then obj.moduleGlow.removeAll()

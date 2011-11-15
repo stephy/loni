@@ -3,6 +3,8 @@ $ ->
 	location = ""
 	rectLocation = ""
 	startDraw = false
+	# Testing:
+	attr = {name: "Song!"}
 	
 	getCoord = (e) ->
 		# Need to take into account mozilla
@@ -76,10 +78,10 @@ $ ->
 		$('#popup-data-sink').show()
 
 	$('#createModuleButton').click ->
-		currentCanvas.newModule(location)
+		currentCanvas.newModule(location, attr)
 		$(@).parents('.popUpObjectBox').hide()
 	$('#createDataSinkButton').click ->
-		currentCanvas.newDataSink(location)
+		currentCanvas.newDataSink(location, attr)
 		$(@).parents('.popUpObjectBox').hide()
 		
 	$('.cancelObjectButton').click ->
@@ -90,6 +92,6 @@ $ ->
 	window.currentCanvas = canvasHash['canvas-1']
 	$('svg:last').attr('id', 'svg-canvas-1')
 	
-	currentCanvas.newDataSink({x:100, y:200})
-	currentCanvas.newDataSink({x:450, y:250})
-	currentCanvas.newDataSource({x:400, y:250})
+	currentCanvas.newDataSink({x:100, y:200}, attr)
+	currentCanvas.newModule({x:450, y:250}, attr)
+	currentCanvas.newDataSource({x:400, y:250}, attr)

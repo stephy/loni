@@ -2,13 +2,12 @@
 # Children can be moved, have glow
 
 class baseModule
-	constructor: (@disp, @prevCoord)->
+	constructor: (@disp, @prevCoord, @attr)->
 		@dim = {width: 50, height:50}
 		@c = @draw()
 		@objs = []
 		@coord = {x:0, y:0}
 		@id = 0
-		@name = "A Module"
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
 		@moduleGlow = ""
@@ -20,7 +19,7 @@ class baseModule
 		@objs.push(obj)
 	hoverIn: =>
 		dim = @c.getBBox()
-		@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @name)
+		@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @attr.name)
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
@@ -71,8 +70,8 @@ class baseModule
 window.module = class module extends baseModule
 	
 window.sink = class sink extends baseModule
-	constructor: (@disp, @prevCoord)->
-		super(@disp, @prevCoord)
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
 		@connectable = true
 		@c.mouseup(@otherMouseUp)
 		
@@ -107,7 +106,7 @@ window.sink = class sink extends baseModule
 			@text = @disp.paper.text(dim.x+dim.width, dim.y+dim.height, "Cannot Connect!")
 			@text.attr({stroke: '#f00'})
 		else
-			@text = @disp.paper.text(dim.x+dim.width, dim.y+dim.height, @name)
+			@text = @disp.paper.text(dim.x+dim.width, dim.y+dim.height, @attr.name)
 	hoverOut: =>
 		@text.remove()
 	ztranslate: (dx,dy) =>
@@ -116,8 +115,8 @@ window.sink = class sink extends baseModule
 
 
 window.dataSink = class dataSink extends baseModule
-	constructor: (@disp, @prevCoord)->
-		super(@disp, @prevCoord)
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
 		@objs.push(new sink(@disp, @prevCoord))
 	draw: ->
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
@@ -125,8 +124,8 @@ window.dataSink = class dataSink extends baseModule
 		return c
 
 window.source = class source extends sink
-	constructor: (@disp, @prevCoord)->
-		super(@disp, @prevCoord)
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
 		@connectable = true
 		@c.mouseup(@otherMouseUp)
 	draw: ->
@@ -140,8 +139,8 @@ window.source = class source extends sink
 
 
 window.dataSource = class dataSource extends baseModule
-	constructor: (@disp, @prevCoord)->
-		super(@disp, @prevCoord)
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
 		@objs.push(new source(@disp, @prevCoord))
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)

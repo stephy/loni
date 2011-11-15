@@ -1,10 +1,13 @@
 (function() {
   $(function() {
-    var coordAfterBoundary, getBox, getCoord, items, location, rectLocation, startDraw;
+    var attr, coordAfterBoundary, getBox, getCoord, items, location, rectLocation, startDraw;
     items = [];
     location = "";
     rectLocation = "";
     startDraw = false;
+    attr = {
+      name: "Song!"
+    };
     getCoord = function(e) {
       var coord;
       coord = {
@@ -97,11 +100,11 @@
       return $('#popup-data-sink').show();
     });
     $('#createModuleButton').click(function() {
-      currentCanvas.newModule(location);
+      currentCanvas.newModule(location, attr);
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('#createDataSinkButton').click(function() {
-      currentCanvas.newDataSink(location);
+      currentCanvas.newDataSink(location, attr);
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('.cancelObjectButton').click(function() {
@@ -115,14 +118,14 @@
     currentCanvas.newDataSink({
       x: 100,
       y: 200
-    });
-    currentCanvas.newDataSink({
+    }, attr);
+    currentCanvas.newModule({
       x: 450,
       y: 250
-    });
+    }, attr);
     return currentCanvas.newDataSource({
       x: 400,
       y: 250
-    });
+    }, attr);
   });
 }).call(this);

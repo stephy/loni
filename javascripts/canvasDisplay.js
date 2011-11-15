@@ -19,14 +19,14 @@
       this.rectangle = void 0;
       this.holder = [];
     }
-    canvasDisplay.prototype.newModule = function(coord) {
-      return this.holder.push(new module(this, coord));
+    canvasDisplay.prototype.newModule = function(coord, attr) {
+      return this.holder.push(new module(this, coord, attr));
     };
-    canvasDisplay.prototype.newDataSink = function(coord) {
-      return this.holder.push(new dataSink(this, coord));
+    canvasDisplay.prototype.newDataSink = function(coord, attr) {
+      return this.holder.push(new dataSink(this, coord, attr));
     };
-    canvasDisplay.prototype.newDataSource = function(coord) {
-      return this.holder.push(new dataSource(this, coord));
+    canvasDisplay.prototype.newDataSource = function(coord, attr) {
+      return this.holder.push(new dataSource(this, coord, attr));
     };
     canvasDisplay.prototype.setGlow = function(obj) {
       if (obj.moduleGlow !== "") {
