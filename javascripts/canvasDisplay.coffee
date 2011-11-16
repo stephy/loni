@@ -10,6 +10,7 @@ window.canvasDisplay = class canvasDisplay
 		@drawingPath = false
 		@rectangle = undefined
 		@holder = []
+		@onselect = []
 		
 	newModule: (coord, attr)->
 		@holder.push(new module(@, coord, attr))

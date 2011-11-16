@@ -77,12 +77,20 @@
       }
     });
     $('svg').live('mouseup', function(e) {
+      var i, _ref;
+      currentCanvas.onselect = [];
       if (startDraw) {
         startDraw = false;
       }
       if (currentCanvas.rectangle !== void 0) {
+        for (i = 0, _ref = currentCanvas.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+          if (currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox())) {
+            currentCanvas.onselect.push(currentCanvas.holder[i]);
+          }
+        }
         currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-        return currentCanvas.rectangle = void 0;
+        currentCanvas.rectangle = void 0;
+        return console.log(currentCanvas.onselect);
       }
     });
     $('body').click(function(e) {

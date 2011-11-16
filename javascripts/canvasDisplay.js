@@ -18,6 +18,7 @@
       this.drawingPath = false;
       this.rectangle = void 0;
       this.holder = [];
+      this.onselect = [];
     }
     canvasDisplay.prototype.newModule = function(coord, attr) {
       return this.holder.push(new module(this, coord, attr));

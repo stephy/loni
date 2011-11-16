@@ -60,11 +60,16 @@ $ ->
 			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
 			currentCanvas.setLight()
 	$('svg').live 'mouseup', (e) ->
+		currentCanvas.onselect = []
 		if startDraw
 			startDraw = false
 		if currentCanvas.rectangle != undefined
+			for i in [0..currentCanvas.holder.length-1]
+				if currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox())
+					currentCanvas.onselect.push(currentCanvas.holder[i])
 			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
 			currentCanvas.rectangle = undefined
+			console.log(currentCanvas.onselect)
 
 	$('body').click (e)->
 		$('#main-menu').hide()
