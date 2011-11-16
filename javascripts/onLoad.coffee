@@ -47,7 +47,14 @@ $ ->
 			$('#edit-menu').show().css({top:coord.y, left:coord.x})
 		return false
 		
-	$('svg').live 'mousedown', (e) ->	
+	$('svg').live 'mousedown', (e) ->
+		console.log e.which
+		if currentCanvas.rectangle != undefined
+			currentCanvas.setSelectedElements()
+			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+			currentCanvas.rectangle = undefined
+
+		if e.which != 1 then return
 		rectLocation = getCoord(e)
 		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
 		currentCanvas.setLight()
@@ -55,16 +62,15 @@ $ ->
 		if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
 			console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
 			startDraw = false
-			for i in [0..currentCanvas.holder.length-1]
-				if currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox())
-					currentCanvas.onselect.push(currentCanvas.holder[i])
+			currentCanvas.setSelectedElements()
 		else
 			console.log "setting true"
 			startDraw = true
 			
 			
 	$('svg').live 'mousemove', (e) ->
-		console.log(currentCanvas.onselect)
+		# console.log(currentCanvas.onselect)
+		# console.log e
 		if(currentCanvas.onselect.length is 0)
 			if startDraw
 				if currentCanvas.rectangle != undefined
@@ -80,9 +86,7 @@ $ ->
 		if startDraw
 			startDraw = false
 		if currentCanvas.rectangle != undefined
-			for i in [0..currentCanvas.holder.length-1]
-				if currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox())
-					currentCanvas.onselect.push(currentCanvas.holder[i])
+			currentCanvas.setSelectedElements()
 			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
 			currentCanvas.rectangle = undefined
 

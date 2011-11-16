@@ -62,7 +62,16 @@
       return false;
     });
     $('svg').live('mousedown', function(e) {
-      var i, offset, _ref, _results;
+      var offset;
+      console.log(e.which);
+      if (currentCanvas.rectangle !== void 0) {
+        currentCanvas.setSelectedElements();
+        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+        currentCanvas.rectangle = void 0;
+      }
+      if (e.which !== 1) {
+        return;
+      }
       rectLocation = getCoord(e);
       currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
       currentCanvas.setLight();
@@ -70,18 +79,13 @@
       if (currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy) !== null) {
         console.log(currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy));
         startDraw = false;
-        _results = [];
-        for (i = 0, _ref = currentCanvas.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-          _results.push(currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox()) ? currentCanvas.onselect.push(currentCanvas.holder[i]) : void 0);
-        }
-        return _results;
+        return currentCanvas.setSelectedElements();
       } else {
         console.log("setting true");
         return startDraw = true;
       }
     });
     $('svg').live('mousemove', function(e) {
-      console.log(currentCanvas.onselect);
       if (currentCanvas.onselect.length === 0) {
         if (startDraw) {
           if (currentCanvas.rectangle !== void 0) {
@@ -95,17 +99,12 @@
       }
     });
     $('svg').live('mouseup', function(e) {
-      var i, _ref;
       currentCanvas.onselect = [];
       if (startDraw) {
         startDraw = false;
       }
       if (currentCanvas.rectangle !== void 0) {
-        for (i = 0, _ref = currentCanvas.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-          if (currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox())) {
-            currentCanvas.onselect.push(currentCanvas.holder[i]);
-          }
-        }
+        currentCanvas.setSelectedElements();
         currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
         return currentCanvas.rectangle = void 0;
       }

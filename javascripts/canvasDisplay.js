@@ -105,6 +105,14 @@
     canvasDisplay.prototype.isHover = function() {
       return this.linkHover;
     };
+    canvasDisplay.prototype.setSelectedElements = function() {
+      var i, _ref, _results;
+      _results = [];
+      for (i = 0, _ref = this.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        _results.push(this.rectangle.testRange(this.holder[i].c.getBBox()) ? this.onselect.push(this.holder[i]) : void 0);
+      }
+      return _results;
+    };
     canvasDisplay.prototype.sremove = function() {
       return this.paper.clear();
     };

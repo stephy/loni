@@ -73,6 +73,11 @@ window.canvasDisplay = class canvasDisplay
 	isHover: ->
 		return @linkHover
 		
+	setSelectedElements: ->
+		for i in [0..@holder.length-1]
+			if @rectangle.testRange(@holder[i].c.getBBox())
+				@onselect.push(@holder[i])
+		
 # ----remove
 	sremove: =>
 		@paper.clear()
