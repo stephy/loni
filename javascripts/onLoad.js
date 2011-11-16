@@ -68,12 +68,15 @@
       return currentCanvas.setLight();
     });
     $('svg').live('mousemove', function(e) {
-      if (startDraw) {
-        if (currentCanvas.rectangle !== void 0) {
-          currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+      console.log(currentCanvas.onselect);
+      if (currentCanvas.onselect.length === 0) {
+        if (startDraw) {
+          if (currentCanvas.rectangle !== void 0) {
+            currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+          }
+          currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
+          return currentCanvas.setLight();
         }
-        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
-        return currentCanvas.setLight();
       }
     });
     $('svg').live('mouseup', function(e) {
@@ -89,8 +92,7 @@
           }
         }
         currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-        currentCanvas.rectangle = void 0;
-        return console.log(currentCanvas.onselect);
+        return currentCanvas.rectangle = void 0;
       }
     });
     $('body').click(function(e) {

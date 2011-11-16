@@ -47,18 +47,22 @@ $ ->
 			$('#edit-menu').show().css({top:coord.y, left:coord.x})
 		return false
 		
-	$('svg').live 'mousedown', (e) ->
+	$('svg').live 'mousedown', (e) ->	
 		rectLocation = getCoord(e)
 		startDraw = true
 		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
 		currentCanvas.setLight()
+		
 			
 	$('svg').live 'mousemove', (e) ->
-		if startDraw
-			if currentCanvas.rectangle != undefined
-				currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
-			currentCanvas.setLight()
+		console.log(currentCanvas.onselect)
+		if(currentCanvas.onselect.length is 0)
+			if startDraw
+				if currentCanvas.rectangle != undefined
+					currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+				currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
+				currentCanvas.setLight()
+				
 	$('svg').live 'mouseup', (e) ->
 		currentCanvas.onselect = []
 		if startDraw
@@ -69,7 +73,6 @@ $ ->
 					currentCanvas.onselect.push(currentCanvas.holder[i])
 			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
 			currentCanvas.rectangle = undefined
-			console.log(currentCanvas.onselect)
 
 	$('body').click (e)->
 		$('#main-menu').hide()
