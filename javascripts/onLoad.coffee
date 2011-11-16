@@ -49,10 +49,19 @@ $ ->
 		
 	$('svg').live 'mousedown', (e) ->	
 		rectLocation = getCoord(e)
-		startDraw = true
 		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
 		currentCanvas.setLight()
-		
+		offset = currentCanvas.offsetCoord
+		if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
+			console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
+			startDraw = false
+			for i in [0..currentCanvas.holder.length-1]
+				if currentCanvas.rectangle.testRange(currentCanvas.holder[i].c.getBBox())
+					currentCanvas.onselect.push(currentCanvas.holder[i])
+		else
+			console.log "setting true"
+			startDraw = true
+			
 			
 	$('svg').live 'mousemove', (e) ->
 		console.log(currentCanvas.onselect)
@@ -62,6 +71,9 @@ $ ->
 					currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
 				currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
 				currentCanvas.setLight()
+			else
+				# Translate
+				console.log "translate all objects"
 				
 	$('svg').live 'mouseup', (e) ->
 		currentCanvas.onselect = []
