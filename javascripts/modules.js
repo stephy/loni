@@ -95,7 +95,8 @@
     };
     baseModule.prototype.glowAll = function(attr) {
       var ele, _i, _len, _ref;
-      this.glowing = this.c.glow(attr);
+      this.moduleGlow = this.c.glow(attr);
+      console.log("glow is: " + this.moduleGlow);
       _ref = this.objs;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         ele = _ref[_i];
@@ -105,7 +106,8 @@
     };
     baseModule.prototype.removeAll = function() {
       var ele, _i, _len, _ref;
-      this.glowing.remove();
+      this.moduleGlow.remove();
+      this.moduleGlow = "";
       _ref = this.objs;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         ele = _ref[_i];
@@ -115,6 +117,10 @@
     };
     baseModule.prototype.ztranslate = function(dx, dy) {
       var ele, _i, _len, _ref, _results;
+      if (this.moduleGlow !== "") {
+        console.log("glow to be shifted is: " + this.moduleGlow);
+        this.moduleGlow.translate(dx, dy);
+      }
       this.c.translate(dx, dy);
       _ref = this.objs;
       _results = [];

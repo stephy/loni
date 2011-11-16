@@ -20,9 +20,9 @@ window.canvasDisplay = class canvasDisplay
 		@holder.push(new dataSource(@, coord, attr))
 
 	setGlow: (obj) ->
-		if (obj.moduleGlow!="") then obj.moduleGlow.removeAll()
+		if (obj.moduleGlow!="") then obj.removeAll()
 		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())
-			obj.moduleGlow = obj.glowAll({color:'#000'})
+			obj.glowAll({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
@@ -73,10 +73,20 @@ window.canvasDisplay = class canvasDisplay
 	isHover: ->
 		return @linkHover
 		
+		
+# ---- Rectangle
+	deleteRect: ->
+		if @rectangle != undefined
+			@setSelectedElements()
+			@rectangle.remRect(@rectangle.getRect())
+			@rectangle = undefined
+		
 	setSelectedElements: ->
 		for i in [0..@holder.length-1]
 			if @rectangle.testRange(@holder[i].c.getBBox())
 				@onselect.push(@holder[i])
+# ---end of rectangle selects
+		
 		
 # ----remove
 	sremove: =>

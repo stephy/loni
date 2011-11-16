@@ -50,19 +50,22 @@ class baseModule
 		@disp.setGlow(@)
 		return false
 	glowAll: (attr) ->
-		@glowing = @c.glow(attr)
+		@moduleGlow = @c.glow(attr)
+		console.log "glow is: #{@moduleGlow}"
 		for ele in @objs
 			ele.glowAll(attr)
 		return @
 	removeAll: ->
-		@glowing.remove()
+		@moduleGlow.remove()
+		@moduleGlow = ""
 		for ele in @objs
 			ele.removeAll()
 		return @
 						
 	ztranslate: (dx,dy) =>
-		# if @glowing
-		# 	@glowing.translate(dx, dy)
+		if @moduleGlow != ""
+			console.log "glow to be shifted is: #{@moduleGlow}"
+			@moduleGlow.translate(dx, dy)
 		@c.translate(dx,dy)
 		for ele in @objs
 			ele.ztranslate(dx, dy)

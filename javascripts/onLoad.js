@@ -63,12 +63,7 @@
     });
     $('svg').live('mousedown', function(e) {
       var offset;
-      console.log(e.which);
-      if (currentCanvas.rectangle !== void 0) {
-        currentCanvas.setSelectedElements();
-        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-        currentCanvas.rectangle = void 0;
-      }
+      currentCanvas.deleteRect();
       if (e.which !== 1) {
         return;
       }
@@ -103,11 +98,7 @@
       if (startDraw) {
         startDraw = false;
       }
-      if (currentCanvas.rectangle !== void 0) {
-        currentCanvas.setSelectedElements();
-        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-        return currentCanvas.rectangle = void 0;
-      }
+      return currentCanvas.deleteRect();
     });
     $('body').click(function(e) {
       $('#main-menu').hide();

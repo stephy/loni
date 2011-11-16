@@ -48,11 +48,7 @@ $ ->
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
-		console.log e.which
-		if currentCanvas.rectangle != undefined
-			currentCanvas.setSelectedElements()
-			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-			currentCanvas.rectangle = undefined
+		currentCanvas.deleteRect()
 
 		if e.which != 1 then return
 		rectLocation = getCoord(e)
@@ -85,10 +81,7 @@ $ ->
 		currentCanvas.onselect = []
 		if startDraw
 			startDraw = false
-		if currentCanvas.rectangle != undefined
-			currentCanvas.setSelectedElements()
-			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-			currentCanvas.rectangle = undefined
+		currentCanvas.deleteRect()
 
 	$('body').click (e)->
 		$('#main-menu').hide()

@@ -31,10 +31,10 @@
     };
     canvasDisplay.prototype.setGlow = function(obj) {
       if (obj.moduleGlow !== "") {
-        obj.moduleGlow.removeAll();
+        obj.removeAll();
       }
       if (this.rectangle !== void 0 && this.rectangle.testRange(obj.c.getBBox())) {
-        return obj.moduleGlow = obj.glowAll({
+        return obj.glowAll({
           color: '#000'
         });
       }
@@ -104,6 +104,13 @@
     };
     canvasDisplay.prototype.isHover = function() {
       return this.linkHover;
+    };
+    canvasDisplay.prototype.deleteRect = function() {
+      if (this.rectangle !== void 0) {
+        this.setSelectedElements();
+        this.rectangle.remRect(this.rectangle.getRect());
+        return this.rectangle = void 0;
+      }
     };
     canvasDisplay.prototype.setSelectedElements = function() {
       var i, _ref, _results;
