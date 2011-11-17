@@ -36,6 +36,13 @@ ul.menu li:hover{
 	color:#FFF;
 	padding:4px 4px 4px 18px;
 }
+
+ul.menu li.disabled:hover{
+	background-color:#FFF;
+	color:#CCC;
+	padding:4px 4px 4px 18px;
+}
+
 ul.menu ul{
 	padding-top: 10px;
 	padding-bottom: 10px;
