@@ -92,8 +92,24 @@ $ ->
 
 	$('#option_module').click (e)->
 		$('#popup-module').show()
+		$('.popup-tab').hide()
+		$('#module-info').show()
+		$('#module-parameters-bt.tabSelected').removeClass('tabSelected')
+		$('#module-execution-bt.tabSelected').removeClass('tabSelected')
+		$('#module-metadata-bt.tabSelected').removeClass('tabSelected')
+		$('#module-info-module').show()
+		$('#module-info-module-website').show()
+		$('li#module-info-bt').addClass('tabSelected')
+		
+  $('#option_data_source').click (e) ->
+  	$('#popup-data-source').show()
+
 	$('#option_data_sink').click (e) ->
 		$('#popup-data-sink').show()
+		$('.popup-tab').hide()
+		$('#data-sink-info-bt').addClass('tabSelected')
+		$('#data-sink-info').show()
+		$('#data-sink-outputs-bt.tabSelected').removeClass('tabSelected')
 
 	$('#createModuleButton').click ->
 		currentCanvas.newModule(location, attr)
