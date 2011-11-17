@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline version=".1">
+        <connections>
+                <connection source="DSource_1.Output" sink="DSink_1.Input" />
+        </connections>
+        <moduleGroup id="Untitled_1" name="Untitled" posX="0" posY="0">
+                <module id="TestProgram_1" name="TestProgram" package="Test" version="2" location="pipeline://localhost/" sourceCode="" posX="82" posY="183" executableVersion="2">
+                        <metadata>
+                                <data key="__creationDateKey" value="Tue Nov 15 14:48:20 PST 2011" />
+                        </metadata>
+                </module>
+                <module id="TestProgram2_1" name="TestProgram2" package="Test" version="3" location="pipeline://localhost/" sourceCode="" posX="383" posY="229" executableVersion="3">
+                        <metadata>
+                                <data key="__creationDateKey" value="Tue Nov 15 14:48:51 PST 2011" />
+                        </metadata>
+                </module>
+                <dataModule id="DSource_1" name="DSource" posX="204" posY="52" type="File" source="true" loopIndex="false">
+                        <fileTypes>
+                                <filetype name="File" extension="" description="Any type of data file" />
+                        </fileTypes>
+                        <metadata>
+                                <data key="__creationDateKey" value="Tue Nov 15 21:54:33 PST 2011" />
+                        </metadata>
+                        <output id="DSource_1.Output" name="Output" required="true" enabled="true" order="-1">
+                                <format type="File" cardinality="1">
+                                        <fileTypes>
+                                                <filetype name="File" extension="" description="Any type of data file" />
+                                        </fileTypes>
+                                </format>
+                        </output>
+                </dataModule>
+                <dataModule id="DSink_1" name="DSink" posX="428" posY="154" type="File" source="false" loopIndex="false" dirDump="false">
+                        <fileTypes>
+                                <filetype name="File" extension="" description="Any type of data file" />
+                        </fileTypes>
+                        <metadata>
+                                <data key="__creationDateKey" value="Tue Nov 15 21:55:13 PST 2011" />
+                        </metadata>
+                        <input id="DSink_1.Input" name="Input" required="true" enabled="true" order="-1">
+                                <format type="File" cardinality="1">
+                                        <fileTypes>
+                                                <filetype name="File" extension="" description="Any type of data file" />
+                                        </fileTypes>
+                                </format>
+                        </input>
+                </dataModule>
+        </moduleGroup>
+</pipeline>
+
