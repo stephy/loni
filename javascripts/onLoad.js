@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, getBox, getCoord, items, location, rectLocation, startDraw, tempRect;
+    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, rectLocation, startDraw, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -8,6 +8,27 @@
     tempRect = "";
     attr = {
       name: "Song!"
+    };
+    generate_data_sink_attr = function() {
+      var data_sink_attr, data_sink_description, data_sink_name, data_sink_package, data_sink_pkg_version, data_sink_tags;
+      data_sink_name = $('input#data-sink_name').val();
+      data_sink_package = $('input#data-sink_package').val();
+      data_sink_pkg_version = $('input#data-sink_pkg_version').val();
+      data_sink_tags = $('input#data_sink_tags').val();
+      data_sink_description = $('textarea#data_sink_description').val();
+      data_sink_attr = {
+        name: data_sink_name,
+        package: data_sink_package,
+        version: data_sink_pkg_version,
+        tags: data_sink_tags,
+        description: data_sink_description
+      };
+      $('input#data-sink_name').val('');
+      $('input#data-sink_package').val('');
+      $('input#data-sink_pkg_version').val('');
+      $('input#data_sink_tags').val('');
+      $('textarea#data_sink_description').val('');
+      return data_sink_attr;
     };
     getCoord = function(e) {
       var coord;
@@ -137,7 +158,7 @@
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('#createDataSinkButton').click(function() {
-      currentCanvas.newDataSink(location, attr);
+      currentCanvas.newDataSink(location, generate_data_sink_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('.cancelObjectButton').click(function() {

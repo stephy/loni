@@ -7,6 +7,30 @@ $ ->
 	# Testing:
 	attr = {name: "Song!"}
 	
+	#data sink form data
+	generate_data_sink_attr = () ->
+	  data_sink_name = $('input#data-sink_name').val()
+	  data_sink_package = $('input#data-sink_package').val()
+	  data_sink_pkg_version = $('input#data-sink_pkg_version').val()
+	  data_sink_tags = $('input#data_sink_tags').val()
+	  data_sink_description = $('textarea#data_sink_description').val()
+	  data_sink_attr = {
+		  name: data_sink_name,
+		  package: data_sink_package,
+		  version: data_sink_pkg_version,
+		  tags: data_sink_tags,
+		  description: data_sink_description
+	  }
+	  #clear form
+	  $('input#data-sink_name').val('')
+	  $('input#data-sink_package').val('')
+	  $('input#data-sink_pkg_version').val('')
+	  $('input#data_sink_tags').val('')
+	  $('textarea#data_sink_description').val('')
+	  
+	  return data_sink_attr
+	
+ 	
 	getCoord = (e) ->
 		# Need to take into account mozilla
 		coord = {x: e.offsetX, y:e.offsetY}
@@ -118,8 +142,9 @@ $ ->
 	$('#createModuleButton').click ->
 		currentCanvas.newModule(location, attr)
 		$(@).parents('.popUpObjectBox').hide()
+		
 	$('#createDataSinkButton').click ->
-		currentCanvas.newDataSink(location, attr)
+		currentCanvas.newDataSink(location, generate_data_sink_attr())
 		$(@).parents('.popUpObjectBox').hide()
 		
 	$('.cancelObjectButton').click ->

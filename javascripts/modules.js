@@ -37,9 +37,9 @@
       var c;
       c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, 40);
       c.attr({
-        fill: '#ddf',
-        stroke: '#33f',
-        'stroke-width': 3
+        fill: '120-#a4abd6-#8793c9:60-#8793c9',
+        stroke: '#6d76c1',
+        'stroke-width': 5
       });
       return c;
     };
@@ -47,9 +47,14 @@
       return this.objs.push(obj);
     };
     baseModule.prototype.hoverIn = function() {
-      var dim;
+      var dim, label;
       dim = this.c.getBBox();
-      return this.text = this.disp.paper.text(dim.x + dim.width / 2, dim.y + dim.height / 2, this.attr.name);
+      this.text = this.disp.paper.text(dim.x + dim.width / 2 + 60, dim.y + 20, this.attr.name);
+      label = this.text;
+      return label.attr({
+        'font-size': 20,
+        fill: '#75757c'
+      });
     };
     baseModule.prototype.hoverOut = function() {
       return this.text.remove();
@@ -164,9 +169,9 @@
       };
       c = this.disp.paper.circle(connectDim.x, connectDim.y, 10);
       c.attr({
-        fill: '#ddf',
-        stroke: '#33f',
-        'stroke-width': 1
+        fill: '#FFF',
+        stroke: '#6d76c1',
+        'stroke-width': 2
       });
       return c;
     };
@@ -239,8 +244,9 @@
       var c;
       c = this.disp.paper.path("M " + this.prevCoord.x + " " + this.prevCoord.y + " l " + this.dim.height + " 0 l -" + (this.dim.width / 2) + " " + this.dim.height + " z");
       c.attr({
-        stroke: '#00f',
-        fill: '#0f0'
+        stroke: '#75757c',
+        fill: '#c8c8cd',
+        'stroke-width': 10
       });
       return c;
     };
@@ -264,9 +270,9 @@
       };
       c = this.disp.paper.path("M " + this.prevCoord.x + " " + (this.prevCoord.y - this.dim.height) + " l " + (this.dim.width / 4) + " " + (this.dim.height / 4) + " l -" + (this.dim.width / 2) + " 0 z");
       c.attr({
-        fill: '#ddf',
-        stroke: '#33f',
-        'stroke-width': 1
+        fill: '#FFF',
+        stroke: '#6d76c1',
+        'stroke-width': 2
       });
       return c;
     };
@@ -290,8 +296,9 @@
       var c;
       c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, this.dim.height / 2);
       c.attr({
-        stroke: '#000',
-        fill: '#aaa'
+        stroke: '#75757c',
+        fill: '#c8c8cd',
+        'stroke-width': 10
       });
       return c;
     };

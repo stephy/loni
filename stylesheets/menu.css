@@ -63,3 +63,8 @@ ul.menu li:hover > ul{
 .endBlock ul{
 	background-color:#FFF;
 }
+
+.disabled {
+	color:#CCC;
+	cursor: default;
+}

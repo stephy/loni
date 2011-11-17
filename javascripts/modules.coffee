@@ -13,13 +13,16 @@ class baseModule
 		@moduleGlow = ""
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,40)
-		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':3)
+		c.attr(fill: '120-#a4abd6-#8793c9:60-#8793c9', stroke: '#6d76c1', 'stroke-width':5)
 		return c
 	insertChildren: (obj)->
 		@objs.push(obj)
 	hoverIn: =>
 		dim = @c.getBBox()
-		@text = @disp.paper.text(dim.x+dim.width/2,dim.y+dim.height/2, @attr.name)
+		@text = @disp.paper.text(dim.x+dim.width/2+60,dim.y+20, @attr.name)
+		label = @text
+		label.attr('font-size':20, fill:'#75757c')
+
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
@@ -81,7 +84,7 @@ window.sink = class sink extends baseModule
 	draw: ->
 		connectDim = {x: @dim.width/2 +  @prevCoord.x , y:  @prevCoord.y - @dim.height/2}
 		c = @disp.paper.circle(connectDim.x,connectDim.y,10)
-		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':1)
+		c.attr(fill: '#FFF', stroke: '#6d76c1', 'stroke-width':2)
 		return c
 	
 	drag: (dx, dy, x, y) =>
@@ -123,7 +126,7 @@ window.dataSink = class dataSink extends baseModule
 		@objs.push(new sink(@disp, @prevCoord, {name:"Sink"}))
 	draw: ->
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
-		c.attr({stroke:'#00f', fill:'#0f0'})
+		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})
 		return c
 
 window.source = class source extends sink
@@ -134,7 +137,7 @@ window.source = class source extends sink
 	draw: ->
 		start = {x: @dim.width/2 +  @prevCoord.x , y:  @prevCoord.y - @dim.height/2}
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y-@dim.height} l #{@dim.width/4} #{@dim.height/4} l -#{@dim.width/2} 0 z")
-		c.attr(fill: '#ddf', stroke: '#33f', 'stroke-width':1)
+		c.attr(fill: '#FFF', stroke: '#6d76c1', 'stroke-width':2)
 		return c
 	getType: ->
 		# Used for Path Connections
@@ -147,6 +150,6 @@ window.dataSource = class dataSource extends baseModule
 		@objs.push(new source(@disp, @prevCoord, {name:"Source"}))
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)
-		c.attr({stroke:'#000', fill:'#aaa'})
+		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})
 		return c
 		
