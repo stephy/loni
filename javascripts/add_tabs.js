@@ -53,9 +53,8 @@ jQuery(document).ready(function(){
   });
   
   //display canvas for the selected tab
-  $('.tabs li:not(#add_new_canvas)').live('click', function(){
+  $('#tabs-menu .tabs li:not(#add_new_canvas)').live('click', function(){
       var selected_canvas = $(this).attr('canvas-id');
-      
       // Set Canvas to display
       currentCanvas = canvasHash[selected_canvas];
       $("svg").hide();
@@ -63,6 +62,14 @@ jQuery(document).ready(function(){
       
       //change tab color
       $('.tabs li').removeClass('tabSelected');
+      $(this).addClass('tabSelected')
+  });
+  
+  
+    //display highlits for popup selected tab
+  $('.popup-controller .tabs li:not(#add_new_canvas)').live('click', function(){
+      //change tab color
+      $('.popup-controller .tabs li').removeClass('tabSelected');
       $(this).addClass('tabSelected')
   });
 
