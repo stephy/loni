@@ -120,7 +120,7 @@ window.sink = class sink extends baseModule
 window.dataSink = class dataSink extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
 		super(@disp, @prevCoord, @attr)
-		@objs.push(new sink(@disp, @prevCoord))
+		@objs.push(new sink(@disp, @prevCoord, {name:"Sink"}))
 	draw: ->
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
 		c.attr({stroke:'#00f', fill:'#0f0'})
@@ -144,7 +144,7 @@ window.source = class source extends sink
 window.dataSource = class dataSource extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
 		super(@disp, @prevCoord, @attr)
-		@objs.push(new source(@disp, @prevCoord))
+		@objs.push(new source(@disp, @prevCoord, {name:"Source"}))
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)
 		c.attr({stroke:'#000', fill:'#aaa'})
