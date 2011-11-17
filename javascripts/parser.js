@@ -61,11 +61,11 @@ function parseXml(xml)
 	canvas.newModule({
       x: modulePosX,
       y: modulePosY
-    }, {name: moduleName, package: modulePackage, version: moduleVersion});
+    }, {id: moduleId, name: moduleName, package: modulePackage, version: moduleVersion});
 		
 	
   });
-/*$(xml).find("datamModule").each(function()
+$(xml).find("dataModule").each(function()
   {
 	//<dataModule> Attributes ---------------------------------------------
 	var dataModuleId = $(this).attr("id");
@@ -85,10 +85,22 @@ function parseXml(xml)
 	var dataModuleRecursive= $(this).attr("recursive");
 	// end of <dataModule> Attributes --------------------------------------
 
-	$("#output").append($(this).attr("name") + " , description:"+ $(this).attr("description")+ "<br />");	
-    $("#EL1").append(moduleDescription + "<br />");
+	//Create DataSink/Source
+	if(dataModuleSource == "true"){
+		canvas.newDataSource({
+      		x: dataModulePosX,
+      		y: dataModulePosY
+    	}, {id: dataModuleId, name: dataModuleName, package: dataModulePackage, version: dataModuleVersion});
+	}
+	else{
+		canvas.newDataSink({
+      		x: dataModulePosX,
+      		y: dataModulePosY
+    	}, {id: dataModuleId, name: dataModuleName, package: dataModulePackage, version: dataModuleVersion});
+		
+	}
 
-  });*/
+  });
 }
 
 function parseAuthors(xml)
@@ -102,7 +114,7 @@ $(document).ready(function()
   $.ajax({
     type: "GET",
     //url: "javascripts/test.xml",
-    url: "javascripts/testloni.pipe",
+    url: "javascripts/testloni2.pipe",
 	dataType: "xml",
     success: parseXml
   });
