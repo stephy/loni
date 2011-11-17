@@ -103,6 +103,10 @@ $ ->
 		
   $('#option_data_source').click (e) ->
   	$('#popup-data-source').show()
+  	$('.popup-tab').hide()
+		$('#data-source-info-bt').addClass('tabSelected')
+		$('#data-source-info').show()
+		$('#data-source-inputs-bt.tabSelected').removeClass('tabSelected')
 
 	$('#option_data_sink').click (e) ->
 		$('#popup-data-sink').show()

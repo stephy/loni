@@ -117,9 +117,13 @@
       $('#module-info-module').show();
       $('#module-info-module-website').show();
       $('li#module-info-bt').addClass('tabSelected');
-      return $('#option_data_source').click(function(e) {
-        return $('#popup-data-source').show();
+      $('#option_data_source').click(function(e) {
+        $('#popup-data-source').show();
+        return $('.popup-tab').hide();
       });
+      $('#data-source-info-bt').addClass('tabSelected');
+      $('#data-source-info').show();
+      return $('#data-source-inputs-bt.tabSelected').removeClass('tabSelected');
     });
     $('#option_data_sink').click(function(e) {
       $('#popup-data-sink').show();
