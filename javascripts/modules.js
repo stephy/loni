@@ -231,7 +231,9 @@
       this.prevCoord = prevCoord;
       this.attr = attr;
       dataSink.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
-      this.objs.push(new sink(this.disp, this.prevCoord));
+      this.objs.push(new sink(this.disp, this.prevCoord, {
+        name: "Sink"
+      }));
     }
     dataSink.prototype.draw = function() {
       var c;
@@ -280,7 +282,9 @@
       this.prevCoord = prevCoord;
       this.attr = attr;
       dataSource.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
-      this.objs.push(new source(this.disp, this.prevCoord));
+      this.objs.push(new source(this.disp, this.prevCoord, {
+        name: "Source"
+      }));
     }
     dataSource.prototype.draw = function() {
       var c;
