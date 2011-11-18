@@ -18,7 +18,7 @@
       this.drawingPath = false;
       this.rectangle = void 0;
       this.holder = [];
-      this.onselect = [];
+      this.selectedObjectArray = [];
     }
     canvasDisplay.prototype.newModule = function(coord, attr) {
       return this.holder.push(new module(this, coord, attr));
@@ -34,6 +34,7 @@
         obj.removeAll();
       }
       if (this.rectangle !== void 0 && this.rectangle.testRange(obj.c.getBBox())) {
+        this.selectedObjectArray.push(obj);
         return obj.glowAll({
           color: '#000'
         });
@@ -116,7 +117,7 @@
       var i, _ref, _results;
       _results = [];
       for (i = 0, _ref = this.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        _results.push(this.rectangle.testRange(this.holder[i].c.getBBox()) ? this.onselect.push(this.holder[i]) : void 0);
+        _results.push(this.rectangle.testRange(this.holder[i].c.getBBox()) ? this.selectedObjectArray.push(this.holder[i]) : void 0);
       }
       return _results;
     };
@@ -125,9 +126,23 @@
     };
     canvasDisplay.prototype.setLight = function() {
       var i, _ref, _results;
+      this.selectedObjectArray = [];
       _results = [];
       for (i = 0, _ref = this.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
         _results.push(this.setGlow(this.holder[i]));
+      }
+      return _results;
+    };
+    canvasDisplay.prototype.gCopy = function(objArray) {
+      var i, _ref, _results;
+      _results = [];
+      for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        _results.push(objArray[i].modID === 0 ? newDataSink({
+          x: 300,
+          y: 300
+        }, {
+          name: "Song!"
+        }) : objArray[i].modID === 1 ? console.log("data sink") : console.log("data source"));
       }
       return _results;
     };

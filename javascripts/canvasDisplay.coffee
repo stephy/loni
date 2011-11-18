@@ -10,7 +10,7 @@ window.canvasDisplay = class canvasDisplay
 		@drawingPath = false
 		@rectangle = undefined
 		@holder = []
-		@onselect = []
+		@selectedObjectArray = []
 		
 	newModule: (coord, attr)->
 		@holder.push(new module(@, coord, attr))
@@ -22,7 +22,9 @@ window.canvasDisplay = class canvasDisplay
 	setGlow: (obj) ->
 		if (obj.moduleGlow!="") then obj.removeAll()
 		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())
+			@selectedObjectArray.push(obj)
 			obj.glowAll({color:'#000'})
+			
 		
 	removeGlow: ->
 		if (@glow!="")
@@ -84,7 +86,7 @@ window.canvasDisplay = class canvasDisplay
 	setSelectedElements: ->
 		for i in [0..@holder.length-1]
 			if @rectangle.testRange(@holder[i].c.getBBox())
-				@onselect.push(@holder[i])
+				@selectedObjectArray.push(@holder[i])
 # ---end of rectangle selects
 		
 		
@@ -93,5 +95,13 @@ window.canvasDisplay = class canvasDisplay
 		@paper.clear()
 		
 	setLight: ->
+		@selectedObjectArray = []
 		for i in [0..@holder.length-1]
 			this.setGlow(@holder[i])
+			
+			#data source 2 data sink 1 module 0
+	gCopy: (objArray) ->
+		for i in [0..objArray.length-1]
+			if objArray[i].modID is 0 then newDataSink({x:300, y:300}, {name: "Song!"})
+			else if objArray[i].modID is 1 then console.log "data sink"
+			else console.log "data source"

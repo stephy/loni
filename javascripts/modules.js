@@ -32,6 +32,7 @@
       this.c.drag(this.drag, this.mDown, this.mUp);
       this.c.hover(this.hoverIn, this.hoverOut);
       this.moduleGlow = "";
+      this.modID = 0;
     }
     baseModule.prototype.draw = function() {
       var c;
@@ -239,6 +240,7 @@
       this.objs.push(new sink(this.disp, this.prevCoord, {
         name: "Sink"
       }));
+      this.modID = 1;
     }
     dataSink.prototype.draw = function() {
       var c;
@@ -291,6 +293,7 @@
       this.objs.push(new source(this.disp, this.prevCoord, {
         name: "Source"
       }));
+      this.modID = 2;
     }
     dataSource.prototype.draw = function() {
       var c;

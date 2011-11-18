@@ -11,6 +11,8 @@ class baseModule
 		@c.drag(@drag, @mDown, @mUp)
 		@c.hover(@hoverIn, @hoverOut)
 		@moduleGlow = ""
+		@modID = 0
+		
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,40)
 		c.attr(fill: '120-#a4abd6-#8793c9:60-#8793c9', stroke: '#6d76c1', 'stroke-width':5)
@@ -124,6 +126,7 @@ window.dataSink = class dataSink extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
 		super(@disp, @prevCoord, @attr)
 		@objs.push(new sink(@disp, @prevCoord, {name:"Sink"}))
+		@modID = 1
 	draw: ->
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
 		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})
@@ -148,6 +151,7 @@ window.dataSource = class dataSource extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
 		super(@disp, @prevCoord, @attr)
 		@objs.push(new source(@disp, @prevCoord, {name:"Source"}))
+		@modID = 2
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)
 		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})

@@ -4,8 +4,11 @@ $ ->
 	rectLocation = ""
 	startDraw = false
 	tempRect = ""
+	tempCopiedArray = []
 	# Testing:
 	attr = {name: "Song!"}
+	
+
 	
 	#data sink form data
 	generate_data_sink_attr = () ->
@@ -30,7 +33,13 @@ $ ->
 	  
 	  return data_sink_attr
 	
- 	
+
+	pasteSelected = (objArray) ->
+		for i in [0..objArray.length-1]
+			if objArray[i].modID is 0 then currentCanvas.newModule({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			else if objArray[i].modID is 1 then currentCanvas.newDataSink({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			else currentCanvas.newDataSource({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			
 	getCoord = (e) ->
 		# Need to take into account mozilla
 		coord = {x: e.offsetX, y:e.offsetY}
@@ -72,6 +81,8 @@ $ ->
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
+		console.log("test")
+		currentCanvas.selectedObjectArray = []
 		currentCanvas.deleteRect()
 
 		if e.which != 1 then return
@@ -82,30 +93,29 @@ $ ->
 		if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
 			console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
 			startDraw = false
-			currentCanvas.setSelectedElements()
+			currentCanvas.setLight()
 		else
 			console.log "setting true"
-			startDraw = true
+		startDraw = true
 			
 			
 	$('svg').live 'mousemove', (e) ->
 		# console.log(currentCanvas.onselect)
 		# console.log e
-		if(currentCanvas.onselect.length is 0)
-			if startDraw
-				if currentCanvas.rectangle != undefined
-					currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-				currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
-				currentCanvas.setLight()
-			else
-				# Translate
-				console.log "translate all objects"
+		#if(currentCanvas.onselect.length is 0)
+		if startDraw
+			if currentCanvas.rectangle != undefined
+				currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
+			currentCanvas.setLight()
 				
 	$('svg').live 'mouseup', (e) ->
-		currentCanvas.onselect = []
+		
+		console.log currentCanvas.selectedObjectArray.length
+		if currentCanvas.rectangle != undefined
+			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
 		if startDraw
 			startDraw = false
-		currentCanvas.deleteRect()
 
 	$('body').click (e)->
 		$('#main-menu').hide()
@@ -142,6 +152,12 @@ $ ->
 	$('#createModuleButton').click ->
 		currentCanvas.newModule(location, attr)
 		$(@).parents('.popUpObjectBox').hide()
+	
+	$('#paste').click ->
+		pasteSelected(tempCopiedArray)
+	
+	$('#copy').click ->
+		tempCopiedArray = currentCanvas.selectedObjectArray
 		
 	$('#createDataSinkButton').click ->
 		currentCanvas.newDataSink(location, generate_data_sink_attr())

@@ -1,11 +1,12 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, rectLocation, startDraw, tempRect;
+    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
     startDraw = false;
     tempRect = "";
+    tempCopiedArray = [];
     attr = {
       name: "Song!"
     };
@@ -29,6 +30,23 @@
       $('input#data_sink_tags').val('');
       $('textarea#data_sink_description').val('');
       return data_sink_attr;
+    };
+    pasteSelected = function(objArray) {
+      var i, _ref, _results;
+      _results = [];
+      for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        _results.push(objArray[i].modID === 0 ? currentCanvas.newModule({
+          x: objArray[i].c.getBBox().x,
+          y: objArray[i].c.getBBox().y
+        }, attr) : objArray[i].modID === 1 ? currentCanvas.newDataSink({
+          x: objArray[i].c.getBBox().x,
+          y: objArray[i].c.getBBox().y
+        }, attr) : currentCanvas.newDataSource({
+          x: objArray[i].c.getBBox().x,
+          y: objArray[i].c.getBBox().y
+        }, attr));
+      }
+      return _results;
     };
     getCoord = function(e) {
       var coord;
@@ -84,6 +102,8 @@
     });
     $('svg').live('mousedown', function(e) {
       var offset;
+      console.log("test");
+      currentCanvas.selectedObjectArray = [];
       currentCanvas.deleteRect();
       if (e.which !== 1) {
         return;
@@ -95,31 +115,29 @@
       if (currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy) !== null) {
         console.log(currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy));
         startDraw = false;
-        return currentCanvas.setSelectedElements();
+        currentCanvas.setLight();
       } else {
         console.log("setting true");
-        return startDraw = true;
       }
+      return startDraw = true;
     });
     $('svg').live('mousemove', function(e) {
-      if (currentCanvas.onselect.length === 0) {
-        if (startDraw) {
-          if (currentCanvas.rectangle !== void 0) {
-            currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-          }
-          currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
-          return currentCanvas.setLight();
-        } else {
-          return console.log("translate all objects");
+      if (startDraw) {
+        if (currentCanvas.rectangle !== void 0) {
+          currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
         }
+        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
+        return currentCanvas.setLight();
       }
     });
     $('svg').live('mouseup', function(e) {
-      currentCanvas.onselect = [];
-      if (startDraw) {
-        startDraw = false;
+      console.log(currentCanvas.selectedObjectArray.length);
+      if (currentCanvas.rectangle !== void 0) {
+        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
       }
-      return currentCanvas.deleteRect();
+      if (startDraw) {
+        return startDraw = false;
+      }
     });
     $('body').click(function(e) {
       $('#main-menu').hide();
@@ -156,6 +174,12 @@
     $('#createModuleButton').click(function() {
       currentCanvas.newModule(location, attr);
       return $(this).parents('.popUpObjectBox').hide();
+    });
+    $('#paste').click(function() {
+      return pasteSelected(tempCopiedArray);
+    });
+    $('#copy').click(function() {
+      return tempCopiedArray = currentCanvas.selectedObjectArray;
     });
     $('#createDataSinkButton').click(function() {
       currentCanvas.newDataSink(location, generate_data_sink_attr());
