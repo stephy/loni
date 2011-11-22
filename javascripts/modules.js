@@ -62,6 +62,7 @@
     };
     baseModule.prototype.drag = function(dx, dy) {
       var elmt, tx, ty;
+      this.disp.deleteRect();
       elmt = this.c.getBBox();
       tx = 0;
       ty = 0;
@@ -97,6 +98,9 @@
         y: 0
       };
       this.disp.setGlow(this);
+      console.log("MOUSE DOWN!!!!");
+      console.log(this.disp.rectangle);
+      this.disp.deleteRect();
       return false;
     };
     baseModule.prototype.glowAll = function(attr) {

@@ -102,42 +102,26 @@
     });
     $('svg').live('mousedown', function(e) {
       var offset;
-      console.log("test");
-      currentCanvas.selectedObjectArray = [];
-      currentCanvas.deleteRect();
       if (e.which !== 1) {
         return;
       }
       rectLocation = getCoord(e);
       currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
       currentCanvas.setLight();
-      offset = currentCanvas.offsetCoord;
-      if (currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy) !== null) {
-        console.log(currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy));
-        startDraw = false;
-        currentCanvas.setLight();
-      } else {
-        console.log("setting true");
-      }
-      return startDraw = true;
+      return offset = currentCanvas.offsetCoord;
     });
     $('svg').live('mousemove', function(e) {
-      if (startDraw) {
-        if (currentCanvas.rectangle !== void 0) {
-          currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-        }
+      if (currentCanvas.rectangle !== void 0) {
+        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
         currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
-        return currentCanvas.setLight();
+        currentCanvas.setLight();
+        return console.log(currentCanvas.selectedObjectArray.length);
       }
     });
     $('svg').live('mouseup', function(e) {
+      currentCanvas.setLight();
       console.log(currentCanvas.selectedObjectArray.length);
-      if (currentCanvas.rectangle !== void 0) {
-        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-      }
-      if (startDraw) {
-        return startDraw = false;
-      }
+      return currentCanvas.deleteRect();
     });
     $('body').click(function(e) {
       $('#main-menu').hide();
@@ -179,7 +163,8 @@
       return pasteSelected(tempCopiedArray);
     });
     $('#copy').click(function() {
-      return tempCopiedArray = currentCanvas.selectedObjectArray;
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      return console.log(tempCopiedArray);
     });
     $('#createDataSinkButton').click(function() {
       currentCanvas.newDataSink(location, generate_data_sink_attr());

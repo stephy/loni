@@ -79,7 +79,7 @@ window.canvasDisplay = class canvasDisplay
 # ---- Rectangle
 	deleteRect: ->
 		if @rectangle != undefined
-			@setSelectedElements()
+			# @setSelectedElements()
 			@rectangle.remRect(@rectangle.getRect())
 			@rectangle = undefined
 		

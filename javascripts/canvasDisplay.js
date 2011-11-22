@@ -108,7 +108,6 @@
     };
     canvasDisplay.prototype.deleteRect = function() {
       if (this.rectangle !== void 0) {
-        this.setSelectedElements();
         this.rectangle.remRect(this.rectangle.getRect());
         return this.rectangle = void 0;
       }

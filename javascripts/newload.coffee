@@ -18,19 +18,19 @@ $ ->
 		startDraw= true
 		prevPosition = {x:e.offsetX, y:e.offsetY}
 	
-	.mousemove (e) ->
-		if startDraw
-			curPosition = {x:e.offsetX, y:e.offsetY}
-			
-			if theRect != undefined
-				theRect.remRect(theRect.getRect())
-			theRect = new rect(r, prevPosition.x, prevPosition.y, curPosition.x, curPosition.y)
-			
-			for i in [1..3] 
-				if theRect.testRange(shapes[i].getBBox())
-					theRect.setGlow(shapes[i], true)
-				else 
-					theRect.setGlow(shapes[i], false)
+	# .mousemove (e) ->
+	# 	if startDraw
+	# 		curPosition = {x:e.offsetX, y:e.offsetY}
+	# 		
+	# 		if theRect != undefined
+	# 			theRect.remRect(theRect.getRect())
+	# 		theRect = new rect(r, prevPosition.x, prevPosition.y, curPosition.x, curPosition.y)
+	# 		
+	# 		for i in [1..3] 
+	# 			if theRect.testRange(shapes[i].getBBox())
+	# 				theRect.setGlow(shapes[i], true)
+	# 			else 
+	# 				theRect.setGlow(shapes[i], false)
 			
 			
 

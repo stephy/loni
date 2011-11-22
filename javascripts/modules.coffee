@@ -28,6 +28,7 @@ class baseModule
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
+		@disp.deleteRect()
 		elmt = @c.getBBox()
 		tx = 0
 		ty = 0
@@ -53,6 +54,10 @@ class baseModule
 		@coord = {x: @c.attr("cx"), y: @c.attr("cy")}
 		@prevCoord = {x:0, y:0}
 		@disp.setGlow(@)
+		console.log "MOUSE DOWN!!!!"
+		console.log @disp.rectangle
+		@disp.deleteRect()
+			
 		return false
 	glowAll: (attr) ->
 		@moduleGlow = @c.glow(attr)

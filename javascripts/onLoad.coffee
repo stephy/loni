@@ -81,41 +81,27 @@ $ ->
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
-		console.log("test")
-		currentCanvas.selectedObjectArray = []
-		currentCanvas.deleteRect()
-
 		if e.which != 1 then return
 		rectLocation = getCoord(e)
 		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
 		currentCanvas.setLight()
 		offset = currentCanvas.offsetCoord
-		if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
-			console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
-			startDraw = false
-			currentCanvas.setLight()
-		else
-			console.log "setting true"
-		startDraw = true
+		# if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
+		# 	console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
+		# 	currentCanvas.deleteRect()
 			
 			
 	$('svg').live 'mousemove', (e) ->
-		# console.log(currentCanvas.onselect)
-		# console.log e
-		#if(currentCanvas.onselect.length is 0)
-		if startDraw
-			if currentCanvas.rectangle != undefined
-				currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
-			currentCanvas.setLight()
-				
-	$('svg').live 'mouseup', (e) ->
-		
-		console.log currentCanvas.selectedObjectArray.length
 		if currentCanvas.rectangle != undefined
 			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-		if startDraw
-			startDraw = false
+			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
+			currentCanvas.setLight()
+			console.log currentCanvas.selectedObjectArray.length
+				
+	$('svg').live 'mouseup', (e) ->
+		currentCanvas.setLight()
+		console.log currentCanvas.selectedObjectArray.length
+		currentCanvas.deleteRect()
 
 	$('body').click (e)->
 		$('#main-menu').hide()
@@ -158,6 +144,7 @@ $ ->
 	
 	$('#copy').click ->
 		tempCopiedArray = currentCanvas.selectedObjectArray
+		console.log tempCopiedArray
 		
 	$('#createDataSinkButton').click ->
 		currentCanvas.newDataSink(location, generate_data_sink_attr())

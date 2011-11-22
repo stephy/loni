@@ -13,23 +13,6 @@
         x: e.offsetX,
         y: e.offsetY
       };
-    }).mousemove(function(e) {
-      var i, _results;
-      if (startDraw) {
-        curPosition = {
-          x: e.offsetX,
-          y: e.offsetY
-        };
-        if (theRect !== void 0) {
-          theRect.remRect(theRect.getRect());
-        }
-        theRect = new rect(r, prevPosition.x, prevPosition.y, curPosition.x, curPosition.y);
-        _results = [];
-        for (i = 1; i <= 3; i++) {
-          _results.push(theRect.testRange(shapes[i].getBBox()) ? theRect.setGlow(shapes[i], true) : theRect.setGlow(shapes[i], false));
-        }
-        return _results;
-      }
     }).mouseup(function() {
       startDraw = false;
       theRect.remRect(theRect.getRect());
