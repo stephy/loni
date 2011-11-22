@@ -68,11 +68,11 @@
           	    <li id="option_image" class="disabled">Image ...</li>
           	</ul>
           </li>
-          <li id="cut">Cut</li>
-          <li id="copy">Copy</li>
-          <li id="copy_w_input" class="disabled">Copy with Input</li>
-          <li id="paste">Paste</li>
-          <li id="select_all" class="endBlock">Select All</li>
+          <li id="mcut">Cut</li>
+          <li id="mcopy">Copy</li>
+          <li id="mcopy_w_input" class="disabled">Copy with Input</li>
+          <li class="paste">Paste</li>
+          <li id="mselect_all" class="endBlock">Select All</li>
           <li id="variables" class="disabled">Variables</li>
           <li id="workflow_property" class="disabled">Workflow Properties</li>
       </ul>
@@ -86,7 +86,7 @@
           <li id="cut">Cut</li>
           <li id="copy">Copy</li>
           <li id="copy_w_input" class="disabled">Copy with Input</li>
-          <li id="paste">Paste</li>
+          <li class="paste">Paste</li>
           <li id="select_all">Select All</li>
       </ul>
   </div>
@@ -388,8 +388,8 @@
       <!-- DATA SOURCE END TAB CONTENT AREA -->
  
 <input type="button" value="Help"/>
-<input type="button" value="Cancel" />
-<input type="button" value="OK" />
+<input type="button" value="Cancel" class="cancelObjectButton"/>
+<input type="button" value="OK" class="createObjectButton" id="createDataSourceButton"/>
 </div>
 
    </div>

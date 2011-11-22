@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -33,6 +33,8 @@
     };
     pasteSelected = function(objArray) {
       var i, _ref, _results;
+      console.log("PASTING!!!");
+      console.log(objArray);
       _results = [];
       for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
         _results.push(objArray[i].modID === 0 ? currentCanvas.newModule({
@@ -86,14 +88,14 @@
       menuBox = getBox($('#main-menu'));
       coord = location;
       if (currentCanvas.isSelected()) {
-        $('#edit-menu').hide();
-        $('#main-menu').show().css({
+        $('#main-menu').hide();
+        $('#edit-menu').show().css({
           top: coord.y,
           left: coord.x
         });
       } else {
-        $('#main-menu').hide();
-        $('#edit-menu').show().css({
+        $('#edit-menu').hide();
+        $('#main-menu').show().css({
           top: coord.y,
           left: coord.x
         });
@@ -139,11 +141,11 @@
       $('#module-metadata-bt.tabSelected').removeClass('tabSelected');
       $('#module-info-module').show();
       $('#module-info-module-website').show();
-      $('li#module-info-bt').addClass('tabSelected');
-      $('#option_data_source').click(function(e) {
-        $('#popup-data-source').show();
-        return $('.popup-tab').hide();
-      });
+      return $('li#module-info-bt').addClass('tabSelected');
+    });
+    $('#option_data_source').click(function(e) {
+      $('#popup-data-source').show();
+      $('.popup-tab').hide();
       $('#data-source-info-bt').addClass('tabSelected');
       $('#data-source-info').show();
       return $('#data-source-inputs-bt.tabSelected').removeClass('tabSelected');
@@ -159,19 +161,30 @@
       currentCanvas.newModule(location, attr);
       return $(this).parents('.popUpObjectBox').hide();
     });
-    $('#paste').click(function() {
-      return pasteSelected(tempCopiedArray);
-    });
-    $('#copy').click(function() {
-      tempCopiedArray = currentCanvas.selectedObjectArray;
-      return console.log(tempCopiedArray);
-    });
     $('#createDataSinkButton').click(function() {
       currentCanvas.newDataSink(location, generate_data_sink_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
+    $('#createDataSourceButton').click(function() {
+      currentCanvas.newDataSource(location, generate_data_sink_attr());
+      return $(this).parents('.popUpObjectBox').hide();
+    });
     $('.cancelObjectButton').click(function() {
       return $(this).parents('.popUpObjectBox').hide();
+    });
+    oldCoord = {
+      x: 0,
+      y: 0
+    };
+    $('.paste').click(function(e) {
+      var newCoord;
+      newCoord = getCoord(e);
+      return pasteSelected(tempCopiedArray);
+    });
+    $('#copy').click(function(e) {
+      oldCoord = getCoord(e);
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      return console.log(tempCopiedArray);
     });
     window.canvasHash = {
       'canvas-1': new canvasDisplay($('#canvas-1'))

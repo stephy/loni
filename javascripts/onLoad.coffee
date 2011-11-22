@@ -35,6 +35,8 @@ $ ->
 	
 
 	pasteSelected = (objArray) ->
+		console.log "PASTING!!!"
+		console.log objArray
 		for i in [0..objArray.length-1]
 			if objArray[i].modID is 0 then currentCanvas.newModule({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
 			else if objArray[i].modID is 1 then currentCanvas.newDataSink({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
@@ -73,11 +75,11 @@ $ ->
 		
 		# Show Edit or new depending if object is selected
 		if currentCanvas.isSelected()
-			$('#edit-menu').hide()
-			$('#main-menu').show().css({top:coord.y, left:coord.x})
-		else
 			$('#main-menu').hide()
 			$('#edit-menu').show().css({top:coord.y, left:coord.x})
+		else
+			$('#edit-menu').hide()
+			$('#main-menu').show().css({top:coord.y, left:coord.x})
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
@@ -121,9 +123,9 @@ $ ->
 		$('#module-info-module-website').show()
 		$('li#module-info-bt').addClass('tabSelected')
 		
-  $('#option_data_source').click (e) ->
-  	$('#popup-data-source').show()
-  	$('.popup-tab').hide()
+	$('#option_data_source').click (e) ->
+		$('#popup-data-source').show()
+		$('.popup-tab').hide()
 		$('#data-source-info-bt').addClass('tabSelected')
 		$('#data-source-info').show()
 		$('#data-source-inputs-bt.tabSelected').removeClass('tabSelected')
@@ -138,20 +140,27 @@ $ ->
 	$('#createModuleButton').click ->
 		currentCanvas.newModule(location, attr)
 		$(@).parents('.popUpObjectBox').hide()
-	
-	$('#paste').click ->
-		pasteSelected(tempCopiedArray)
-	
-	$('#copy').click ->
-		tempCopiedArray = currentCanvas.selectedObjectArray
-		console.log tempCopiedArray
 		
 	$('#createDataSinkButton').click ->
 		currentCanvas.newDataSink(location, generate_data_sink_attr())
 		$(@).parents('.popUpObjectBox').hide()
 		
+	$('#createDataSourceButton').click ->
+		currentCanvas.newDataSource(location, generate_data_sink_attr())
+		$(@).parents('.popUpObjectBox').hide()
+		
 	$('.cancelObjectButton').click ->
 		$(@).parents('.popUpObjectBox').hide()
+	
+	oldCoord = {x:0, y:0}
+	$('.paste').click (e) ->
+		newCoord = getCoord(e)
+		pasteSelected(tempCopiedArray)
+	
+	$('#copy').click (e)->
+		oldCoord = getCoord(e)
+		tempCopiedArray = currentCanvas.selectedObjectArray
+		console.log tempCopiedArray
 		
 		
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}

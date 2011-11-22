@@ -63,7 +63,7 @@ window.canvasDisplay = class canvasDisplay
 # ------ end of Drawing paths ------
 
 	isSelected: ->
-		if (@glow!="") then return false else return true		
+		if (@selectedObjectArray.length > 0) then return true else return false
 	
 	select: (x, y, w, h) ->
 		@paper.rect(x, y, w, h)

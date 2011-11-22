@@ -88,10 +88,10 @@
       return _results;
     };
     canvasDisplay.prototype.isSelected = function() {
-      if (this.glow !== "") {
-        return false;
-      } else {
+      if (this.selectedObjectArray.length > 0) {
         return true;
+      } else {
+        return false;
       }
     };
     canvasDisplay.prototype.select = function(x, y, w, h) {
