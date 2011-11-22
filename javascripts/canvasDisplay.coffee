@@ -13,11 +13,17 @@ window.canvasDisplay = class canvasDisplay
 		@selectedObjectArray = []
 		
 	newModule: (coord, attr)->
-		@holder.push(new module(@, coord, attr))
+		a = new module(@, coord, attr)
+		@holder.push(a)
+		return a
 	newDataSink: (coord, attr)->
-		@holder.push(new dataSink(@, coord, attr))
+		a = new dataSink(@, coord, attr)
+		@holder.push(a)
+		return a
 	newDataSource: (coord, attr)->
-		@holder.push(new dataSource(@, coord, attr))
+		a = new dataSource(@, coord, attr)
+		@holder.push(a)
+		return a
 
 	setGlow: (obj) ->
 		if (obj.moduleGlow!="") then obj.removeAll()

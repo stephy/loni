@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -32,21 +32,28 @@
       return data_sink_attr;
     };
     pasteSelected = function(objArray) {
-      var i, _ref, _results;
+      var a, i, _ref, _results;
       console.log("PASTING!!!");
       console.log(objArray);
       _results = [];
       for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        _results.push(objArray[i].modID === 0 ? currentCanvas.newModule({
-          x: objArray[i].c.getBBox().x,
-          y: objArray[i].c.getBBox().y
-        }, attr) : objArray[i].modID === 1 ? currentCanvas.newDataSink({
-          x: objArray[i].c.getBBox().x,
-          y: objArray[i].c.getBBox().y
-        }, attr) : currentCanvas.newDataSource({
-          x: objArray[i].c.getBBox().x,
-          y: objArray[i].c.getBBox().y
-        }, attr));
+        if (objArray[i].modID === 0) {
+          a = currentCanvas.newModule({
+            x: objArray[i].c.getBBox().x,
+            y: objArray[i].c.getBBox().y
+          }, attr);
+        } else if (objArray[i].modID === 1) {
+          a = currentCanvas.newDataSink({
+            x: objArray[i].c.getBBox().x,
+            y: objArray[i].c.getBBox().y
+          }, attr);
+        } else {
+          a = currentCanvas.newDataSource({
+            x: objArray[i].c.getBBox().x,
+            y: objArray[i].c.getBBox().y
+          }, attr);
+        }
+        _results.push(a.ztranslate(newCoord.x - oldCoord.x, newCoord.y - oldCoord.y));
       }
       return _results;
     };
@@ -176,13 +183,23 @@
       x: 0,
       y: 0
     };
+    newCoord = {
+      x: 0,
+      y: 0
+    };
     $('.paste').click(function(e) {
-      var newCoord;
-      newCoord = getCoord(e);
+      newCoord = {
+        x: e.pageX,
+        y: e.pageY
+      };
       return pasteSelected(tempCopiedArray);
     });
     $('#copy').click(function(e) {
-      oldCoord = getCoord(e);
+      oldCoord = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      console.log(e.pageX);
       tempCopiedArray = currentCanvas.selectedObjectArray;
       return console.log(tempCopiedArray);
     });

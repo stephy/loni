@@ -38,9 +38,13 @@ $ ->
 		console.log "PASTING!!!"
 		console.log objArray
 		for i in [0..objArray.length-1]
-			if objArray[i].modID is 0 then currentCanvas.newModule({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
-			else if objArray[i].modID is 1 then currentCanvas.newDataSink({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
-			else currentCanvas.newDataSource({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			if objArray[i].modID is 0
+				a = currentCanvas.newModule({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			else if objArray[i].modID is 1
+				a = currentCanvas.newDataSink({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			else 
+				a =currentCanvas.newDataSource({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			a.ztranslate(newCoord.x-oldCoord.x, newCoord.y-oldCoord.y)
 			
 	getCoord = (e) ->
 		# Need to take into account mozilla
@@ -153,12 +157,14 @@ $ ->
 		$(@).parents('.popUpObjectBox').hide()
 	
 	oldCoord = {x:0, y:0}
+	newCoord = {x:0, y:0}
 	$('.paste').click (e) ->
-		newCoord = getCoord(e)
+		newCoord = {x: e.pageX, y:e.pageY}
 		pasteSelected(tempCopiedArray)
 	
-	$('#copy').click (e)->
-		oldCoord = getCoord(e)
+	$('#copy').click (e) ->
+		oldCoord = {x: e.pageX, y:e.pageY}
+		console.log e.pageX
 		tempCopiedArray = currentCanvas.selectedObjectArray
 		console.log tempCopiedArray
 		

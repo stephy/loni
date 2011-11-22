@@ -21,13 +21,22 @@
       this.selectedObjectArray = [];
     }
     canvasDisplay.prototype.newModule = function(coord, attr) {
-      return this.holder.push(new module(this, coord, attr));
+      var a;
+      a = new module(this, coord, attr);
+      this.holder.push(a);
+      return a;
     };
     canvasDisplay.prototype.newDataSink = function(coord, attr) {
-      return this.holder.push(new dataSink(this, coord, attr));
+      var a;
+      a = new dataSink(this, coord, attr);
+      this.holder.push(a);
+      return a;
     };
     canvasDisplay.prototype.newDataSource = function(coord, attr) {
-      return this.holder.push(new dataSource(this, coord, attr));
+      var a;
+      a = new dataSource(this, coord, attr);
+      this.holder.push(a);
+      return a;
     };
     canvasDisplay.prototype.setGlow = function(obj) {
       if (obj.moduleGlow !== "") {
