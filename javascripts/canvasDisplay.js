@@ -45,7 +45,9 @@
       }
       if (this.rectangle !== void 0 && this.rectangle.testRange(obj.c.getBBox())) {
         this.selectedObjectArray.push(obj);
-        obj.isBeingSelected = 1;
+        if (obj.modID !== 0) {
+          obj.objs[0].isBeingSelected = 1;
+        }
         return obj.glowAll({
           color: '#000'
         });
@@ -165,7 +167,9 @@
       var i, j, _ref, _ref2, _results;
       this.selectedObjectArray = [];
       for (j = 0, _ref = this.holder.length - 1; 0 <= _ref ? j <= _ref : j >= _ref; 0 <= _ref ? j++ : j--) {
-        this.holder[j].isBeingSelected = 0;
+        if (this.holder[j].objs[0] !== void 0) {
+          this.holder[j].objs[0].isBeingSelected = 0;
+        }
       }
       _results = [];
       for (i = 0, _ref2 = this.holder.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {

@@ -31,7 +31,8 @@ window.canvasDisplay = class canvasDisplay
 		if (obj.moduleGlow!="") then obj.removeAll()
 		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())
 			@selectedObjectArray.push(obj)
-			obj.isBeingSelected = 1
+			if obj.modID isnt 0
+				obj.objs[0].isBeingSelected = 1
 			obj.glowAll({color:'#000'})
 			
 		
@@ -131,7 +132,8 @@ window.canvasDisplay = class canvasDisplay
 	setLight: ->
 		@selectedObjectArray = []
 		for j in [0..@holder.length-1]
-			@holder[j].isBeingSelected = 0
+			if @holder[j].objs[0] != undefined
+				@holder[j].objs[0].isBeingSelected = 0
 		for i in [0..@holder.length-1]
 			this.setGlow(@holder[i])
 			
