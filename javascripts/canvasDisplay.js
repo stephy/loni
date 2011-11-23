@@ -19,6 +19,7 @@
       this.rectangle = void 0;
       this.holder = [];
       this.selectedObjectArray = [];
+      this.rectangleStatus = 0;
     }
     canvasDisplay.prototype.newModule = function(coord, attr) {
       var a;
@@ -67,6 +68,7 @@
       return this.drawingPath = true;
     };
     canvasDisplay.prototype.drawPath = function(coord) {
+      this.rectangleStatus = 1;
       if (this.path) {
         this.path.remPath(this.path.getPath());
       }
@@ -82,6 +84,7 @@
     canvasDisplay.prototype.savePath = function(coord, endObj) {
       if (this.startObj.getType() !== endObj.getType()) {
         this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
+        this.rectangleStatus = 0;
       }
       this.drawingPath = false;
       return this.startPathCoord;
@@ -93,6 +96,16 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         ele = _ref[_i];
         _results.push(this.paper.connection2(ele));
+      }
+      return _results;
+    };
+    canvasDisplay.prototype.moveToFront = function() {
+      var ele, _i, _len, _ref, _results;
+      _ref = this.holder;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        ele = _ref[_i];
+        _results.push(ele.c.toFront());
       }
       return _results;
     };

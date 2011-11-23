@@ -98,11 +98,14 @@ $ ->
 			
 			
 	$('svg').live 'mousemove', (e) ->
-		if currentCanvas.rectangle != undefined
-			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
-			currentCanvas.setLight()
-			console.log currentCanvas.selectedObjectArray.length
+		
+		currentCanvas.moveToFront()
+		if currentCanvas.rectangleStatus is 0
+			if currentCanvas.rectangle != undefined
+				currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
+				currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
+				currentCanvas.setLight()
+				console.log currentCanvas.selectedObjectArray.length
 				
 	$('svg').live 'mouseup', (e) ->
 		currentCanvas.setLight()

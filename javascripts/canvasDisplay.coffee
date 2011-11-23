@@ -11,6 +11,7 @@ window.canvasDisplay = class canvasDisplay
 		@rectangle = undefined
 		@holder = []
 		@selectedObjectArray = []
+		@rectangleStatus = 0
 		
 	newModule: (coord, attr)->
 		a = new module(@, coord, attr)
@@ -49,6 +50,7 @@ window.canvasDisplay = class canvasDisplay
 		@drawingPath = true
 		
 	drawPath: (coord) ->
+		@rectangleStatus = 1
 		if @path
 			@path.remPath(@path.getPath())
 		@path = new path(@paper, @startPathCoord, {x:coord.x-@offsetCoord.dx, y:coord.y-@offsetCoord.dy})
@@ -61,12 +63,19 @@ window.canvasDisplay = class canvasDisplay
 		# Start obj is @startObj, end obj is endObj
 		if @startObj.getType() != endObj.getType()
 			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))	
+			@rectangleStatus = 0
 		@drawingPath = false
 		return @startPathCoord
 	translatePaths: ->
+		
 		for ele in @paths
 			@paper.connection2(ele)
 # ------ end of Drawing paths ------
+
+# --- moving object infront of the paths
+	moveToFront: ->
+		for ele in @holder
+			ele.c.toFront()
 
 	isSelected: ->
 		if (@selectedObjectArray.length > 0) then return true else return false

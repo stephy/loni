@@ -120,11 +120,14 @@
       return offset = currentCanvas.offsetCoord;
     });
     $('svg').live('mousemove', function(e) {
-      if (currentCanvas.rectangle !== void 0) {
-        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
-        currentCanvas.setLight();
-        return console.log(currentCanvas.selectedObjectArray.length);
+      currentCanvas.moveToFront();
+      if (currentCanvas.rectangleStatus === 0) {
+        if (currentCanvas.rectangle !== void 0) {
+          currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+          currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
+          currentCanvas.setLight();
+          return console.log(currentCanvas.selectedObjectArray.length);
+        }
       }
     });
     $('svg').live('mouseup', function(e) {
