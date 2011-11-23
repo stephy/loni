@@ -32,12 +32,16 @@
       return data_sink_attr;
     };
     pasteSelected = function(objArray) {
-      var a, b, i, map, _ref, _results;
+      var a, b, i, map, _ref, _ref2, _results;
       console.log("PASTING!!!");
       map = new Object();
-      _results = [];
       for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        objArray[i].objs[0].isBeingSelected = 1;
+        if (objArray[i].objs[0] !== void 0) {
+          objArray[i].objs[0].isBeingSelected = 1;
+        }
+      }
+      _results = [];
+      for (i = 0, _ref2 = objArray.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
         _results.push((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected === 0) ? (console.log("GO IF"), console.log(objArray[i]), createNewCopy(objArray[i])) : map[objArray[i].objs[0].connectedObject] === void 0 ? (console.log("GO ELSE 1"), map[objArray[i].objs[0]] = objArray[i]) : (console.log("GO ELSE 2"), a = createNewCopy(map[objArray[i].objs[0].connectedObject]), b = createNewCopy(objArray[i]), map = new Object(), currentCanvas.savePathForCopy(a.objs[0], b.objs[0])));
       }
       return _results;

@@ -41,7 +41,9 @@ $ ->
 		console.log "PASTING!!!"
 		map = new Object()
 		for i in [0..objArray.length-1]		
-			objArray[i].objs[0].isBeingSelected = 1
+			if objArray[i].objs[0] != undefined
+				objArray[i].objs[0].isBeingSelected = 1
+		for i in [0..objArray.length-1]		
 			if (objArray[i].modID is 0) or (objArray[i].objs[0].connectedObject is undefined) or (objArray[i].objs[0].connectedObject.isBeingSelected is 0)
 				console.log "GO IF"
 				console.log objArray[i]
