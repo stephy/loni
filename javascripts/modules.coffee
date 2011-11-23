@@ -12,6 +12,8 @@ class baseModule
 		@c.hover(@hoverIn, @hoverOut)
 		@moduleGlow = ""
 		@modID = 0
+		@connectedObject = undefined
+		@isBeingSelected = 0
 		
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,40)

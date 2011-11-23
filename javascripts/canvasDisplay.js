@@ -45,6 +45,7 @@
       }
       if (this.rectangle !== void 0 && this.rectangle.testRange(obj.c.getBBox())) {
         this.selectedObjectArray.push(obj);
+        obj.isBeingSelected = 1;
         return obj.glowAll({
           color: '#000'
         });
@@ -84,6 +85,8 @@
     canvasDisplay.prototype.savePath = function(coord, endObj) {
       if (this.startObj.getType() !== endObj.getType()) {
         this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
+        this.startObj.connectedObject = endObj;
+        endObj.connectedObject = this.startObj;
         this.rectangleStatus = 0;
       }
       this.drawingPath = false;
@@ -146,24 +149,26 @@
       return this.paper.clear();
     };
     canvasDisplay.prototype.setLight = function() {
-      var i, _ref, _results;
+      var i, j, _ref, _ref2, _results;
       this.selectedObjectArray = [];
+      for (j = 0, _ref = this.holder.length - 1; 0 <= _ref ? j <= _ref : j >= _ref; 0 <= _ref ? j++ : j--) {
+        this.holder[j].isBeingSelected = 0;
+      }
       _results = [];
-      for (i = 0, _ref = this.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+      for (i = 0, _ref2 = this.holder.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
         _results.push(this.setGlow(this.holder[i]));
       }
       return _results;
     };
-    canvasDisplay.prototype.gCopy = function(objArray) {
-      var i, _ref, _results;
+    canvasDisplay.prototype.gCopy = function() {
+      var i, j, _ref, _ref2, _results;
+      for (i = 0, _ref = this.selectedObjectArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        this.selectedObjectMap[this.selectedObjectArray[i].c] = i;
+      }
       _results = [];
-      for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        _results.push(objArray[i].modID === 0 ? newDataSink({
-          x: 300,
-          y: 300
-        }, {
-          name: "Song!"
-        }) : objArray[i].modID === 1 ? console.log("data sink") : console.log("data source"));
+      for (j = 0, _ref2 = this.selectedObjectArray.length - 1; 0 <= _ref2 ? j <= _ref2 : j >= _ref2; 0 <= _ref2 ? j++ : j--) {
+        console.log("here is j" + j);
+        _results.push(console.log(this.selectedObjectMap[this.selectedObjectArray[j].c]));
       }
       return _results;
     };

@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+    var attr, coordAfterBoundary, createNewCopy, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -32,30 +32,35 @@
       return data_sink_attr;
     };
     pasteSelected = function(objArray) {
-      var a, i, _ref, _results;
+      var a, b, i, map, _ref, _results;
       console.log("PASTING!!!");
-      console.log(objArray);
+      map = new Object();
       _results = [];
       for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        if (objArray[i].modID === 0) {
-          a = currentCanvas.newModule({
-            x: objArray[i].c.getBBox().x,
-            y: objArray[i].c.getBBox().y
-          }, attr);
-        } else if (objArray[i].modID === 1) {
-          a = currentCanvas.newDataSink({
-            x: objArray[i].c.getBBox().x,
-            y: objArray[i].c.getBBox().y
-          }, attr);
-        } else {
-          a = currentCanvas.newDataSource({
-            x: objArray[i].c.getBBox().x,
-            y: objArray[i].c.getBBox().y
-          }, attr);
-        }
-        _results.push(a.ztranslate(newCoord.x - oldCoord.x, newCoord.y - oldCoord.y));
+        _results.push((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected = 0) ? createNewCopy(objArray[i]) : map[objArray[i].objs[0].connectedObject] === void 0 ? map[objArray[i].objs[0]] = objArray[i] : map[objArray[i].objs[0].connectedObject] !== void 0 ? (a = createNewCopy(map[objArray[i].objs[0].connectedObject]), b = createNewCopy(objArray[i]), currentCanvas.paths.push(currentCanvas.paper.connection2(a.objs[0].c, b.objs[0].c, "#000"))) : void 0);
       }
       return _results;
+    };
+    createNewCopy = function(obj) {
+      var a;
+      if (obj.modID === 0) {
+        a = currentCanvas.newModule({
+          x: obj.c.getBBox().x,
+          y: obj.c.getBBox().y
+        }, attr);
+      } else if (obj.modID === 1) {
+        a = currentCanvas.newDataSink({
+          x: obj.c.getBBox().x,
+          y: obj.c.getBBox().y
+        }, attr);
+      } else {
+        a = currentCanvas.newDataSource({
+          x: obj.c.getBBox().x,
+          y: obj.c.getBBox().y
+        }, attr);
+      }
+      a.ztranslate(newCoord.x - oldCoord.x, newCoord.y - oldCoord.y);
+      return a;
     };
     getCoord = function(e) {
       var coord;

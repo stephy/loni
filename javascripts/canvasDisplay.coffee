@@ -12,6 +12,7 @@ window.canvasDisplay = class canvasDisplay
 		@holder = []
 		@selectedObjectArray = []
 		@rectangleStatus = 0
+
 		
 	newModule: (coord, attr)->
 		a = new module(@, coord, attr)
@@ -30,6 +31,7 @@ window.canvasDisplay = class canvasDisplay
 		if (obj.moduleGlow!="") then obj.removeAll()
 		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())
 			@selectedObjectArray.push(obj)
+			obj.isBeingSelected = 1
 			obj.glowAll({color:'#000'})
 			
 		
@@ -62,12 +64,19 @@ window.canvasDisplay = class canvasDisplay
 	savePath: (coord, endObj)->
 		# Start obj is @startObj, end obj is endObj
 		if @startObj.getType() != endObj.getType()
-			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))	
+			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
+			#use HASHMAP	
+			@startObj.connectedObject = endObj
+			endObj.connectedObject = @startObj
+			
+			
+		#	if @map[@startObj.c] is undefined
+		#		@map[@startObj.c ] = endObj.c
 			@rectangleStatus = 0
 		@drawingPath = false
+		#console.log @map[@startObj.c]
 		return @startPathCoord
-	translatePaths: ->
-		
+	translatePaths: ->		
 		for ele in @paths
 			@paper.connection2(ele)
 # ------ end of Drawing paths ------
@@ -111,12 +120,19 @@ window.canvasDisplay = class canvasDisplay
 		
 	setLight: ->
 		@selectedObjectArray = []
+		for j in [0..@holder.length-1]
+			@holder[j].isBeingSelected = 0
 		for i in [0..@holder.length-1]
 			this.setGlow(@holder[i])
 			
 			#data source 2 data sink 1 module 0
-	gCopy: (objArray) ->
-		for i in [0..objArray.length-1]
-			if objArray[i].modID is 0 then newDataSink({x:300, y:300}, {name: "Song!"})
-			else if objArray[i].modID is 1 then console.log "data sink"
-			else console.log "data source"
+	gCopy: ->
+		for i in [0..@selectedObjectArray.length-1]	
+		#	console.log @selectedObjectArray[i].c + i		
+			@selectedObjectMap[@selectedObjectArray[i].c] = i
+		for j in [0..@selectedObjectArray.length-1]
+			console.log "here is j" + j
+			console.log @selectedObjectMap[@selectedObjectArray[j].c]
+			
+			
+		

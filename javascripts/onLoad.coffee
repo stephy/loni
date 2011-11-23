@@ -7,6 +7,7 @@ $ ->
 	tempCopiedArray = []
 	# Testing:
 	attr = {name: "Song!"}
+
 	
 
 	
@@ -34,17 +35,33 @@ $ ->
 	  return data_sink_attr
 	
 
+	
+
 	pasteSelected = (objArray) ->
 		console.log "PASTING!!!"
-		console.log objArray
+		map = new Object()
 		for i in [0..objArray.length-1]
-			if objArray[i].modID is 0
-				a = currentCanvas.newModule({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
-			else if objArray[i].modID is 1
-				a = currentCanvas.newDataSink({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+			if (objArray[i].modID is 0) or (objArray[i].objs[0].connectedObject is undefined) or (objArray[i].objs[0].connectedObject.isBeingSelected = 0)
+				createNewCopy(objArray[i])
 			else 
-				a =currentCanvas.newDataSource({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
-			a.ztranslate(newCoord.x-oldCoord.x, newCoord.y-oldCoord.y)
+				if map[objArray[i].objs[0].connectedObject] is undefined
+					map[objArray[i].objs[0]] = objArray[i]
+				else if map[objArray[i].objs[0].connectedObject] isnt undefined
+					a = createNewCopy(map[objArray[i].objs[0].connectedObject])
+					b = createNewCopy(objArray[i])
+					currentCanvas.paths.push(currentCanvas.paper.connection2(a.objs[0].c, b.objs[0].c, "#000"))
+					
+					
+	
+	createNewCopy = (obj) ->
+		if obj.modID is 0
+			a = currentCanvas.newModule({x:obj.c.getBBox().x, y:obj.c.getBBox().y}, attr)			 
+		else if obj.modID is 1
+			a = currentCanvas.newDataSink({x:obj.c.getBBox().x, y:obj.c.getBBox().y}, attr)
+		else 
+			a =currentCanvas.newDataSource({x:obj.c.getBBox().x, y:obj.c.getBBox().y}, attr)
+		a.ztranslate(newCoord.x-oldCoord.x, newCoord.y-oldCoord.y)
+		return a
 			
 	getCoord = (e) ->
 		# Need to take into account mozilla

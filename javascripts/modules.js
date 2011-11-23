@@ -33,6 +33,8 @@
       this.c.hover(this.hoverIn, this.hoverOut);
       this.moduleGlow = "";
       this.modID = 0;
+      this.connectedObject = void 0;
+      this.isBeingSelected = 0;
     }
     baseModule.prototype.draw = function() {
       var c;
