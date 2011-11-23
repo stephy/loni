@@ -40,16 +40,18 @@ $ ->
 	pasteSelected = (objArray) ->
 		console.log "PASTING!!!"
 		map = new Object()
+		console.log map
 		for i in [0..objArray.length-1]
 			if (objArray[i].modID is 0) or (objArray[i].objs[0].connectedObject is undefined) or (objArray[i].objs[0].connectedObject.isBeingSelected = 0)
 				createNewCopy(objArray[i])
 			else 
 				if map[objArray[i].objs[0].connectedObject] is undefined
 					map[objArray[i].objs[0]] = objArray[i]
-				else if map[objArray[i].objs[0].connectedObject] isnt undefined
+				else
 					a = createNewCopy(map[objArray[i].objs[0].connectedObject])
 					b = createNewCopy(objArray[i])
-					currentCanvas.paths.push(currentCanvas.paper.connection2(a.objs[0].c, b.objs[0].c, "#000"))
+					#currentCanvas.paths.push(currentCanvas.paper.connection2(a.objs[0].c, b.objs[0].c, "#000"))
+					currentCanvas.savePathForCopy(a.objs[0],b.objs[0])
 					
 					
 	

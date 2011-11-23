@@ -35,9 +35,10 @@
       var a, b, i, map, _ref, _results;
       console.log("PASTING!!!");
       map = new Object();
+      console.log(map);
       _results = [];
       for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        _results.push((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected = 0) ? createNewCopy(objArray[i]) : map[objArray[i].objs[0].connectedObject] === void 0 ? map[objArray[i].objs[0]] = objArray[i] : map[objArray[i].objs[0].connectedObject] !== void 0 ? (a = createNewCopy(map[objArray[i].objs[0].connectedObject]), b = createNewCopy(objArray[i]), currentCanvas.paths.push(currentCanvas.paper.connection2(a.objs[0].c, b.objs[0].c, "#000"))) : void 0);
+        _results.push((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected = 0) ? createNewCopy(objArray[i]) : map[objArray[i].objs[0].connectedObject] === void 0 ? map[objArray[i].objs[0]] = objArray[i] : (a = createNewCopy(map[objArray[i].objs[0].connectedObject]), b = createNewCopy(objArray[i]), currentCanvas.savePathForCopy(a.objs[0], b.objs[0])));
       }
       return _results;
     };

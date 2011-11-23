@@ -68,14 +68,24 @@ window.canvasDisplay = class canvasDisplay
 			#use HASHMAP	
 			@startObj.connectedObject = endObj
 			endObj.connectedObject = @startObj
-			
-			
-		#	if @map[@startObj.c] is undefined
-		#		@map[@startObj.c ] = endObj.c
 			@rectangleStatus = 0
 		@drawingPath = false
 		#console.log @map[@startObj.c]
 		return @startPathCoord
+		
+	savePathForCopy: (obj1, obj2) ->
+		@startObj = obj1
+		endObj = obj2
+		if @startObj.getType() != endObj.getType()
+			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
+			#use HASHMAP	
+			@startObj.connectedObject = endObj
+			endObj.connectedObject = @startObj
+			@rectangleStatus = 0
+		@drawingPath = false
+		#console.log @map[@startObj.c]
+		return @startPathCoord
+		
 	translatePaths: ->		
 		for ele in @paths
 			@paper.connection2(ele)

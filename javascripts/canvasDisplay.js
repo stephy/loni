@@ -92,6 +92,19 @@
       this.drawingPath = false;
       return this.startPathCoord;
     };
+    canvasDisplay.prototype.savePathForCopy = function(obj1, obj2) {
+      var endObj;
+      this.startObj = obj1;
+      endObj = obj2;
+      if (this.startObj.getType() !== endObj.getType()) {
+        this.paths.push(this.paper.connection2(this.startObj.c, endObj.c, "#000"));
+        this.startObj.connectedObject = endObj;
+        endObj.connectedObject = this.startObj;
+        this.rectangleStatus = 0;
+      }
+      this.drawingPath = false;
+      return this.startPathCoord;
+    };
     canvasDisplay.prototype.translatePaths = function() {
       var ele, _i, _len, _ref, _results;
       _ref = this.paths;
