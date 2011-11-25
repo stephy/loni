@@ -234,6 +234,9 @@
           x: tempCopiedArray[i].c.getBBox().x,
           y: tempCopiedArray[i].c.getBBox().y
         };
+        if (tempCopiedArray[i].moduleGlow !== "") {
+          tempCopiedArray[i].removeAll();
+        }
         currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject();
         currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
       }
@@ -244,6 +247,9 @@
       var i, _ref;
       tempCopiedArray = currentCanvas.selectedObjectArray;
       for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        if (tempCopiedArray[i].moduleGlow !== "") {
+          tempCopiedArray[i].removeAll();
+        }
         tempCopiedArray[i].deleteObject();
         currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
       }

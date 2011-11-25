@@ -220,6 +220,7 @@ $ ->
 		#	console.log tempCopiedArray[i]
 			#tempCopiedArray[i].remove()
 			tempCopiedArray[i].coord = {x: tempCopiedArray[i].c.getBBox().x, y: tempCopiedArray[i].c.getBBox().y} 
+			if (tempCopiedArray[i].moduleGlow!="") then tempCopiedArray[i].removeAll()
 			#console.log "copying" 
 			#console.log tempCopiedArray[i].coord
 			currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject()
@@ -233,6 +234,7 @@ $ ->
 		for i in [0..tempCopiedArray.length-1]
 		#	console.log tempCopiedArray[i]
 			#tempCopiedArray[i].removeAll()
+			if (tempCopiedArray[i].moduleGlow!="") then tempCopiedArray[i].removeAll()
 			tempCopiedArray[i].deleteObject()
 			#delete currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)]
 			currentCanvas.holder.splice( $.inArray(tempCopiedArray[i], currentCanvas.holder), 1 );
