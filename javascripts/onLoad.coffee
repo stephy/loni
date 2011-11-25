@@ -63,12 +63,19 @@ $ ->
 					
 	
 	createNewCopy = (obj) ->
+		if obj.c.getBBox().x != undefined
+			theCoord = {x:obj.c.getBBox().x, y:obj.c.getBBox().y}
+		else
+			console.log "beta"
+			console.log obj.coord
+			theCoord = obj.coord
 		if obj.modID is 0
-			a = currentCanvas.newModule({x:obj.c.getBBox().x, y:obj.c.getBBox().y}, attr)			 
+			a = currentCanvas.newModule(theCoord, attr)		
+				 
 		else if obj.modID is 1
-			a = currentCanvas.newDataSink({x:obj.c.getBBox().x, y:obj.c.getBBox().y}, attr)
+			a = currentCanvas.newDataSink(theCoord, attr)
 		else 
-			a =currentCanvas.newDataSource({x:obj.c.getBBox().x, y:obj.c.getBBox().y}, attr)
+			a =currentCanvas.newDataSource(theCoord, attr)
 		a.ztranslate(newCoord.x-oldCoord.x, newCoord.y-oldCoord.y)
 		return a
 			
@@ -184,19 +191,63 @@ $ ->
 		
 	$('.cancelObjectButton').click ->
 		$(@).parents('.popUpObjectBox').hide()
-	
+		
 	oldCoord = {x:0, y:0}
 	newCoord = {x:0, y:0}
 	$('.paste').click (e) ->
+		console.log tempCopiedArray
 		newCoord = {x: e.pageX, y:e.pageY}
-		pasteSelected(tempCopiedArray)
+		if tempCopiedArray.length > 0 then pasteSelected(tempCopiedArray)
+		console.log currentCanvas.holder
 	
 	$('#copy').click (e) ->
 		oldCoord = {x: e.pageX, y:e.pageY}
 		console.log e.pageX
 		tempCopiedArray = currentCanvas.selectedObjectArray
 		console.log tempCopiedArray
+	
+	$('#cut').click (e) ->
+		oldCoord = {x: e.pageX, y:e.pageY}
+		tempCopiedArray = currentCanvas.selectedObjectArray
+		#holdMap = new Object()
+		#for i in [0..currentCanvas.holder.length-1]	
+		#	holdMap[currentCanvas.holder[i].objs[0]] = 
+		#console.log holdMap
+		#console.log currentCanvas.selectedObjectArray
+		console.log "here"
+		#console.log currentCanvas.selectedObjectArray
+		for i in [0..tempCopiedArray.length-1]
+		#	console.log tempCopiedArray[i]
+			#tempCopiedArray[i].remove()
+			tempCopiedArray[i].coord = {x: tempCopiedArray[i].c.getBBox().x, y: tempCopiedArray[i].c.getBBox().y} 
+			#console.log "copying" 
+			#console.log tempCopiedArray[i].coord
+			currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject()
+			#delete currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)]
+			currentCanvas.holder.splice( $.inArray(tempCopiedArray[i], currentCanvas.holder), 1 );
+		console.log currentCanvas.holder
+		console.log tempCopiedArray
 		
+	$('#delete').click (e) ->
+		tempCopiedArray = currentCanvas.selectedObjectArray
+		for i in [0..tempCopiedArray.length-1]
+		#	console.log tempCopiedArray[i]
+			#tempCopiedArray[i].removeAll()
+			tempCopiedArray[i].deleteObject()
+			#delete currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)]
+			currentCanvas.holder.splice( $.inArray(tempCopiedArray[i], currentCanvas.holder), 1 );
+		tempCopiedArray = []
+		console.log currentCanvas.holder
+		#keys = [];
+		#for key in holdMap
+		#	if key != undefined
+		#		keys.push(key)
+		#console.log keys
+		#console.log "HEHE"
+		#c.remove()
+		#console.log currentCanvas.holder
+	$('#mselect_all').click ->
+		currentCanvas.setAllSelectedGlow()
 		
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}
 	window.currentCanvas = canvasHash['canvas-1']
@@ -205,3 +256,4 @@ $ ->
 	currentCanvas.newDataSink({x:100, y:200}, attr)
 	currentCanvas.newModule({x:450, y:250}, attr)
 	currentCanvas.newDataSource({x:400, y:250}, attr)
+	c = currentCanvas.newDataSink({x:300, y:200}, attr)

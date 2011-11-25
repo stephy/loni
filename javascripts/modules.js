@@ -59,6 +59,9 @@
         fill: '#75757c'
       });
     };
+    baseModule.prototype.deleteObject = function() {
+      return this.c.remove();
+    };
     baseModule.prototype.hoverOut = function() {
       return this.text.remove();
     };
@@ -258,6 +261,10 @@
       });
       return c;
     };
+    dataSink.prototype.deleteObject = function() {
+      this.c.remove();
+      return this.objs[0].deleteObject();
+    };
     return dataSink;
   })();
   window.source = source = (function() {
@@ -301,6 +308,10 @@
       }));
       this.modID = 2;
     }
+    dataSource.prototype.deleteObject = function() {
+      this.c.remove();
+      return this.objs[0].deleteObject();
+    };
     dataSource.prototype.draw = function() {
       var c;
       c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, this.dim.height / 2);

@@ -26,6 +26,9 @@ class baseModule
 		@text = @disp.paper.text(dim.x+dim.width/2+60,dim.y+20, @attr.name)
 		label = @text
 		label.attr('font-size':20, fill:'#75757c')
+	
+	deleteObject: ->
+		@c.remove()
 
 	hoverOut: =>
 		@text.remove()
@@ -138,6 +141,10 @@ window.dataSink = class dataSink extends baseModule
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
 		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})
 		return c
+		
+	deleteObject: ->
+		@c.remove()
+		@objs[0].deleteObject()
 
 window.source = class source extends sink
 	constructor: (@disp, @prevCoord, @attr)->
@@ -159,6 +166,11 @@ window.dataSource = class dataSource extends baseModule
 		super(@disp, @prevCoord, @attr)
 		@objs.push(new source(@disp, @prevCoord, {name:"Source"}))
 		@modID = 2
+	
+	deleteObject: ->
+		@c.remove()
+		@objs[0].deleteObject()	
+	
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)
 		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})

@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, createNewCopy, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+    var attr, c, coordAfterBoundary, createNewCopy, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -47,22 +47,23 @@
       return _results;
     };
     createNewCopy = function(obj) {
-      var a;
-      if (obj.modID === 0) {
-        a = currentCanvas.newModule({
+      var a, theCoord;
+      if (obj.c.getBBox().x !== void 0) {
+        theCoord = {
           x: obj.c.getBBox().x,
           y: obj.c.getBBox().y
-        }, attr);
-      } else if (obj.modID === 1) {
-        a = currentCanvas.newDataSink({
-          x: obj.c.getBBox().x,
-          y: obj.c.getBBox().y
-        }, attr);
+        };
       } else {
-        a = currentCanvas.newDataSource({
-          x: obj.c.getBBox().x,
-          y: obj.c.getBBox().y
-        }, attr);
+        console.log("beta");
+        console.log(obj.coord);
+        theCoord = obj.coord;
+      }
+      if (obj.modID === 0) {
+        a = currentCanvas.newModule(theCoord, attr);
+      } else if (obj.modID === 1) {
+        a = currentCanvas.newDataSink(theCoord, attr);
+      } else {
+        a = currentCanvas.newDataSource(theCoord, attr);
       }
       a.ztranslate(newCoord.x - oldCoord.x, newCoord.y - oldCoord.y);
       return a;
@@ -201,11 +202,15 @@
       y: 0
     };
     $('.paste').click(function(e) {
+      console.log(tempCopiedArray);
       newCoord = {
         x: e.pageX,
         y: e.pageY
       };
-      return pasteSelected(tempCopiedArray);
+      if (tempCopiedArray.length > 0) {
+        pasteSelected(tempCopiedArray);
+      }
+      return console.log(currentCanvas.holder);
     });
     $('#copy').click(function(e) {
       oldCoord = {
@@ -215,6 +220,38 @@
       console.log(e.pageX);
       tempCopiedArray = currentCanvas.selectedObjectArray;
       return console.log(tempCopiedArray);
+    });
+    $('#cut').click(function(e) {
+      var i, _ref;
+      oldCoord = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      console.log("here");
+      for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        tempCopiedArray[i].coord = {
+          x: tempCopiedArray[i].c.getBBox().x,
+          y: tempCopiedArray[i].c.getBBox().y
+        };
+        currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject();
+        currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
+      }
+      console.log(currentCanvas.holder);
+      return console.log(tempCopiedArray);
+    });
+    $('#delete').click(function(e) {
+      var i, _ref;
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        tempCopiedArray[i].deleteObject();
+        currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
+      }
+      tempCopiedArray = [];
+      return console.log(currentCanvas.holder);
+    });
+    $('#mselect_all').click(function() {
+      return currentCanvas.setAllSelectedGlow();
     });
     window.canvasHash = {
       'canvas-1': new canvasDisplay($('#canvas-1'))
@@ -229,9 +266,13 @@
       x: 450,
       y: 250
     }, attr);
-    return currentCanvas.newDataSource({
+    currentCanvas.newDataSource({
       x: 400,
       y: 250
+    }, attr);
+    return c = currentCanvas.newDataSink({
+      x: 300,
+      y: 200
     }, attr);
   });
 }).call(this);

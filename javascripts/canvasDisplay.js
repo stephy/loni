@@ -53,6 +53,20 @@
         });
       }
     };
+    canvasDisplay.prototype.setAllSelectedGlow = function() {
+      var i, _ref, _results;
+      _results = [];
+      for (i = 0, _ref = this.holder.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        this.selectedObjectArray.push(this.holder[i]);
+        if (this.holder[i].modID !== 0) {
+          this.holder[i].objs[0].isBeingSelected = 1;
+        }
+        _results.push(this.holder[i].glowAll({
+          color: '#000'
+        }));
+      }
+      return _results;
+    };
     canvasDisplay.prototype.removeGlow = function() {
       if (this.glow !== "") {
         this.glow.removeAll();
@@ -166,16 +180,18 @@
     canvasDisplay.prototype.setLight = function() {
       var i, j, _ref, _ref2, _results;
       this.selectedObjectArray = [];
-      for (j = 0, _ref = this.holder.length - 1; 0 <= _ref ? j <= _ref : j >= _ref; 0 <= _ref ? j++ : j--) {
-        if (this.holder[j].objs[0] !== void 0) {
-          this.holder[j].objs[0].isBeingSelected = 0;
+      if (this.holder.length > 0) {
+        for (j = 0, _ref = this.holder.length - 1; 0 <= _ref ? j <= _ref : j >= _ref; 0 <= _ref ? j++ : j--) {
+          if (this.holder[j].objs[0] !== void 0) {
+            this.holder[j].objs[0].isBeingSelected = 0;
+          }
         }
+        _results = [];
+        for (i = 0, _ref2 = this.holder.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
+          _results.push(this.setGlow(this.holder[i]));
+        }
+        return _results;
       }
-      _results = [];
-      for (i = 0, _ref2 = this.holder.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-        _results.push(this.setGlow(this.holder[i]));
-      }
-      return _results;
     };
     canvasDisplay.prototype.gCopy = function() {
       var i, j, _ref, _ref2, _results;

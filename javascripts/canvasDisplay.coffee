@@ -34,7 +34,13 @@ window.canvasDisplay = class canvasDisplay
 			if obj.modID isnt 0
 				obj.objs[0].isBeingSelected = 1
 			obj.glowAll({color:'#000'})
-			
+
+	setAllSelectedGlow: () ->
+		for i in [0..@holder.length-1]
+			@selectedObjectArray.push(@holder[i])
+			if @holder[i].modID isnt 0
+				@holder[i].objs[0].isBeingSelected = 1
+			@holder[i].glowAll({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
@@ -131,11 +137,12 @@ window.canvasDisplay = class canvasDisplay
 		
 	setLight: ->
 		@selectedObjectArray = []
-		for j in [0..@holder.length-1]
-			if @holder[j].objs[0] != undefined
-				@holder[j].objs[0].isBeingSelected = 0
-		for i in [0..@holder.length-1]
-			this.setGlow(@holder[i])
+		if @holder.length > 0
+			for j in [0..@holder.length-1]
+				if @holder[j].objs[0] != undefined
+					@holder[j].objs[0].isBeingSelected = 0
+			for i in [0..@holder.length-1]
+				this.setGlow(@holder[i])
 			
 			#data source 2 data sink 1 module 0
 	gCopy: ->
