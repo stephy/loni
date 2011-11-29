@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var attr, coordAfterBoundary, generate_data_sink_attr, getBox, getCoord, items, location, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+    var attr, coordAfterBoundary, generate_data_sink_attr, generate_data_source_attr, generate_module_attr, getBox, getCoord, items, location, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -24,12 +24,45 @@
         tags: data_sink_tags,
         description: data_sink_description
       };
-      $('input#data-sink_name').val('');
-      $('input#data-sink_package').val('');
-      $('input#data-sink_pkg_version').val('');
-      $('input#data_sink_tags').val('');
-      $('textarea#data_sink_description').val('');
+      $('input.data_sink_input').val('');
+      $('textarea.data_sink_input').val('');
       return data_sink_attr;
+    };
+    generate_data_source_attr = function() {
+      var data_source_attr, data_source_description, data_source_name, data_source_package, data_source_pkg_version, data_source_tags;
+      data_source_name = $('input#data-source_name').val();
+      data_source_package = $('input#data-source_package').val();
+      data_source_pkg_version = $('input#data-source_pkg_version').val();
+      data_source_tags = $('input#data_source_tags').val();
+      data_source_description = $('textarea#data_source_description').val();
+      data_source_attr = {
+        name: data_source_name,
+        package: data_source_package,
+        version: data_source_pkg_version,
+        tags: data_source_tags,
+        description: data_source_description
+      };
+      $('input#data-source_input').val('');
+      $('textarea#data_source_input').val('');
+      return data_source_attr;
+    };
+    generate_module_attr = function() {
+      var module_attr, module_description, module_name, module_package, module_pkg_version, module_tags;
+      module_name = $('input#module_name').val();
+      module_package = $('input#module_package').val();
+      module_pkg_version = $('input#module_pkg_version').val();
+      module_tags = $('input#module_tags').val();
+      module_description = $('textarea#module_description').val();
+      module_attr = {
+        name: module_name,
+        package: module_package,
+        version: module_pkg_version,
+        tags: module_tags,
+        description: module_description
+      };
+      $('input#module_input').val('');
+      $('textarea#module_input').val('');
+      return module_attr;
     };
     pasteSelected = function(objArray) {
       var i, _ref, _results;
@@ -172,7 +205,7 @@
       return $('#data-sink-outputs-bt.tabSelected').removeClass('tabSelected');
     });
     $('#createModuleButton').click(function() {
-      currentCanvas.newModule(location, attr);
+      currentCanvas.newModule(location, generate_module_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('#paste').click(function() {
