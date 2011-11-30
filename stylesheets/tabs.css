@@ -92,5 +92,19 @@ ul.tabs li:hover ul{
 }
 
 
+.grouping-tab{
+	padding:2px 8px 2px 8px;
+	width: 60px;
+	background-color:#99C;
+	font-weight:bold;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #FFF;
+	border-right: 1px solid #999;
+	border-top: 1px solid #FFF;
+}
+.grouping-tab:hover{
+	cursor:pointer;
+}
+
 
 

@@ -72,5 +72,23 @@ jQuery(document).ready(function(){
       $('.popup-controller .tabs li').removeClass('tabSelected');
       $(this).addClass('tabSelected')
   });
+  
+  $('.grouping-tab').mousedown(function(){
+	$('.grouping-tab').css('background-color', '#CCC');
+	$('.grouping-tab').css('border-bottom', '1px solid #FFF');
+	$('.grouping-tab').css('border-left', '1px solid #999');
+	$('.grouping-tab').css('border-right', '1px solid #FFF');
+	$('.grouping-tab').css('border-top', '1px solid #999');
+  });
+  
+  $('.grouping-tab').mouseup(function(){
+	$('.grouping-tab').css('background-color', '#99C');
+	$('.grouping-tab').css('border-bottom', '1px solid #999');
+	$('.grouping-tab').css('border-left', '1px solid #fff');
+	$('.grouping-tab').css('border-right', '1px solid #999');
+	$('.grouping-tab').css('border-top', '1px solid #fff');
+  });  
+  
+ 
 
 });
