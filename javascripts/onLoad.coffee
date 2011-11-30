@@ -234,13 +234,13 @@ $ ->
 		if tempCopiedArray.length > 0 then pasteSelected(tempCopiedArray)
 		console.log currentCanvas.holder
 	
-	$('#copy').click (e) ->
+	$('.copy').click (e) ->
 		oldCoord = {x: e.pageX, y:e.pageY}
 		console.log e.pageX
 		tempCopiedArray = currentCanvas.selectedObjectArray
 		console.log tempCopiedArray
 	
-	$('#cut').click (e) ->
+	$('.cut').click (e) ->
 		oldCoord = {x: e.pageX, y:e.pageY}
 		tempCopiedArray = currentCanvas.selectedObjectArray
 		#holdMap = new Object()
@@ -263,7 +263,7 @@ $ ->
 		console.log currentCanvas.holder
 		console.log tempCopiedArray
 		
-	$('#delete').click (e) ->
+	$('.delete').click (e) ->
 		tempCopiedArray = currentCanvas.selectedObjectArray
 		for i in [0..tempCopiedArray.length-1]
 		#	console.log tempCopiedArray[i]
@@ -282,7 +282,7 @@ $ ->
 		#console.log "HEHE"
 		#c.remove()
 		#console.log currentCanvas.holder
-	$('#mselect_all').click ->
+	$('.select_all').click ->
 		currentCanvas.setAllSelectedGlow()
 		
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}

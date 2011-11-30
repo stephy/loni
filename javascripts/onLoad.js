@@ -1,10 +1,6 @@
 (function() {
   $(function() {
-<<<<<<< HEAD
-    var attr, coordAfterBoundary, generate_data_sink_attr, generate_data_source_attr, generate_module_attr, getBox, getCoord, items, location, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
-=======
-    var attr, c, coordAfterBoundary, createNewCopy, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
->>>>>>> c94c5bdeb6a584e1c8574b251cd536e40d0b74aa
+    var attr, c, coordAfterBoundary, createNewCopy, generate_data_sink_attr, generate_data_source_attr, generate_module_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -249,7 +245,7 @@
       }
       return console.log(currentCanvas.holder);
     });
-    $('#copy').click(function(e) {
+    $('.copy').click(function(e) {
       oldCoord = {
         x: e.pageX,
         y: e.pageY
@@ -258,7 +254,7 @@
       tempCopiedArray = currentCanvas.selectedObjectArray;
       return console.log(tempCopiedArray);
     });
-    $('#cut').click(function(e) {
+    $('.cut').click(function(e) {
       var i, _ref;
       oldCoord = {
         x: e.pageX,
@@ -280,7 +276,7 @@
       console.log(currentCanvas.holder);
       return console.log(tempCopiedArray);
     });
-    $('#delete').click(function(e) {
+    $('.delete').click(function(e) {
       var i, _ref;
       tempCopiedArray = currentCanvas.selectedObjectArray;
       for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
@@ -293,7 +289,7 @@
       tempCopiedArray = [];
       return console.log(currentCanvas.holder);
     });
-    $('#mselect_all').click(function() {
+    $('.select_all').click(function() {
       return currentCanvas.setAllSelectedGlow();
     });
     window.canvasHash = {
