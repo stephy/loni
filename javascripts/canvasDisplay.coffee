@@ -15,15 +15,21 @@ window.canvasDisplay = class canvasDisplay
 
 		
 	newModule: (coord, attr)->
-		a = new module(@, coord, attr)
+		nattr = $.extend(true, {}, attr)
+		nattr['objectType'] = "module"
+		a = new module(@, coord, nattr)
 		@holder.push(a)
 		return a
 	newDataSink: (coord, attr)->
-		a = new dataSink(@, coord, attr)
+		nattr = $.extend(true, {}, attr)
+		nattr['objectType'] = "dataSink"
+		a = new dataSink(@, coord, nattr)
 		@holder.push(a)
 		return a
 	newDataSource: (coord, attr)->
-		a = new dataSource(@, coord, attr)
+		nattr = $.extend(true, {}, nattr)
+		nattr['objectType'] = "dataSource"
+		a = new dataSource(@, coord, nattr)
 		@holder.push(a)
 		return a
 

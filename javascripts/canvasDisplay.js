@@ -22,20 +22,26 @@
       this.rectangleStatus = 0;
     }
     canvasDisplay.prototype.newModule = function(coord, attr) {
-      var a;
-      a = new module(this, coord, attr);
+      var a, nattr;
+      nattr = $.extend(true, {}, attr);
+      nattr['objectType'] = "module";
+      a = new module(this, coord, nattr);
       this.holder.push(a);
       return a;
     };
     canvasDisplay.prototype.newDataSink = function(coord, attr) {
-      var a;
-      a = new dataSink(this, coord, attr);
+      var a, nattr;
+      nattr = $.extend(true, {}, attr);
+      nattr['objectType'] = "dataSink";
+      a = new dataSink(this, coord, nattr);
       this.holder.push(a);
       return a;
     };
     canvasDisplay.prototype.newDataSource = function(coord, attr) {
-      var a;
-      a = new dataSource(this, coord, attr);
+      var a, nattr;
+      nattr = $.extend(true, {}, nattr);
+      nattr['objectType'] = "dataSource";
+      a = new dataSource(this, coord, nattr);
       this.holder.push(a);
       return a;
     };

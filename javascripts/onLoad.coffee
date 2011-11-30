@@ -39,14 +39,15 @@ $ ->
 	  data_source_description = $('textarea#data_source_description').val()
 	  data_source_attr = {
 		  name: data_source_name,
+		  objectType: 'dataSource',
 		  package: data_source_package,
 		  version: data_source_pkg_version,
 		  tags: data_source_tags,
 		  description: data_source_description
 	  }
 	  #clear form
-	  $('input#data-source_input').val('')
-	  $('textarea#data_source_input').val('')
+	  $('input.data-source_input').val('')
+	  $('textarea.data_source_input').val('')
 	  
 	  return data_source_attr
 
@@ -64,12 +65,19 @@ $ ->
   	  description: module_description
     }
     #clear form
-    $('input#module_input').val('')
-    $('textarea#module_input').val('')
+    $('input.module_input').val('')
+    $('textarea.module_input').val('')
 
     return module_attr
 
-	
+	#get data from object and display on edit form window
+	window.getObjectDataName = () ->
+	  objData = currentCanvas.selectedObjectArray
+	  return objData[0].attr.name
+  
+  
+    
+	  
 
 	pasteSelected = (objArray) ->
 		console.log "PASTING!!!"
@@ -185,7 +193,18 @@ $ ->
 		# console.log e.target.nodeName
 		if(e.target.nodeName != "circle" and e.target.nodeName != "path" )
 			currentCanvas.removeGlow()
-
+			
+	$('.edit_module').click ->
+		console.log "clicked"
+		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'module')
+			$('#popup-module').css("display","block")
+			$('input#module_name').val(getObjectDataName())
+		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'dataSink')
+			$('#popup-data-sink').css("display","block")
+		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'dataSource')
+			$('#popup-data-source').css("display","block")
+			
+	  
 	$('#option_module').click (e)->
 		$('#popup-module').show()
 		$('.popup-tab').hide()
@@ -288,8 +307,9 @@ $ ->
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}
 	window.currentCanvas = canvasHash['canvas-1']
 	$('svg:last').attr('id', 'svg-canvas-1')
-	
+	console.log attr
 	currentCanvas.newDataSink({x:100, y:200}, attr)
+	console.log attr
 	currentCanvas.newModule({x:450, y:250}, attr)
 	currentCanvas.newDataSource({x:400, y:250}, attr)
 	c = currentCanvas.newDataSink({x:300, y:200}, attr)
