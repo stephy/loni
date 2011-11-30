@@ -12,8 +12,8 @@ window.canvasDisplay = class canvasDisplay
 		@holder = []
 		@selectedObjectArray = []
 		@rectangleStatus = 0
+		@selectedTranslate = false
 
-		
 	newModule: (coord, attr)->
 		nattr = $.extend(true, {}, attr)
 		nattr['objectType'] = "module"
@@ -32,7 +32,20 @@ window.canvasDisplay = class canvasDisplay
 		a = new dataSource(@, coord, nattr)
 		@holder.push(a)
 		return a
+		
+	newGroup: (coord) ->
+		console.log "CREATING NEW GROUP1"
+		nattr = {elements: @selectedObjectArray}
+		nattr['objectType'] = "group"
+		a = new module(@, coord, nattr)
+		@holder.push(a)
 
+# Translation:
+	translateSelected: (x, y) ->
+		for ele in @selectedObjectArray
+			ele.ztranslate(x, y)
+
+# --------- Setting glows ----------
 	setGlow: (obj) ->
 		if (obj.moduleGlow!="") then obj.removeAll()
 		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())

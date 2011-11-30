@@ -146,12 +146,20 @@
       coord = location;
       if (currentCanvas.isSelected()) {
         $('#main-menu').hide();
-        $('#edit-menu').show().css({
-          top: coord.y,
-          left: coord.x
-        });
+        if (currentCanvas.selectedObjectArray.length > 1) {
+          $('#group-menu').show().css({
+            top: coord.y,
+            left: coord.x
+          });
+        } else {
+          $('#edit-menu').show().css({
+            top: coord.y,
+            left: coord.x
+          });
+        }
       } else {
         $('#edit-menu').hide();
+        $('#group-menu').hide();
         $('#main-menu').show().css({
           top: coord.y,
           left: coord.x
@@ -164,10 +172,12 @@
       if (e.which !== 1) {
         return;
       }
-      rectLocation = getCoord(e);
-      currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
-      currentCanvas.setLight();
-      return offset = currentCanvas.offsetCoord;
+      if (e.target.nodeName === 'svg' || currentCanvas.selectedObjectArray.length < 2) {
+        rectLocation = getCoord(e);
+        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
+        currentCanvas.setLight();
+        return offset = currentCanvas.offsetCoord;
+      }
     });
     $('svg').live('mousemove', function(e) {
       currentCanvas.moveToFront();
@@ -181,16 +191,13 @@
       }
     });
     $('svg').live('mouseup', function(e) {
-      currentCanvas.setLight();
-      console.log(currentCanvas.selectedObjectArray.length);
+      currentCanvas.selectedTranslate = false;
       return currentCanvas.deleteRect();
     });
     $('body').click(function(e) {
       $('#main-menu').hide();
       $('#edit-menu').hide();
-      if (e.target.nodeName !== "circle" && e.target.nodeName !== "path") {
-        return currentCanvas.removeGlow();
-      }
+      return $('#group-menu').hide();
     });
     $('.edit_module').click(function() {
       console.log("clicked");
@@ -204,6 +211,9 @@
       if (currentCanvas.selectedObjectArray[0].attr.objectType === 'dataSource') {
         return $('#popup-data-source').css("display", "block");
       }
+    });
+    $('#group_modules').click(function(e) {
+      return currentCanvas.newGroup(location);
     });
     $('#option_module').click(function(e) {
       $('#popup-module').show();

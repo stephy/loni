@@ -85,7 +85,7 @@
       } else {
         ty = dy - this.prevCoord.y;
       }
-      this.ztranslate(tx, ty);
+      this.disp.translateSelected(tx, ty);
       this.prevCoord = {
         x: dx,
         y: dy
@@ -102,9 +102,6 @@
         x: 0,
         y: 0
       };
-      this.disp.setGlow(this);
-      console.log("MOUSE DOWN!!!!");
-      console.log(this.disp.rectangle);
       this.disp.deleteRect();
       return false;
     };

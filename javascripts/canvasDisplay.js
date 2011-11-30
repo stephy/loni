@@ -20,6 +20,7 @@
       this.holder = [];
       this.selectedObjectArray = [];
       this.rectangleStatus = 0;
+      this.selectedTranslate = false;
     }
     canvasDisplay.prototype.newModule = function(coord, attr) {
       var a, nattr;
@@ -44,6 +45,26 @@
       a = new dataSource(this, coord, nattr);
       this.holder.push(a);
       return a;
+    };
+    canvasDisplay.prototype.newGroup = function(coord) {
+      var a, nattr;
+      console.log("CREATING NEW GROUP1");
+      nattr = {
+        elements: this.selectedObjectArray
+      };
+      nattr['objectType'] = "group";
+      a = new module(this, coord, nattr);
+      return this.holder.push(a);
+    };
+    canvasDisplay.prototype.translateSelected = function(x, y) {
+      var ele, _i, _len, _ref, _results;
+      _ref = this.selectedObjectArray;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        ele = _ref[_i];
+        _results.push(ele.ztranslate(x, y));
+      }
+      return _results;
     };
     canvasDisplay.prototype.setGlow = function(obj) {
       if (obj.moduleGlow !== "") {

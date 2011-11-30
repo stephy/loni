@@ -51,16 +51,16 @@ class baseModule
 			ty = 10
 		else
 			ty = dy - @prevCoord.y
-		@ztranslate(tx, ty)
+		@disp.translateSelected(tx, ty)
 		@prevCoord = {x: dx, y: dy}
 		@text.remove()
 	mDown: () =>
 		@text.remove()
 		@coord = {x: @c.attr("cx"), y: @c.attr("cy")}
 		@prevCoord = {x:0, y:0}
-		@disp.setGlow(@)
-		console.log "MOUSE DOWN!!!!"
-		console.log @disp.rectangle
+		# @disp.setGlow(@)
+		# console.log "MOUSE DOWN!!!!"
+		# console.log @disp.selectedObjectArray
 		@disp.deleteRect()
 			
 		return false

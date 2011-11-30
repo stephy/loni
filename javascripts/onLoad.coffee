@@ -8,9 +8,6 @@ $ ->
 	# Testing:
 	attr = {name: "Song!"}
 
-	
-
-	
 	#data sink form data
 	generate_data_sink_attr = () ->
 	  data_sink_name = $('input#data-sink_name').val()
@@ -51,7 +48,7 @@ $ ->
 	  
 	  return data_source_attr
 
-  generate_module_attr = () ->
+	generate_module_attr = ->
     module_name = $('input#module_name').val()
     module_package = $('input#module_package').val()
     module_pkg_version = $('input#module_pkg_version').val()
@@ -74,10 +71,6 @@ $ ->
 	window.getObjectDataName = () ->
 	  objData = currentCanvas.selectedObjectArray
 	  return objData[0].attr.name
-  
-  
-    
-	  
 
 	pasteSelected = (objArray) ->
 		console.log "PASTING!!!"
@@ -155,25 +148,30 @@ $ ->
 		# Show Edit or new depending if object is selected
 		if currentCanvas.isSelected()
 			$('#main-menu').hide()
-			$('#edit-menu').show().css({top:coord.y, left:coord.x})
+			if currentCanvas.selectedObjectArray.length > 1
+				$('#group-menu').show().css({top:coord.y, left:coord.x})
+			else
+				$('#edit-menu').show().css({top:coord.y, left:coord.x})
 		else
 			$('#edit-menu').hide()
+			$('#group-menu').hide()
 			$('#main-menu').show().css({top:coord.y, left:coord.x})
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
 		if e.which != 1 then return
-		rectLocation = getCoord(e)
-		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
-		currentCanvas.setLight()
-		offset = currentCanvas.offsetCoord
+		if e.target.nodeName == 'svg' or currentCanvas.selectedObjectArray.length < 2
+			# Did not click on any element or there's only one element
+			rectLocation = getCoord(e)
+			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
+			currentCanvas.setLight()
+			offset = currentCanvas.offsetCoord
 		# if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
 		# 	console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
 		# 	currentCanvas.deleteRect()
 			
 			
 	$('svg').live 'mousemove', (e) ->
-		
 		currentCanvas.moveToFront()
 		if currentCanvas.rectangleStatus is 0
 			if currentCanvas.rectangle != undefined
@@ -183,16 +181,15 @@ $ ->
 				console.log currentCanvas.selectedObjectArray.length
 				
 	$('svg').live 'mouseup', (e) ->
-		currentCanvas.setLight()
-		console.log currentCanvas.selectedObjectArray.length
+		currentCanvas.selectedTranslate = false
+		# currentCanvas.setLight()
+		# console.log currentCanvas.selectedObjectArray.length
 		currentCanvas.deleteRect()
 
 	$('body').click (e)->
 		$('#main-menu').hide()
 		$('#edit-menu').hide()
-		# console.log e.target.nodeName
-		if(e.target.nodeName != "circle" and e.target.nodeName != "path" )
-			currentCanvas.removeGlow()
+		$('#group-menu').hide()
 			
 	$('.edit_module').click ->
 		console.log "clicked"
@@ -203,7 +200,9 @@ $ ->
 			$('#popup-data-sink').css("display","block")
 		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'dataSource')
 			$('#popup-data-source').css("display","block")
-			
+	
+	$('#group_modules').click (e) ->
+		currentCanvas.newGroup(location)
 	  
 	$('#option_module').click (e)->
 		$('#popup-module').show()
