@@ -12,6 +12,8 @@ class baseModule
 		@c.hover(@hoverIn, @hoverOut)
 		@moduleGlow = ""
 		@modID = 0
+		@connectedObject = undefined
+		@isBeingSelected = 0
 		
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,40)
@@ -24,10 +26,14 @@ class baseModule
 		@text = @disp.paper.text(dim.x+dim.width/2+60,dim.y+20, @attr.name)
 		label = @text
 		label.attr('font-size':20, fill:'#75757c')
+	
+	deleteObject: ->
+		@c.remove()
 
 	hoverOut: =>
 		@text.remove()
 	drag: (dx, dy) =>
+		@disp.deleteRect()
 		elmt = @c.getBBox()
 		tx = 0
 		ty = 0
@@ -53,6 +59,10 @@ class baseModule
 		@coord = {x: @c.attr("cx"), y: @c.attr("cy")}
 		@prevCoord = {x:0, y:0}
 		@disp.setGlow(@)
+		console.log "MOUSE DOWN!!!!"
+		console.log @disp.rectangle
+		@disp.deleteRect()
+			
 		return false
 	glowAll: (attr) ->
 		@moduleGlow = @c.glow(attr)
@@ -131,6 +141,10 @@ window.dataSink = class dataSink extends baseModule
 		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y} l #{@dim.height} 0 l -#{@dim.width/2} #{@dim.height} z")
 		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})
 		return c
+		
+	deleteObject: ->
+		@c.remove()
+		@objs[0].deleteObject()
 
 window.source = class source extends sink
 	constructor: (@disp, @prevCoord, @attr)->
@@ -152,6 +166,11 @@ window.dataSource = class dataSource extends baseModule
 		super(@disp, @prevCoord, @attr)
 		@objs.push(new source(@disp, @prevCoord, {name:"Source"}))
 		@modID = 2
+	
+	deleteObject: ->
+		@c.remove()
+		@objs[0].deleteObject()	
+	
 	draw: ->
 		c = @disp.paper.circle(@prevCoord.x,@prevCoord.y,@dim.height/2)
 		c.attr({stroke:'#75757c', fill:'#c8c8cd', 'stroke-width': 10})

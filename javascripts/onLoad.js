@@ -1,6 +1,10 @@
 (function() {
   $(function() {
+<<<<<<< HEAD
     var attr, coordAfterBoundary, generate_data_sink_attr, generate_data_source_attr, generate_module_attr, getBox, getCoord, items, location, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+=======
+    var attr, c, coordAfterBoundary, createNewCopy, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+>>>>>>> c94c5bdeb6a584e1c8574b251cd536e40d0b74aa
     items = [];
     location = "";
     rectLocation = "";
@@ -65,21 +69,41 @@
       return module_attr;
     };
     pasteSelected = function(objArray) {
-      var i, _ref, _results;
-      _results = [];
+      var a, b, i, map, _ref, _ref2, _results;
+      console.log("PASTING!!!");
+      map = new Object();
       for (i = 0, _ref = objArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        _results.push(objArray[i].modID === 0 ? currentCanvas.newModule({
-          x: objArray[i].c.getBBox().x,
-          y: objArray[i].c.getBBox().y
-        }, attr) : objArray[i].modID === 1 ? currentCanvas.newDataSink({
-          x: objArray[i].c.getBBox().x,
-          y: objArray[i].c.getBBox().y
-        }, attr) : currentCanvas.newDataSource({
-          x: objArray[i].c.getBBox().x,
-          y: objArray[i].c.getBBox().y
-        }, attr));
+        if (objArray[i].objs[0] !== void 0) {
+          objArray[i].objs[0].isBeingSelected = 1;
+        }
+      }
+      _results = [];
+      for (i = 0, _ref2 = objArray.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
+        _results.push((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected === 0) ? (console.log("GO IF"), console.log(objArray[i]), createNewCopy(objArray[i])) : map[objArray[i].objs[0].connectedObject] === void 0 ? (console.log("GO ELSE 1"), map[objArray[i].objs[0]] = objArray[i]) : (console.log("GO ELSE 2"), a = createNewCopy(map[objArray[i].objs[0].connectedObject]), b = createNewCopy(objArray[i]), map = new Object(), currentCanvas.savePathForCopy(a.objs[0], b.objs[0])));
       }
       return _results;
+    };
+    createNewCopy = function(obj) {
+      var a, theCoord;
+      if (obj.c.getBBox().x !== void 0) {
+        theCoord = {
+          x: obj.c.getBBox().x,
+          y: obj.c.getBBox().y
+        };
+      } else {
+        console.log("beta");
+        console.log(obj.coord);
+        theCoord = obj.coord;
+      }
+      if (obj.modID === 0) {
+        a = currentCanvas.newModule(theCoord, attr);
+      } else if (obj.modID === 1) {
+        a = currentCanvas.newDataSink(theCoord, attr);
+      } else {
+        a = currentCanvas.newDataSource(theCoord, attr);
+      }
+      a.ztranslate(newCoord.x - oldCoord.x, newCoord.y - oldCoord.y);
+      return a;
     };
     getCoord = function(e) {
       var coord;
@@ -119,14 +143,14 @@
       menuBox = getBox($('#main-menu'));
       coord = location;
       if (currentCanvas.isSelected()) {
-        $('#edit-menu').hide();
-        $('#main-menu').show().css({
+        $('#main-menu').hide();
+        $('#edit-menu').show().css({
           top: coord.y,
           left: coord.x
         });
       } else {
-        $('#main-menu').hide();
-        $('#edit-menu').show().css({
+        $('#edit-menu').hide();
+        $('#main-menu').show().css({
           top: coord.y,
           left: coord.x
         });
@@ -135,42 +159,29 @@
     });
     $('svg').live('mousedown', function(e) {
       var offset;
-      console.log("test");
-      currentCanvas.selectedObjectArray = [];
-      currentCanvas.deleteRect();
       if (e.which !== 1) {
         return;
       }
       rectLocation = getCoord(e);
       currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
       currentCanvas.setLight();
-      offset = currentCanvas.offsetCoord;
-      if (currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy) !== null) {
-        console.log(currentCanvas.paper.getElementByPoint(rectLocation.x + offset.dx, rectLocation.y + offset.dy));
-        startDraw = false;
-        currentCanvas.setLight();
-      } else {
-        console.log("setting true");
-      }
-      return startDraw = true;
+      return offset = currentCanvas.offsetCoord;
     });
     $('svg').live('mousemove', function(e) {
-      if (startDraw) {
+      currentCanvas.moveToFront();
+      if (currentCanvas.rectangleStatus === 0) {
         if (currentCanvas.rectangle !== void 0) {
           currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
+          currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
+          currentCanvas.setLight();
+          return console.log(currentCanvas.selectedObjectArray.length);
         }
-        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e));
-        return currentCanvas.setLight();
       }
     });
     $('svg').live('mouseup', function(e) {
+      currentCanvas.setLight();
       console.log(currentCanvas.selectedObjectArray.length);
-      if (currentCanvas.rectangle !== void 0) {
-        currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect());
-      }
-      if (startDraw) {
-        return startDraw = false;
-      }
+      return currentCanvas.deleteRect();
     });
     $('body').click(function(e) {
       $('#main-menu').hide();
@@ -188,11 +199,11 @@
       $('#module-metadata-bt.tabSelected').removeClass('tabSelected');
       $('#module-info-module').show();
       $('#module-info-module-website').show();
-      $('li#module-info-bt').addClass('tabSelected');
-      $('#option_data_source').click(function(e) {
-        $('#popup-data-source').show();
-        return $('.popup-tab').hide();
-      });
+      return $('li#module-info-bt').addClass('tabSelected');
+    });
+    $('#option_data_source').click(function(e) {
+      $('#popup-data-source').show();
+      $('.popup-tab').hide();
       $('#data-source-info-bt').addClass('tabSelected');
       $('#data-source-info').show();
       return $('#data-source-inputs-bt.tabSelected').removeClass('tabSelected');
@@ -208,18 +219,82 @@
       currentCanvas.newModule(location, generate_module_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
-    $('#paste').click(function() {
-      return pasteSelected(tempCopiedArray);
-    });
-    $('#copy').click(function() {
-      return tempCopiedArray = currentCanvas.selectedObjectArray;
-    });
     $('#createDataSinkButton').click(function() {
       currentCanvas.newDataSink(location, generate_data_sink_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
+    $('#createDataSourceButton').click(function() {
+      currentCanvas.newDataSource(location, generate_data_sink_attr());
+      return $(this).parents('.popUpObjectBox').hide();
+    });
     $('.cancelObjectButton').click(function() {
       return $(this).parents('.popUpObjectBox').hide();
+    });
+    oldCoord = {
+      x: 0,
+      y: 0
+    };
+    newCoord = {
+      x: 0,
+      y: 0
+    };
+    $('.paste').click(function(e) {
+      console.log(tempCopiedArray);
+      newCoord = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      if (tempCopiedArray.length > 0) {
+        pasteSelected(tempCopiedArray);
+      }
+      return console.log(currentCanvas.holder);
+    });
+    $('#copy').click(function(e) {
+      oldCoord = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      console.log(e.pageX);
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      return console.log(tempCopiedArray);
+    });
+    $('#cut').click(function(e) {
+      var i, _ref;
+      oldCoord = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      console.log("here");
+      for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        tempCopiedArray[i].coord = {
+          x: tempCopiedArray[i].c.getBBox().x,
+          y: tempCopiedArray[i].c.getBBox().y
+        };
+        if (tempCopiedArray[i].moduleGlow !== "") {
+          tempCopiedArray[i].removeAll();
+        }
+        currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject();
+        currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
+      }
+      console.log(currentCanvas.holder);
+      return console.log(tempCopiedArray);
+    });
+    $('#delete').click(function(e) {
+      var i, _ref;
+      tempCopiedArray = currentCanvas.selectedObjectArray;
+      for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+        if (tempCopiedArray[i].moduleGlow !== "") {
+          tempCopiedArray[i].removeAll();
+        }
+        tempCopiedArray[i].deleteObject();
+        currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
+      }
+      tempCopiedArray = [];
+      return console.log(currentCanvas.holder);
+    });
+    $('#mselect_all').click(function() {
+      return currentCanvas.setAllSelectedGlow();
     });
     window.canvasHash = {
       'canvas-1': new canvasDisplay($('#canvas-1'))
@@ -234,9 +309,13 @@
       x: 450,
       y: 250
     }, attr);
-    return currentCanvas.newDataSource({
+    currentCanvas.newDataSource({
       x: 400,
       y: 250
+    }, attr);
+    return c = currentCanvas.newDataSink({
+      x: 300,
+      y: 200
     }, attr);
   });
 }).call(this);

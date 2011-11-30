@@ -7,6 +7,7 @@ $ ->
 	tempCopiedArray = []
 	# Testing:
 	attr = {name: "Song!"}
+
 	
 
 	
@@ -68,11 +69,49 @@ $ ->
 
     return module_attr
 
+	
+
 	pasteSelected = (objArray) ->
-		for i in [0..objArray.length-1]
-			if objArray[i].modID is 0 then currentCanvas.newModule({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
-			else if objArray[i].modID is 1 then currentCanvas.newDataSink({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
-			else currentCanvas.newDataSource({x:objArray[i].c.getBBox().x, y:objArray[i].c.getBBox().y}, attr)
+		console.log "PASTING!!!"
+		map = new Object()
+		for i in [0..objArray.length-1]		
+			if objArray[i].objs[0] != undefined
+				objArray[i].objs[0].isBeingSelected = 1
+		for i in [0..objArray.length-1]		
+			if (objArray[i].modID is 0) or (objArray[i].objs[0].connectedObject is undefined) or (objArray[i].objs[0].connectedObject.isBeingSelected is 0)
+				console.log "GO IF"
+				console.log objArray[i]
+				createNewCopy(objArray[i])
+			else 
+				if map[objArray[i].objs[0].connectedObject] is undefined
+					console.log "GO ELSE 1"
+					map[objArray[i].objs[0]] = objArray[i]
+				else
+					console.log "GO ELSE 2"
+					a = createNewCopy(map[objArray[i].objs[0].connectedObject])
+					b = createNewCopy(objArray[i])
+					map = new Object()
+					#currentCanvas.paths.push(currentCanvas.paper.connection2(a.objs[0].c, b.objs[0].c, "#000"))
+					currentCanvas.savePathForCopy(a.objs[0],b.objs[0])
+					
+					
+	
+	createNewCopy = (obj) ->
+		if obj.c.getBBox().x != undefined
+			theCoord = {x:obj.c.getBBox().x, y:obj.c.getBBox().y}
+		else
+			console.log "beta"
+			console.log obj.coord
+			theCoord = obj.coord
+		if obj.modID is 0
+			a = currentCanvas.newModule(theCoord, attr)		
+				 
+		else if obj.modID is 1
+			a = currentCanvas.newDataSink(theCoord, attr)
+		else 
+			a =currentCanvas.newDataSource(theCoord, attr)
+		a.ztranslate(newCoord.x-oldCoord.x, newCoord.y-oldCoord.y)
+		return a
 			
 	getCoord = (e) ->
 		# Need to take into account mozilla
@@ -107,49 +146,38 @@ $ ->
 		
 		# Show Edit or new depending if object is selected
 		if currentCanvas.isSelected()
-			$('#edit-menu').hide()
-			$('#main-menu').show().css({top:coord.y, left:coord.x})
-		else
 			$('#main-menu').hide()
 			$('#edit-menu').show().css({top:coord.y, left:coord.x})
+		else
+			$('#edit-menu').hide()
+			$('#main-menu').show().css({top:coord.y, left:coord.x})
 		return false
 		
 	$('svg').live 'mousedown', (e) ->
-		console.log("test")
-		currentCanvas.selectedObjectArray = []
-		currentCanvas.deleteRect()
-
 		if e.which != 1 then return
 		rectLocation = getCoord(e)
 		currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation)
 		currentCanvas.setLight()
 		offset = currentCanvas.offsetCoord
-		if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
-			console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
-			startDraw = false
-			currentCanvas.setLight()
-		else
-			console.log "setting true"
-		startDraw = true
+		# if currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy) != null
+		# 	console.log currentCanvas.paper.getElementByPoint(rectLocation.x+offset.dx, rectLocation.y+offset.dy)
+		# 	currentCanvas.deleteRect()
 			
 			
 	$('svg').live 'mousemove', (e) ->
-		# console.log(currentCanvas.onselect)
-		# console.log e
-		#if(currentCanvas.onselect.length is 0)
-		if startDraw
+		
+		currentCanvas.moveToFront()
+		if currentCanvas.rectangleStatus is 0
 			if currentCanvas.rectangle != undefined
 				currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-			currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
-			currentCanvas.setLight()
+				currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, getCoord(e))
+				currentCanvas.setLight()
+				console.log currentCanvas.selectedObjectArray.length
 				
 	$('svg').live 'mouseup', (e) ->
-		
+		currentCanvas.setLight()
 		console.log currentCanvas.selectedObjectArray.length
-		if currentCanvas.rectangle != undefined
-			currentCanvas.rectangle.remRect(currentCanvas.rectangle.getRect())
-		if startDraw
-			startDraw = false
+		currentCanvas.deleteRect()
 
 	$('body').click (e)->
 		$('#main-menu').hide()
@@ -169,9 +197,9 @@ $ ->
 		$('#module-info-module-website').show()
 		$('li#module-info-bt').addClass('tabSelected')
 		
-  $('#option_data_source').click (e) ->
-  	$('#popup-data-source').show()
-  	$('.popup-tab').hide()
+	$('#option_data_source').click (e) ->
+		$('#popup-data-source').show()
+		$('.popup-tab').hide()
 		$('#data-source-info-bt').addClass('tabSelected')
 		$('#data-source-info').show()
 		$('#data-source-inputs-bt.tabSelected').removeClass('tabSelected')
@@ -186,20 +214,76 @@ $ ->
 	$('#createModuleButton').click ->
 		currentCanvas.newModule(location, generate_module_attr())
 		$(@).parents('.popUpObjectBox').hide()
-	
-	$('#paste').click ->
-		pasteSelected(tempCopiedArray)
-	
-	$('#copy').click ->
-		tempCopiedArray = currentCanvas.selectedObjectArray
 		
 	$('#createDataSinkButton').click ->
 		currentCanvas.newDataSink(location, generate_data_sink_attr())
 		$(@).parents('.popUpObjectBox').hide()
 		
+	$('#createDataSourceButton').click ->
+		currentCanvas.newDataSource(location, generate_data_sink_attr())
+		$(@).parents('.popUpObjectBox').hide()
+		
 	$('.cancelObjectButton').click ->
 		$(@).parents('.popUpObjectBox').hide()
 		
+	oldCoord = {x:0, y:0}
+	newCoord = {x:0, y:0}
+	$('.paste').click (e) ->
+		console.log tempCopiedArray
+		newCoord = {x: e.pageX, y:e.pageY}
+		if tempCopiedArray.length > 0 then pasteSelected(tempCopiedArray)
+		console.log currentCanvas.holder
+	
+	$('#copy').click (e) ->
+		oldCoord = {x: e.pageX, y:e.pageY}
+		console.log e.pageX
+		tempCopiedArray = currentCanvas.selectedObjectArray
+		console.log tempCopiedArray
+	
+	$('#cut').click (e) ->
+		oldCoord = {x: e.pageX, y:e.pageY}
+		tempCopiedArray = currentCanvas.selectedObjectArray
+		#holdMap = new Object()
+		#for i in [0..currentCanvas.holder.length-1]	
+		#	holdMap[currentCanvas.holder[i].objs[0]] = 
+		#console.log holdMap
+		#console.log currentCanvas.selectedObjectArray
+		console.log "here"
+		#console.log currentCanvas.selectedObjectArray
+		for i in [0..tempCopiedArray.length-1]
+		#	console.log tempCopiedArray[i]
+			#tempCopiedArray[i].remove()
+			tempCopiedArray[i].coord = {x: tempCopiedArray[i].c.getBBox().x, y: tempCopiedArray[i].c.getBBox().y} 
+			if (tempCopiedArray[i].moduleGlow!="") then tempCopiedArray[i].removeAll()
+			#console.log "copying" 
+			#console.log tempCopiedArray[i].coord
+			currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject()
+			#delete currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)]
+			currentCanvas.holder.splice( $.inArray(tempCopiedArray[i], currentCanvas.holder), 1 );
+		console.log currentCanvas.holder
+		console.log tempCopiedArray
+		
+	$('#delete').click (e) ->
+		tempCopiedArray = currentCanvas.selectedObjectArray
+		for i in [0..tempCopiedArray.length-1]
+		#	console.log tempCopiedArray[i]
+			#tempCopiedArray[i].removeAll()
+			if (tempCopiedArray[i].moduleGlow!="") then tempCopiedArray[i].removeAll()
+			tempCopiedArray[i].deleteObject()
+			#delete currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)]
+			currentCanvas.holder.splice( $.inArray(tempCopiedArray[i], currentCanvas.holder), 1 );
+		tempCopiedArray = []
+		console.log currentCanvas.holder
+		#keys = [];
+		#for key in holdMap
+		#	if key != undefined
+		#		keys.push(key)
+		#console.log keys
+		#console.log "HEHE"
+		#c.remove()
+		#console.log currentCanvas.holder
+	$('#mselect_all').click ->
+		currentCanvas.setAllSelectedGlow()
 		
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}
 	window.currentCanvas = canvasHash['canvas-1']
@@ -208,3 +292,4 @@ $ ->
 	currentCanvas.newDataSink({x:100, y:200}, attr)
 	currentCanvas.newModule({x:450, y:250}, attr)
 	currentCanvas.newDataSource({x:400, y:250}, attr)
+	c = currentCanvas.newDataSink({x:300, y:200}, attr)

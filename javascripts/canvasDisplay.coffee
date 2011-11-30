@@ -11,20 +11,36 @@ window.canvasDisplay = class canvasDisplay
 		@rectangle = undefined
 		@holder = []
 		@selectedObjectArray = []
+		@rectangleStatus = 0
+
 		
 	newModule: (coord, attr)->
-		@holder.push(new module(@, coord, attr))
+		a = new module(@, coord, attr)
+		@holder.push(a)
+		return a
 	newDataSink: (coord, attr)->
-		@holder.push(new dataSink(@, coord, attr))
+		a = new dataSink(@, coord, attr)
+		@holder.push(a)
+		return a
 	newDataSource: (coord, attr)->
-		@holder.push(new dataSource(@, coord, attr))
+		a = new dataSource(@, coord, attr)
+		@holder.push(a)
+		return a
 
 	setGlow: (obj) ->
 		if (obj.moduleGlow!="") then obj.removeAll()
 		if @rectangle != undefined and @rectangle.testRange(obj.c.getBBox())
 			@selectedObjectArray.push(obj)
+			if obj.modID isnt 0
+				obj.objs[0].isBeingSelected = 1
 			obj.glowAll({color:'#000'})
-			
+
+	setAllSelectedGlow: () ->
+		for i in [0..@holder.length-1]
+			@selectedObjectArray.push(@holder[i])
+			if @holder[i].modID isnt 0
+				@holder[i].objs[0].isBeingSelected = 1
+			@holder[i].glowAll({color:'#000'})
 		
 	removeGlow: ->
 		if (@glow!="")
@@ -43,6 +59,7 @@ window.canvasDisplay = class canvasDisplay
 		@drawingPath = true
 		
 	drawPath: (coord) ->
+		@rectangleStatus = 1
 		if @path
 			@path.remPath(@path.getPath())
 		@path = new path(@paper, @startPathCoord, {x:coord.x-@offsetCoord.dx, y:coord.y-@offsetCoord.dy})
@@ -54,16 +71,40 @@ window.canvasDisplay = class canvasDisplay
 	savePath: (coord, endObj)->
 		# Start obj is @startObj, end obj is endObj
 		if @startObj.getType() != endObj.getType()
-			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))	
+			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
+			#use HASHMAP	
+			@startObj.connectedObject = endObj
+			endObj.connectedObject = @startObj
+			@rectangleStatus = 0
 		@drawingPath = false
+		#console.log @map[@startObj.c]
 		return @startPathCoord
-	translatePaths: ->
+		
+	savePathForCopy: (obj1, obj2) ->
+		@startObj = obj1
+		endObj = obj2
+		if @startObj.getType() != endObj.getType()
+			@paths.push(@paper.connection2(@startObj.c, endObj.c, "#000"))
+			#use HASHMAP	
+			@startObj.connectedObject = endObj
+			endObj.connectedObject = @startObj
+			@rectangleStatus = 0
+		@drawingPath = false
+		#console.log @map[@startObj.c]
+		return @startPathCoord
+		
+	translatePaths: ->		
 		for ele in @paths
 			@paper.connection2(ele)
 # ------ end of Drawing paths ------
 
+# --- moving object infront of the paths
+	moveToFront: ->
+		for ele in @holder
+			ele.c.toFront()
+
 	isSelected: ->
-		if (@glow!="") then return false else return true		
+		if (@selectedObjectArray.length > 0) then return true else return false
 	
 	select: (x, y, w, h) ->
 		@paper.rect(x, y, w, h)
@@ -79,7 +120,7 @@ window.canvasDisplay = class canvasDisplay
 # ---- Rectangle
 	deleteRect: ->
 		if @rectangle != undefined
-			@setSelectedElements()
+			# @setSelectedElements()
 			@rectangle.remRect(@rectangle.getRect())
 			@rectangle = undefined
 		
@@ -96,12 +137,21 @@ window.canvasDisplay = class canvasDisplay
 		
 	setLight: ->
 		@selectedObjectArray = []
-		for i in [0..@holder.length-1]
-			this.setGlow(@holder[i])
+		if @holder.length > 0
+			for j in [0..@holder.length-1]
+				if @holder[j].objs[0] != undefined
+					@holder[j].objs[0].isBeingSelected = 0
+			for i in [0..@holder.length-1]
+				this.setGlow(@holder[i])
 			
 			#data source 2 data sink 1 module 0
-	gCopy: (objArray) ->
-		for i in [0..objArray.length-1]
-			if objArray[i].modID is 0 then newDataSink({x:300, y:300}, {name: "Song!"})
-			else if objArray[i].modID is 1 then console.log "data sink"
-			else console.log "data source"
+	gCopy: ->
+		for i in [0..@selectedObjectArray.length-1]	
+		#	console.log @selectedObjectArray[i].c + i		
+			@selectedObjectMap[@selectedObjectArray[i].c] = i
+		for j in [0..@selectedObjectArray.length-1]
+			console.log "here is j" + j
+			console.log @selectedObjectMap[@selectedObjectArray[j].c]
+			
+			
+		
