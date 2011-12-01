@@ -86,7 +86,12 @@ class baseModule
 			ele.ztranslate(dx, dy)
 			
 window.module = class module extends baseModule
-	
+window.groupmodule = class groupmodule extends baseModule
+	draw: ->
+		c = @disp.paper.rect(@prevCoord.x-(@dim.width/2), @prevCoord.y, @dim.width*3/5, @dim.height*7/4, 25)
+		c.attr({stroke: '#cdc9c9', fill:'120-#a4abd6-#8793c9:60-#8793c9', 'stroke-width': 25})
+		return c
+
 window.sink = class sink extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
 		super(@disp, @prevCoord, @attr)
