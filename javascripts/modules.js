@@ -1,14 +1,9 @@
 (function() {
   var baseModule, dataSink, dataSource, groupmodule, module, sink, source;
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-    for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-    function ctor() { this.constructor = child; }
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor;
-    child.__super__ = parent.prototype;
-    return child;
-  };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
   baseModule = (function() {
+
     function baseModule(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
@@ -36,6 +31,7 @@
       this.connectedObject = void 0;
       this.isBeingSelected = 0;
     }
+
     baseModule.prototype.draw = function() {
       var c;
       c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, 40);
@@ -46,9 +42,11 @@
       });
       return c;
     };
+
     baseModule.prototype.insertChildren = function(obj) {
       return this.objs.push(obj);
     };
+
     baseModule.prototype.hoverIn = function() {
       var dim, label;
       dim = this.c.getBBox();
@@ -59,12 +57,15 @@
         fill: '#75757c'
       });
     };
+
     baseModule.prototype.deleteObject = function() {
       return this.c.remove();
     };
+
     baseModule.prototype.hoverOut = function() {
       return this.text.remove();
     };
+
     baseModule.prototype.drag = function(dx, dy) {
       var elmt, tx, ty;
       this.disp.deleteRect();
@@ -92,6 +93,7 @@
       };
       return this.text.remove();
     };
+
     baseModule.prototype.mDown = function() {
       this.text.remove();
       this.coord = {
@@ -105,6 +107,7 @@
       this.disp.deleteRect();
       return false;
     };
+
     baseModule.prototype.glowAll = function(attr) {
       var ele, _i, _len, _ref;
       this.moduleGlow = this.c.glow(attr);
@@ -116,6 +119,7 @@
       }
       return this;
     };
+
     baseModule.prototype.removeAll = function() {
       var ele, _i, _len, _ref;
       this.moduleGlow.remove();
@@ -127,6 +131,7 @@
       }
       return this;
     };
+
     baseModule.prototype.ztranslate = function(dx, dy) {
       var ele, _i, _len, _ref, _results;
       if (this.moduleGlow !== "") {
@@ -142,20 +147,31 @@
       }
       return _results;
     };
+
     return baseModule;
+
   })();
+
   window.module = module = (function() {
+
     __extends(module, baseModule);
+
     function module() {
       module.__super__.constructor.apply(this, arguments);
     }
+
     return module;
+
   })();
+
   window.groupmodule = groupmodule = (function() {
+
     __extends(groupmodule, baseModule);
+
     function groupmodule() {
       groupmodule.__super__.constructor.apply(this, arguments);
     }
+
     groupmodule.prototype.draw = function() {
       var c;
       c = this.disp.paper.rect(this.prevCoord.x - (this.dim.width / 2), this.prevCoord.y, this.dim.width * 3 / 5, this.dim.height * 7 / 4, 25);
@@ -166,10 +182,15 @@
       });
       return c;
     };
+
     return groupmodule;
+
   })();
+
   window.sink = sink = (function() {
+
     __extends(sink, baseModule);
+
     function sink(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
@@ -185,6 +206,7 @@
       this.connectable = true;
       this.c.mouseup(this.otherMouseUp);
     }
+
     sink.prototype.draw = function() {
       var c, connectDim;
       connectDim = {
@@ -199,6 +221,7 @@
       });
       return c;
     };
+
     sink.prototype.drag = function(dx, dy, x, y) {
       this.prevCoord = {
         x: dx,
@@ -210,6 +233,7 @@
       });
       return this.text.remove();
     };
+
     sink.prototype.mDown = function(x, y) {
       this.text.remove();
       this.prevCoord = {
@@ -223,15 +247,19 @@
       });
       return false;
     };
+
     sink.prototype.mUp = function(e) {
       return this.disp.removePath();
     };
+
     sink.prototype.getType = function() {
       return 'sink';
     };
+
     sink.prototype.otherMouseUp = function(e) {
       return this.disp.savePath(this.c.getBBox(), this);
     };
+
     sink.prototype.hoverIn = function() {
       var dim;
       dim = this.c.getBBox();
@@ -244,17 +272,24 @@
         return this.text = this.disp.paper.text(dim.x + dim.width, dim.y + dim.height, this.attr.name);
       }
     };
+
     sink.prototype.hoverOut = function() {
       return this.text.remove();
     };
+
     sink.prototype.ztranslate = function(dx, dy) {
       sink.__super__.ztranslate.call(this, dx, dy);
       return this.disp.translatePaths();
     };
+
     return sink;
+
   })();
+
   window.dataSink = dataSink = (function() {
+
     __extends(dataSink, baseModule);
+
     function dataSink(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
@@ -265,6 +300,7 @@
       }));
       this.modID = 1;
     }
+
     dataSink.prototype.draw = function() {
       var c;
       c = this.disp.paper.path("M " + this.prevCoord.x + " " + this.prevCoord.y + " l " + this.dim.height + " 0 l -" + (this.dim.width / 2) + " " + this.dim.height + " z");
@@ -275,14 +311,20 @@
       });
       return c;
     };
+
     dataSink.prototype.deleteObject = function() {
       this.c.remove();
       return this.objs[0].deleteObject();
     };
+
     return dataSink;
+
   })();
+
   window.source = source = (function() {
+
     __extends(source, sink);
+
     function source(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
@@ -291,13 +333,14 @@
       this.connectable = true;
       this.c.mouseup(this.otherMouseUp);
     }
+
     source.prototype.draw = function() {
       var c, start;
       start = {
         x: this.dim.width / 2 + this.prevCoord.x,
-        y: this.prevCoord.y - this.dim.height / 2
+        y: this.prevCoord.y - this.dim.height
       };
-      c = this.disp.paper.path("M " + this.prevCoord.x + " " + (this.prevCoord.y - this.dim.height) + " l " + (this.dim.width / 4) + " " + (this.dim.height / 4) + " l -" + (this.dim.width / 2) + " 0 z");
+      c = this.disp.paper.path("M " + this.prevCoord.x + " " + (this.prevCoord.y + this.dim.height) + " l -" + (this.dim.width / 4) + " -" + (this.dim.height / 4) + " l " + (this.dim.width / 2) + " 0 z");
       c.attr({
         fill: '#FFF',
         stroke: '#6d76c1',
@@ -305,13 +348,19 @@
       });
       return c;
     };
+
     source.prototype.getType = function() {
       return 'source';
     };
+
     return source;
+
   })();
+
   window.dataSource = dataSource = (function() {
+
     __extends(dataSource, baseModule);
+
     function dataSource(disp, prevCoord, attr) {
       this.disp = disp;
       this.prevCoord = prevCoord;
@@ -322,10 +371,12 @@
       }));
       this.modID = 2;
     }
+
     dataSource.prototype.deleteObject = function() {
       this.c.remove();
       return this.objs[0].deleteObject();
     };
+
     dataSource.prototype.draw = function() {
       var c;
       c = this.disp.paper.circle(this.prevCoord.x, this.prevCoord.y, this.dim.height / 2);
@@ -336,6 +387,9 @@
       });
       return c;
     };
+
     return dataSource;
+
   })();
+
 }).call(this);

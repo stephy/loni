@@ -158,8 +158,8 @@ window.source = class source extends sink
 		@connectable = true
 		@c.mouseup(@otherMouseUp)
 	draw: ->
-		start = {x: @dim.width/2 +  @prevCoord.x , y:  @prevCoord.y - @dim.height/2}
-		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y-@dim.height} l #{@dim.width/4} #{@dim.height/4} l -#{@dim.width/2} 0 z")
+		start = {x: @dim.width/2 +  @prevCoord.x , y:  @prevCoord.y - @dim.height}
+		c = @disp.paper.path("M #{@prevCoord.x} #{@prevCoord.y+(@dim.height)} l -#{@dim.width/4} -#{@dim.height/4} l #{@dim.width/2} 0 z")
 		c.attr(fill: '#FFF', stroke: '#6d76c1', 'stroke-width':2)
 		return c
 	getType: ->
