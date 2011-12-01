@@ -8,8 +8,36 @@ $ ->
 	# Testing:
 	attr = {name: "Song!"}
 
+	clearDataSinkInputs = ->
+ 		$('input.data_sink_input').val('')
+ 		$('textarea.data_sink_input').val('')
+
+ 	clearDataSourceInputs = ->
+	 	$('input.data_source_input').val('')
+	 	$('textarea.data_source_input').val('')
+
+	clearModuleInputs = ->
+		$('input.module_input').val('')
+		$('textarea.module_input').val('')
+
 	#data sink form data
-	generate_data_sink_attr = () ->
+	generate_data_source_attr = ->
+		data_source_name = $('input#data-source_name').val()
+		data_source_package = $('input#data-source_package').val()
+		data_source_pkg_version = $('input#data-source_pkg_version').val()
+		data_source_tags = $('input#data_source_tags').val()
+		data_source_description = $('textarea#data_source_description').val()
+		data_source_attr = {
+		  name: data_source_name,
+		  package: data_source_package,
+		  pkg_version: data_source_pkg_version,
+		  tags: data_source_tags,
+		  description: data_source_description
+		}
+		clearDataSourceInputs()
+		return data_source_attr
+
+	generate_data_sink_attr = ->
 	  data_sink_name = $('input#data-sink_name').val()
 	  data_sink_package = $('input#data-sink_package').val()
 	  data_sink_pkg_version = $('input#data-sink_pkg_version').val()
@@ -18,60 +46,88 @@ $ ->
 	  data_sink_attr = {
 		  name: data_sink_name,
 		  package: data_sink_package,
-		  version: data_sink_pkg_version,
+		  pkg_version: data_sink_pkg_version,
 		  tags: data_sink_tags,
 		  description: data_sink_description
 	  }
-	  #clear form
-	  $('input.data_sink_input').val('')
-	  $('textarea.data_sink_input').val('')
-	  
+	  clearDataSinkInputs()
 	  return data_sink_attr
 
-  generate_data_source_attr = () ->
-	  data_source_name = $('input#data-source_name').val()
-	  data_source_package = $('input#data-source_package').val()
-	  data_source_pkg_version = $('input#data-source_pkg_version').val()
-	  data_source_tags = $('input#data_source_tags').val()
-	  data_source_description = $('textarea#data_source_description').val()
-	  data_source_attr = {
-		  name: data_source_name,
-		  objectType: 'dataSource',
-		  package: data_source_package,
-		  version: data_source_pkg_version,
-		  tags: data_source_tags,
-		  description: data_source_description
-	  }
-	  #clear form
-	  $('input.data-source_input').val('')
-	  $('textarea.data_source_input').val('')
-	  
-	  return data_source_attr
+  	
 
 	generate_module_attr = ->
     module_name = $('input#module_name').val()
     module_package = $('input#module_package').val()
     module_pkg_version = $('input#module_pkg_version').val()
+    module_exec_version = $('input#module_exec_version').val()
     module_tags = $('input#module_tags').val()
     module_description = $('textarea#module_description').val()
     module_attr = {
   	  name: module_name,
   	  package: module_package,
-  	  version: module_pkg_version,
+  	  pkg_version: module_pkg_version,
+  	  exec_version: module_exec_version,
   	  tags: module_tags,
   	  description: module_description
     }
-    #clear form
-    $('input.module_input').val('')
-    $('textarea.module_input').val('')
-
+    clearModuleInputs()
     return module_attr
+    
+	save_module_attr = ->
+		module_data = generate_module_attr()
+		currentCanvas.selectedObjectArray[0].attr = module_data
+ 	
+	getModuleAttr = ->
+		obj = currentCanvas.selectedObjectArray[0].attr
+		$('input#module_name').val(obj.name)
+		$('input#module_package').val(obj.package)
+		$('input#module_pkg_version').val(obj.pkg_version)
+		$('input#module_exec_version').val(obj.exec_version)
+		$('input#module_tags').val(obj.tags)
+		$('textarea#module_description').val(obj.description)
+	
+	getDataSinkAttr = ->
+		obj = currentCanvas.selectedObjectArray[0].attr 
+		$('input#data-sink_name').val(obj.name)
+		$('input#data-sink_package').val(obj.package)
+		$('input#data-sink_pkg_version').val(obj.pkg_version)
+		$('input#data_sink_tags').val(obj.tags)
+		$('textarea#data_sink_description').val(obj.description)
 
-	#get data from object and display on edit form window
-	window.getObjectDataName = () ->
-	  objData = currentCanvas.selectedObjectArray
-	  return objData[0].attr.name
+	getDataSourceAttr = ->
+		obj = currentCanvas.selectedObjectArray[0].attr
+		$('input#data-source_name').val(obj.name)
+		$('input#data-source_package').val(obj.package)
+		$('input#data-source_pkg_version').val(obj.pkg_version)
+		$('input#data_source_tags').val(obj.tags)
+		$('textarea#data_source_description').val(obj.description)	
 
+	saveDataSinkAttr = ->
+		obj = currentCanvas.selectedObjectArray[0].attr
+		obj.name = $('input#data-sink_name').val()
+		obj.package = $('input#data-sink_package').val()
+		obj.pkg_version = $('input#data-sink_pkg_version').val()
+		obj.tags = $('input#data_sink_tags').val()
+		obj.description = $('textarea#data_sink_description').val()
+
+	saveDataSourceAttr = ->
+		obj = currentCanvas.selectedObjectArray[0].attr
+		obj.name = $('input#data-source_name').val()
+		obj.package = $('input#data-source_package').val()
+		obj.pkg_version = $('input#data-source_pkg_version').val()
+		obj.tags = $('input#data_source_tags').val()
+		obj.description = $('textarea#data_source_description').val()
+	
+	saveModuleAttr = ->
+		obj = currentCanvas.selectedObjectArray[0].attr
+		obj.name = $('input#module_name').val()
+		obj.package = $('input#module_package').val()
+		obj.pkg_version = $('input#module_pkg_version').val()
+		obj.exec_version= $('input#module_exec_version').val()
+		obj.tags = $('input#module_tags').val()
+		obj.description = $('textarea#module_description').val()
+
+		
 	pasteSelected = (objArray) ->
 		console.log "PASTING!!!"
 		map = new Object()
@@ -190,17 +246,53 @@ $ ->
 		$('#main-menu').hide()
 		$('#edit-menu').hide()
 		$('#group-menu').hide()
-			
-	$('.edit_module').click ->
-		console.log "clicked"
-		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'module')
-			$('#popup-module').css("display","block")
-			$('input#module_name').val(getObjectDataName())
-		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'dataSink')
-			$('#popup-data-sink').css("display","block")
-		if (currentCanvas.selectedObjectArray[0].attr.objectType == 'dataSource')
-			$('#popup-data-source').css("display","block")
 	
+
+	$('#saveModuleButton').click ->
+		saveModuleAttr()
+		clearModuleInputs() #clear html form 
+		$('#popup-module').css("display","none")
+		$('#saveModuleButton').css("display", "none")
+		$('#createModuleButton').css("display", "block")
+	
+	$('#saveDataSourceButton').click ->
+		saveDataSourceAttr()
+		clearDataSourceInputs()
+		$('#popup-data-source').css("display","none")
+		$('#saveDataSourceButton').css("display", "none")
+		$('#createDataSourceButton').css("display", "block")
+	
+	$('#saveDataSinkButton').click ->
+		saveDataSinkAttr()
+		clearDataSinkInputs()
+		$('#popup-data-sink').css("display","none")
+		$('#saveDataSinkButton').css("display", "none")
+		$('#createDataSinkButton').css("display", "block")				
+	
+
+	$('.edit_module').click ->
+		obj = currentCanvas.selectedObjectArray[0].attr
+		#console.log "clicked"
+		if (obj.objectType == 'module')
+			getModuleAttr()
+			$('#popup-module').css("display","block")
+			$('#saveModuleButton').css("display", "block")
+			$('#createModuleButton').css("display", "none")
+			
+		if (obj.objectType == 'dataSink')
+			getDataSinkAttr()
+			$('#popup-data-sink').css("display","block")
+			$('#saveDataSinkButton').css("display", "block")
+			$('#createDataSinkButton').css("display", "none")
+			
+
+		if (obj.objectType == 'dataSource')
+			getDataSourceAttr()
+			$('#popup-data-source').css("display","block")
+			$('#saveDataSourceButton').css("display", "block")
+			$('#createDataSourceButton').css("display", "none")
+			
+				
 	$('#group_modules').click (e) ->
 		currentCanvas.newGroup(location)
 	  
@@ -238,7 +330,7 @@ $ ->
 		$(@).parents('.popUpObjectBox').hide()
 		
 	$('#createDataSourceButton').click ->
-		currentCanvas.newDataSource(location, generate_data_sink_attr())
+		currentCanvas.newDataSource(location, generate_data_source_attr())
 		$(@).parents('.popUpObjectBox').hide()
 		
 	$('.cancelObjectButton').click ->
@@ -306,9 +398,3 @@ $ ->
 	window.canvasHash = {'canvas-1': new canvasDisplay($('#canvas-1'))}
 	window.currentCanvas = canvasHash['canvas-1']
 	$('svg:last').attr('id', 'svg-canvas-1')
-	console.log attr
-	currentCanvas.newDataSink({x:100, y:200}, attr)
-	console.log attr
-	currentCanvas.newModule({x:450, y:250}, attr)
-	currentCanvas.newDataSource({x:400, y:250}, attr)
-	c = currentCanvas.newDataSink({x:300, y:200}, attr)

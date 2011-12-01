@@ -27,7 +27,7 @@ window.canvasDisplay = class canvasDisplay
 		@holder.push(a)
 		return a
 	newDataSource: (coord, attr)->
-		nattr = $.extend(true, {}, nattr)
+		nattr = $.extend(true, {}, attr)
 		nattr['objectType'] = "dataSource"
 		a = new dataSource(@, coord, nattr)
 		@holder.push(a)

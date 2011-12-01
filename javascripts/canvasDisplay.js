@@ -40,7 +40,7 @@
     };
     canvasDisplay.prototype.newDataSource = function(coord, attr) {
       var a, nattr;
-      nattr = $.extend(true, {}, nattr);
+      nattr = $.extend(true, {}, attr);
       nattr['objectType'] = "dataSource";
       a = new dataSource(this, coord, nattr);
       this.holder.push(a);
