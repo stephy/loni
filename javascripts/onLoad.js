@@ -32,7 +32,7 @@
       data_source_attr = {
         name: data_source_name,
         package: data_source_package,
-        pkg_version: data_source_pkg_version,
+        version: data_source_pkg_version,
         tags: data_source_tags,
         description: data_source_description
       };
@@ -49,7 +49,7 @@
       data_sink_attr = {
         name: data_sink_name,
         package: data_sink_package,
-        pkg_version: data_sink_pkg_version,
+        version: data_sink_pkg_version,
         tags: data_sink_tags,
         description: data_sink_description
       };
@@ -67,8 +67,8 @@
       module_attr = {
         name: module_name,
         package: module_package,
-        pkg_version: module_pkg_version,
-        exec_version: module_exec_version,
+        version: module_pkg_version,
+        executableVersion: module_exec_version,
         tags: module_tags,
         description: module_description
       };
@@ -85,8 +85,8 @@
       obj = currentCanvas.selectedObjectArray[0].attr;
       $('input#module_name').val(obj.name);
       $('input#module_package').val(obj.package);
-      $('input#module_pkg_version').val(obj.pkg_version);
-      $('input#module_exec_version').val(obj.exec_version);
+      $('input#module_pkg_version').val(obj.version);
+      $('input#module_exec_version').val(obj.executableVersion);
       $('input#module_tags').val(obj.tags);
       return $('textarea#module_description').val(obj.description);
     };
@@ -95,7 +95,7 @@
       obj = currentCanvas.selectedObjectArray[0].attr;
       $('input#data-sink_name').val(obj.name);
       $('input#data-sink_package').val(obj.package);
-      $('input#data-sink_pkg_version').val(obj.pkg_version);
+      $('input#data-sink_pkg_version').val(obj.version);
       $('input#data_sink_tags').val(obj.tags);
       return $('textarea#data_sink_description').val(obj.description);
     };
@@ -104,7 +104,7 @@
       obj = currentCanvas.selectedObjectArray[0].attr;
       $('input#data-source_name').val(obj.name);
       $('input#data-source_package').val(obj.package);
-      $('input#data-source_pkg_version').val(obj.pkg_version);
+      $('input#data-source_pkg_version').val(obj.version);
       $('input#data_source_tags').val(obj.tags);
       return $('textarea#data_source_description').val(obj.description);
     };
