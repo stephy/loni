@@ -1,4 +1,4 @@
-(function() {
+
   $(function() {
     var attr, clearDataSinkInputs, clearDataSourceInputs, clearModuleInputs, coordAfterBoundary, createNewCopy, generate_data_sink_attr, generate_data_source_attr, generate_module_attr, getBox, getCoord, getDataSinkAttr, getDataSourceAttr, getModuleAttr, items, location, newCoord, oldCoord, pasteSelected, rectLocation, saveDataSinkAttr, saveDataSourceAttr, saveModuleAttr, save_module_attr, startDraw, tempCopiedArray, tempRect;
     items = [];
@@ -147,7 +147,22 @@
       }
       _results = [];
       for (i = 0, _ref2 = objArray.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-        _results.push((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected === 0) ? (console.log("GO IF"), console.log(objArray[i]), createNewCopy(objArray[i])) : map[objArray[i].objs[0].connectedObject] === void 0 ? (console.log("GO ELSE 1"), map[objArray[i].objs[0]] = objArray[i]) : (console.log("GO ELSE 2"), a = createNewCopy(map[objArray[i].objs[0].connectedObject]), b = createNewCopy(objArray[i]), map = new Object(), currentCanvas.savePathForCopy(a.objs[0], b.objs[0])));
+        if ((objArray[i].modID === 0) || (objArray[i].objs[0].connectedObject === void 0) || (objArray[i].objs[0].connectedObject.isBeingSelected === 0)) {
+          console.log("GO IF");
+          console.log(objArray[i]);
+          _results.push(createNewCopy(objArray[i]));
+        } else {
+          if (map[objArray[i].objs[0].connectedObject] === void 0) {
+            console.log("GO ELSE 1");
+            _results.push(map[objArray[i].objs[0]] = objArray[i]);
+          } else {
+            console.log("GO ELSE 2");
+            a = createNewCopy(map[objArray[i].objs[0].connectedObject]);
+            b = createNewCopy(objArray[i]);
+            map = new Object();
+            _results.push(currentCanvas.savePathForCopy(a.objs[0], b.objs[0]));
+          }
+        }
       }
       return _results;
     };
@@ -164,11 +179,11 @@
         theCoord = obj.coord;
       }
       if (obj.modID === 0) {
-        a = currentCanvas.newModule(theCoord, attr);
+        a = currentCanvas.newModule(theCoord, obj.attr);
       } else if (obj.modID === 1) {
-        a = currentCanvas.newDataSink(theCoord, attr);
+        a = currentCanvas.newDataSink(theCoord, obj.attr);
       } else {
-        a = currentCanvas.newDataSource(theCoord, attr);
+        a = currentCanvas.newDataSource(theCoord, obj.attr);
       }
       a.ztranslate(newCoord.x - oldCoord.x, newCoord.y - oldCoord.y);
       return a;
@@ -235,9 +250,7 @@
     });
     $('svg').live('mousedown', function(e) {
       var offset;
-      if (e.which !== 1) {
-        return;
-      }
+      if (e.which !== 1) return;
       if (e.target.nodeName === 'svg' || currentCanvas.selectedObjectArray.length < 2) {
         rectLocation = getCoord(e);
         currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
@@ -365,9 +378,7 @@
         x: e.pageX,
         y: e.pageY
       };
-      if (tempCopiedArray.length > 0) {
-        pasteSelected(tempCopiedArray);
-      }
+      if (tempCopiedArray.length > 0) pasteSelected(tempCopiedArray);
       return console.log(currentCanvas.holder);
     });
     $('.copy').click(function(e) {
@@ -392,9 +403,7 @@
           x: tempCopiedArray[i].c.getBBox().x,
           y: tempCopiedArray[i].c.getBBox().y
         };
-        if (tempCopiedArray[i].moduleGlow !== "") {
-          tempCopiedArray[i].removeAll();
-        }
+        if (tempCopiedArray[i].moduleGlow !== "") tempCopiedArray[i].removeAll();
         currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)].deleteObject();
         currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
       }
@@ -405,9 +414,7 @@
       var i, _ref;
       tempCopiedArray = currentCanvas.selectedObjectArray;
       for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-        if (tempCopiedArray[i].moduleGlow !== "") {
-          tempCopiedArray[i].removeAll();
-        }
+        if (tempCopiedArray[i].moduleGlow !== "") tempCopiedArray[i].removeAll();
         tempCopiedArray[i].deleteObject();
         currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
       }
@@ -423,4 +430,3 @@
     window.currentCanvas = canvasHash['canvas-1'];
     return $('svg:last').attr('id', 'svg-canvas-1');
   });
-}).call(this);
