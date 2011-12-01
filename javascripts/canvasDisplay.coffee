@@ -37,7 +37,7 @@ window.canvasDisplay = class canvasDisplay
 		console.log "CREATING NEW GROUP1"
 		nattr = {elements: @selectedObjectArray}
 		nattr['objectType'] = "group"
-		a = new module(@, coord, nattr)
+		a = new groupmodule(@, coord, nattr)
 		@holder.push(a)
 
 # Translation:

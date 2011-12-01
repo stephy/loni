@@ -86,6 +86,7 @@ class baseModule
 			ele.ztranslate(dx, dy)
 			
 window.module = class module extends baseModule
+	
 window.groupmodule = class groupmodule extends baseModule
 	draw: ->
 		c = @disp.paper.rect(@prevCoord.x-(@dim.width/2), @prevCoord.y, @dim.width*3/5, @dim.height*7/4, 25)
