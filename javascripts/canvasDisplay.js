@@ -53,7 +53,7 @@
         elements: this.selectedObjectArray
       };
       nattr['objectType'] = "group";
-      a = new module(this, coord, nattr);
+      a = new groupmodule(this, coord, nattr);
       return this.holder.push(a);
     };
     canvasDisplay.prototype.translateSelected = function(x, y) {
