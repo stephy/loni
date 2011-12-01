@@ -1,7 +1,6 @@
 (function() {
-  	function parseXml(xml)
+	function parseXml(xml)
 	{
-		//canvas = new canvasDisplay($('#canvas-1'));
 	  //find every MODULE GROUP and print the Name and Decription
 	  //Assign variables to attributes and elements
 	  /*$(xml).find("moduleGroup").each(function()
@@ -25,6 +24,11 @@
 
 	  //find every MODULE and print the Name and Description
 	  //Assign variables to attributes and elements
+	  //ALMOST DONE EXCEPT PARAMETERS + PUTTING EVERYTHING INTO MODULE
+	  var moduleCitations = [];
+	  var moduleTag = [];
+	  var moduleMetadataActions= [];
+	  var attr = {};
 	  $(xml).find("module").each(function()
 	  {
 		//<module> Attributes ---------------------------------------------
@@ -49,23 +53,63 @@
 		var moduleMPINumSlots = $(this).attr("MPINumSlots");
 		var modulePreserveInputFilename = $(this).attr("preserveInputFilename");
 		// end of <module> Attributes --------------------------------------
+		/*
+		//Parse Executable Authors
+		var moduleExecutableAuthors = parseAuthors(this, "executableAuthors");
 
-		$(this).find("authors").each(function(){
-			//$("#author").append($(this).attr("fullName") + "<br />");
-		});
-
-		//$("#output").append($(this).attr("name") + " , description:"+ $(this).attr("description")+ "<br />");	
-	    //$("#output").append($(this).attr("name") + " , package:"+ modulePackage + ", version:" + moduleVersion + "<br />");	
-
-		$("#EL1").append(moduleDescription + "<br />");
+		//Testing Authors
+		/*for ( var i in moduleExecutableAuthors){
+			$("#author").append( moduleExecutableAuthors[i]['fullName']  + "<br />");
+		}
+		*/
+	    //$("#output").append($(this).attr("name") + " , package:"+ modulePackage + ", version:" + moduleVersion + "<br />");
+		/*
+		//Parse Citations
+		moduleCitations = parseCitations(this);
+		//Parse executableProvenance
+		//var moduleExecutableProvenance = parseExecutableProvenance(this);
+		//Parse Input parameter
+		//var moduleInput = parseParameter(this, input);
+		//Parse Metadata
+		var moduleMetadata = parseMetadata(this);
+		//Parse Output parameter
+		//var moduleOutput = parseParameter(this, output);
+		//Parse Tag
+		var moduleTags = parseTag(this);
+		//Parse uri
+		var moduleUri = $(this).find("uri").text();
+		//Parse license
+		var moduleLicense = $(this).find("license").text();
+		//"metadataActions" type="metadataActions"/>
+		moduleMetadataActions = parseMetadataActions(this);
+		*/
+		
+		//$("#EL1").append(moduleDescription + "<br />");
+		//NOTE: Not all attributes and elements are passed yet, since the form is not complete
+		//To pass just add attribute: value
+		//E.g.: executableAuthors: moduleExecutableAuthors,
+		attr = {
+			id: moduleId, 
+			name: moduleName, 
+			package: modulePackage, 
+			version: moduleVersion,
+			executableVersion: moduleExecutableVersion,
+			description: moduleDescription
+		};
+		
 		//Create Module to Canvas
 		currentCanvas.newModule({
 	      x: modulePosX,
 	      y: modulePosY
-	    }, {id: moduleId, name: moduleName, package: modulePackage, version: moduleVersion});
+	    }, attr);
 
 
 	  });
+	  var dataModuleCitations = [];
+	  var dataModuleFileTypes = [];
+	  var dataModuleValues = [];
+
+	//ALMOST DONE EXCEPT PARAMETERS AND DIRSOURCEFILTERS  + Putting everything in datamodule object
 	$(xml).find("dataModule").each(function()
 	  {
 		//<dataModule> Attributes ---------------------------------------------
@@ -85,26 +129,56 @@
 		var dataModuleDirSourceFilterType = $(this).attr("dirSourceFilterType");
 		var dataModuleRecursive= $(this).attr("recursive");
 		// end of <dataModule> Attributes --------------------------------------
+		/*
+		var dataModuleExecutableAuthors = parseAuthors(this, "executableAuthors");
+
+		//Parse Citations
+		dataModuleCitations = parseCitations(this);
+		//Parse DirSourceFilters
+		//Parse Filetypes
+		dataModuleFileTypes = parseFileTypes(this);
+		//Parse Metadata
+		var dataModuleMetadata = parseMetadata(this);
+		//Parse Tag
+		var dataModuleTags = parseTag(this);
+		//Parse uri
+		var dataModuleUri = $(this).find("uri").text();
+		//parseValues
+		dataModuleValues = parseValues(this);
+		//Parse Input parameter
+		//var dataModuleInput = parseParameter(this, input);
+		//Parse Output parameter
+		//var dataModuleOutput = parseParameter(this, output);
+		*/
+		attr = {
+			id: dataModuleId, 
+			name: dataModuleName, 
+			package: dataModulePackage, 
+			version: dataModuleVersion,
+			description: dataModuleDescription
+		};
 		
 		//Explicitly casting dataModulePosX and dataModulePosY to integer
 		dataModulePosX = dataModulePosX*1;
 		dataModulePosY = dataModulePosY*1;
-		
+
 		//Create DataSink/Source
 		if(dataModuleSource == "true"){
 			currentCanvas.newDataSource({
 	      		x: dataModulePosX,
 	      		y: dataModulePosY
-	    	}, {id: dataModuleId, name: dataModuleName, package: dataModulePackage, version: dataModuleVersion});
+	    	}, attr);
 		}
 		else{
 			currentCanvas.newDataSink({
 	      		x: dataModulePosX,
 	      		y: dataModulePosY
-	    	}, {id: dataModuleId, name: dataModuleName, package: dataModulePackage, version: dataModuleVersion});
+	    	}, attr);
+
 		}
 
 	  });
+
 	//MIGHT NEED "CONNECTION OBJECT" TO KEEP TRACK OF EACH CONNECTIONS
 	//Parse Connections-----------------
 	var source, sink, sourceObj, sinkObj, tempObj,i;
@@ -113,14 +187,14 @@
 	var parseSink =[];
 	var exitFlag = 0;
 	var holderLen = canvasHolder.length;
-	
+
 	$(xml).find("connections").each(function(){
 		$(xml).find("connection").each(function(){
 			source = $(this).attr("source");
 			sink = $(this).attr("sink");
 			parseSource = source.split(/\./);
 			parseSink = sink.split(/\./);
-			
+
 			i=0;
 			//Iterate through Canvas holder array, find object with id source and sink
 			while ((i < holderLen) && (exitFlag < 2)){
@@ -138,14 +212,13 @@
 			}
 			//Connecting Source-Sink
 			currentCanvas.savePathForCopy(sourceObj.objs[0],sinkObj.objs[0]);
-			
+
 		});
 	});
 	//END OF CONNECTION----------------------------------------------------------------
-	
 	}
   $(function() {
-    var attr, c, coordAfterBoundary, createNewCopy, generate_data_sink_attr, getBox, getCoord, items, location, newCoord, oldCoord, pasteSelected, rectLocation, startDraw, tempCopiedArray, tempRect;
+    var attr, clearDataSinkInputs, clearDataSourceInputs, clearModuleInputs, coordAfterBoundary, createNewCopy, generate_data_sink_attr, generate_data_source_attr, generate_module_attr, getBox, getCoord, getDataSinkAttr, getDataSourceAttr, getModuleAttr, items, location, newCoord, oldCoord, pasteSelected, rectLocation, saveDataSinkAttr, saveDataSourceAttr, saveModuleAttr, save_module_attr, startDraw, tempCopiedArray, tempRect;
     items = [];
     location = "";
     rectLocation = "";
@@ -154,6 +227,35 @@
     tempCopiedArray = [];
     attr = {
       name: "Song!"
+    };
+    clearDataSinkInputs = function() {
+      $('input.data_sink_input').val('');
+      return $('textarea.data_sink_input').val('');
+    };
+    clearDataSourceInputs = function() {
+      $('input.data_source_input').val('');
+      return $('textarea.data_source_input').val('');
+    };
+    clearModuleInputs = function() {
+      $('input.module_input').val('');
+      return $('textarea.module_input').val('');
+    };
+    generate_data_source_attr = function() {
+      var data_source_attr, data_source_description, data_source_name, data_source_package, data_source_pkg_version, data_source_tags;
+      data_source_name = $('input#data-source_name').val();
+      data_source_package = $('input#data-source_package').val();
+      data_source_pkg_version = $('input#data-source_pkg_version').val();
+      data_source_tags = $('input#data_source_tags').val();
+      data_source_description = $('textarea#data_source_description').val();
+      data_source_attr = {
+        name: data_source_name,
+        package: data_source_package,
+        pkg_version: data_source_pkg_version,
+        tags: data_source_tags,
+        description: data_source_description
+      };
+      clearDataSourceInputs();
+      return data_source_attr;
     };
     generate_data_sink_attr = function() {
       var data_sink_attr, data_sink_description, data_sink_name, data_sink_package, data_sink_pkg_version, data_sink_tags;
@@ -165,16 +267,92 @@
       data_sink_attr = {
         name: data_sink_name,
         package: data_sink_package,
-        version: data_sink_pkg_version,
+        pkg_version: data_sink_pkg_version,
         tags: data_sink_tags,
         description: data_sink_description
       };
-      $('input#data-sink_name').val('');
-      $('input#data-sink_package').val('');
-      $('input#data-sink_pkg_version').val('');
-      $('input#data_sink_tags').val('');
-      $('textarea#data_sink_description').val('');
+      clearDataSinkInputs();
       return data_sink_attr;
+    };
+    generate_module_attr = function() {
+      var module_attr, module_description, module_exec_version, module_name, module_package, module_pkg_version, module_tags;
+      module_name = $('input#module_name').val();
+      module_package = $('input#module_package').val();
+      module_pkg_version = $('input#module_pkg_version').val();
+      module_exec_version = $('input#module_exec_version').val();
+      module_tags = $('input#module_tags').val();
+      module_description = $('textarea#module_description').val();
+      module_attr = {
+        name: module_name,
+        package: module_package,
+        pkg_version: module_pkg_version,
+        exec_version: module_exec_version,
+        tags: module_tags,
+        description: module_description
+      };
+      clearModuleInputs();
+      return module_attr;
+    };
+    save_module_attr = function() {
+      var module_data;
+      module_data = generate_module_attr();
+      return currentCanvas.selectedObjectArray[0].attr = module_data;
+    };
+    getModuleAttr = function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      $('input#module_name').val(obj.name);
+      $('input#module_package').val(obj.package);
+      $('input#module_pkg_version').val(obj.pkg_version);
+      $('input#module_exec_version').val(obj.exec_version);
+      $('input#module_tags').val(obj.tags);
+      return $('textarea#module_description').val(obj.description);
+    };
+    getDataSinkAttr = function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      $('input#data-sink_name').val(obj.name);
+      $('input#data-sink_package').val(obj.package);
+      $('input#data-sink_pkg_version').val(obj.pkg_version);
+      $('input#data_sink_tags').val(obj.tags);
+      return $('textarea#data_sink_description').val(obj.description);
+    };
+    getDataSourceAttr = function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      $('input#data-source_name').val(obj.name);
+      $('input#data-source_package').val(obj.package);
+      $('input#data-source_pkg_version').val(obj.pkg_version);
+      $('input#data_source_tags').val(obj.tags);
+      return $('textarea#data_source_description').val(obj.description);
+    };
+    saveDataSinkAttr = function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      obj.name = $('input#data-sink_name').val();
+      obj.package = $('input#data-sink_package').val();
+      obj.pkg_version = $('input#data-sink_pkg_version').val();
+      obj.tags = $('input#data_sink_tags').val();
+      return obj.description = $('textarea#data_sink_description').val();
+    };
+    saveDataSourceAttr = function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      obj.name = $('input#data-source_name').val();
+      obj.package = $('input#data-source_package').val();
+      obj.pkg_version = $('input#data-source_pkg_version').val();
+      obj.tags = $('input#data_source_tags').val();
+      return obj.description = $('textarea#data_source_description').val();
+    };
+    saveModuleAttr = function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      obj.name = $('input#module_name').val();
+      obj.package = $('input#module_package').val();
+      obj.pkg_version = $('input#module_pkg_version').val();
+      obj.exec_version = $('input#module_exec_version').val();
+      obj.tags = $('input#module_tags').val();
+      return obj.description = $('textarea#module_description').val();
     };
     pasteSelected = function(objArray) {
       var a, b, i, map, _ref, _ref2, _results;
@@ -252,12 +430,20 @@
       coord = location;
       if (currentCanvas.isSelected()) {
         $('#main-menu').hide();
-        $('#edit-menu').show().css({
-          top: coord.y,
-          left: coord.x
-        });
+        if (currentCanvas.selectedObjectArray.length > 1) {
+          $('#group-menu').show().css({
+            top: coord.y,
+            left: coord.x
+          });
+        } else {
+          $('#edit-menu').show().css({
+            top: coord.y,
+            left: coord.x
+          });
+        }
       } else {
         $('#edit-menu').hide();
+        $('#group-menu').hide();
         $('#main-menu').show().css({
           top: coord.y,
           left: coord.x
@@ -270,10 +456,12 @@
       if (e.which !== 1) {
         return;
       }
-      rectLocation = getCoord(e);
-      currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
-      currentCanvas.setLight();
-      return offset = currentCanvas.offsetCoord;
+      if (e.target.nodeName === 'svg' || currentCanvas.selectedObjectArray.length < 2) {
+        rectLocation = getCoord(e);
+        currentCanvas.rectangle = new rect(currentCanvas.paper, rectLocation, rectLocation);
+        currentCanvas.setLight();
+        return offset = currentCanvas.offsetCoord;
+      }
     });
     $('svg').live('mousemove', function(e) {
       currentCanvas.moveToFront();
@@ -287,16 +475,59 @@
       }
     });
     $('svg').live('mouseup', function(e) {
-      currentCanvas.setLight();
-      console.log(currentCanvas.selectedObjectArray.length);
+      currentCanvas.selectedTranslate = false;
       return currentCanvas.deleteRect();
     });
     $('body').click(function(e) {
       $('#main-menu').hide();
       $('#edit-menu').hide();
-      if (e.target.nodeName !== "circle" && e.target.nodeName !== "path") {
-        return currentCanvas.removeGlow();
+      return $('#group-menu').hide();
+    });
+    $('#saveModuleButton').click(function() {
+      saveModuleAttr();
+      clearModuleInputs();
+      $('#popup-module').css("display", "none");
+      $('#saveModuleButton').css("display", "none");
+      return $('#createModuleButton').css("display", "block");
+    });
+    $('#saveDataSourceButton').click(function() {
+      saveDataSourceAttr();
+      clearDataSourceInputs();
+      $('#popup-data-source').css("display", "none");
+      $('#saveDataSourceButton').css("display", "none");
+      return $('#createDataSourceButton').css("display", "block");
+    });
+    $('#saveDataSinkButton').click(function() {
+      saveDataSinkAttr();
+      clearDataSinkInputs();
+      $('#popup-data-sink').css("display", "none");
+      $('#saveDataSinkButton').css("display", "none");
+      return $('#createDataSinkButton').css("display", "block");
+    });
+    $('.edit_module').click(function() {
+      var obj;
+      obj = currentCanvas.selectedObjectArray[0].attr;
+      if (obj.objectType === 'module') {
+        getModuleAttr();
+        $('#popup-module').css("display", "block");
+        $('#saveModuleButton').css("display", "block");
+        $('#createModuleButton').css("display", "none");
       }
+      if (obj.objectType === 'dataSink') {
+        getDataSinkAttr();
+        $('#popup-data-sink').css("display", "block");
+        $('#saveDataSinkButton').css("display", "block");
+        $('#createDataSinkButton').css("display", "none");
+      }
+      if (obj.objectType === 'dataSource') {
+        getDataSourceAttr();
+        $('#popup-data-source').css("display", "block");
+        $('#saveDataSourceButton').css("display", "block");
+        return $('#createDataSourceButton').css("display", "none");
+      }
+    });
+    $('#group_modules').click(function(e) {
+      return currentCanvas.newGroup(location);
     });
     $('#option_module').click(function(e) {
       $('#popup-module').show();
@@ -324,7 +555,7 @@
       return $('#data-sink-outputs-bt.tabSelected').removeClass('tabSelected');
     });
     $('#createModuleButton').click(function() {
-      currentCanvas.newModule(location, attr);
+      currentCanvas.newModule(location, generate_module_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('#createDataSinkButton').click(function() {
@@ -332,7 +563,7 @@
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('#createDataSourceButton').click(function() {
-      currentCanvas.newDataSource(location, generate_data_sink_attr());
+      currentCanvas.newDataSource(location, generate_data_source_attr());
       return $(this).parents('.popUpObjectBox').hide();
     });
     $('.cancelObjectButton').click(function() {
@@ -357,7 +588,7 @@
       }
       return console.log(currentCanvas.holder);
     });
-    $('#copy').click(function(e) {
+    $('.copy').click(function(e) {
       oldCoord = {
         x: e.pageX,
         y: e.pageY
@@ -366,7 +597,7 @@
       tempCopiedArray = currentCanvas.selectedObjectArray;
       return console.log(tempCopiedArray);
     });
-    $('#cut').click(function(e) {
+    $('.cut').click(function(e) {
       var i, _ref;
       oldCoord = {
         x: e.pageX,
@@ -388,7 +619,7 @@
       console.log(currentCanvas.holder);
       return console.log(tempCopiedArray);
     });
-    $('#delete').click(function(e) {
+    $('.delete').click(function(e) {
       var i, _ref;
       tempCopiedArray = currentCanvas.selectedObjectArray;
       for (i = 0, _ref = tempCopiedArray.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
@@ -401,7 +632,7 @@
       tempCopiedArray = [];
       return console.log(currentCanvas.holder);
     });
-    $('#mselect_all').click(function() {
+    $('.select_all').click(function() {
       return currentCanvas.setAllSelectedGlow();
     });
     window.canvasHash = {
@@ -409,14 +640,14 @@
     };
     window.currentCanvas = canvasHash['canvas-1'];
     $('svg:last').attr('id', 'svg-canvas-1');
-    var filename = $.cookie("lonifilename");
-	filename = "upload/" + filename;
-	console.log("Filename: " + filename);
+	//var filename = $.cookie("lonifilename");
+	//filename = "upload/" + filename;
+	//console.log("Filename: " + filename);
 	//PARSING-------------------------------
 	$.ajax({
 	    type: "GET",
-	    //url: "upload/testloni2.pipe",
-	    url: filename,
+	    url: "upload/testloni3.pipe",
+	    //url: filename,
 		dataType: "xml",
 	    success: parseXml
 	  });
