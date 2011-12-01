@@ -113,7 +113,7 @@
       obj = currentCanvas.selectedObjectArray[0].attr;
       obj.name = $('input#data-sink_name').val();
       obj.package = $('input#data-sink_package').val();
-      obj.pkg_version = $('input#data-sink_pkg_version').val();
+      obj.version = $('input#data-sink_pkg_version').val();
       obj.tags = $('input#data_sink_tags').val();
       return obj.description = $('textarea#data_sink_description').val();
     };
@@ -122,7 +122,7 @@
       obj = currentCanvas.selectedObjectArray[0].attr;
       obj.name = $('input#data-source_name').val();
       obj.package = $('input#data-source_package').val();
-      obj.pkg_version = $('input#data-source_pkg_version').val();
+      obj.version = $('input#data-source_pkg_version').val();
       obj.tags = $('input#data_source_tags').val();
       return obj.description = $('textarea#data_source_description').val();
     };
@@ -131,8 +131,8 @@
       obj = currentCanvas.selectedObjectArray[0].attr;
       obj.name = $('input#module_name').val();
       obj.package = $('input#module_package').val();
-      obj.pkg_version = $('input#module_pkg_version').val();
-      obj.exec_version = $('input#module_exec_version').val();
+      obj.version = $('input#module_pkg_version').val();
+      obj.executableVersion = $('input#module_exec_version').val();
       obj.tags = $('input#module_tags').val();
       return obj.description = $('textarea#module_description').val();
     };
