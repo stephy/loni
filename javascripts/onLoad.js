@@ -20,7 +20,9 @@
     };
     clearModuleInputs = function() {
       $('input.module_input').val('');
-      return $('textarea.module_input').val('');
+      $('textarea.module_input').val('');
+      $("#parameters-table").find("tr:gt(0)").remove();
+      return cleanIdx();
     };
     generate_data_source_attr = function() {
       var data_source_attr, data_source_description, data_source_name, data_source_package, data_source_pkg_version, data_source_tags;

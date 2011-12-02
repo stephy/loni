@@ -19,6 +19,8 @@ $ ->
 	clearModuleInputs = ->
 		$('input.module_input').val('')
 		$('textarea.module_input').val('')
+		$("#parameters-table").find("tr:gt(0)").remove();
+		cleanIdx();
 
 	#data sink form data
 	generate_data_source_attr = ->
