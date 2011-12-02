@@ -18,6 +18,7 @@ jQuery(document).ready(function(){
 	// --------------------------------------
 	
 	$('#module-info-bt').click(function(){
+		$('.popup-tab').hide();
 		$('#module-info.popup-tab').show();
 		$('#module-info-module.popup-tab').show();
 		$('#module-info-module-website.popup-tab').show();
