@@ -387,6 +387,7 @@ $ ->
 			#tempCopiedArray[i].removeAll()
 			if (tempCopiedArray[i].moduleGlow!="") then tempCopiedArray[i].removeAll()
 			tempCopiedArray[i].deleteObject()
+			currentCanvas.translatePaths()
 			#delete currentCanvas.holder[$.inArray(tempCopiedArray[i], currentCanvas.holder)]
 			currentCanvas.holder.splice( $.inArray(tempCopiedArray[i], currentCanvas.holder), 1 );
 		tempCopiedArray = []

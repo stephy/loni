@@ -413,6 +413,7 @@
           tempCopiedArray[i].removeAll();
         }
         tempCopiedArray[i].deleteObject();
+        currentCanvas.translatePaths();
         currentCanvas.holder.splice($.inArray(tempCopiedArray[i], currentCanvas.holder), 1);
       }
       tempCopiedArray = [];
