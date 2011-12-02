@@ -86,6 +86,21 @@ class baseModule
 			ele.ztranslate(dx, dy)
 			
 window.module = class module extends baseModule
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
+		if(@attr.parameter.length > 0)
+			interval = @dim.width*2/@attr.parameter.length
+			start = 0
+			i = 0
+			for e in [0...@attr.parameter.length]
+				newC = {
+					x:@prevCoord.x-@dim.width + interval*i + interval/2,
+					y:@prevCoord.y-@dim.height
+				}
+				console.log newC
+				@objs.push(new moduleParam(@disp, @prevCoord, newC, e))
+				console.log "CREATING PARAMS #{i}"
+				i +=1
 	
 window.groupmodule = class groupmodule extends baseModule
 	draw: ->
@@ -137,6 +152,17 @@ window.sink = class sink extends baseModule
 		super(dx, dy)
 		@disp.translatePaths()
 
+
+
+window.moduleParam = class moduleParam extends sink
+	constructor: (@disp, @prevCoord, @fixedCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
+	draw: ->
+		connectDim = {x: @fixedCoord.x, y:  @fixedCoord.y}
+		c = @disp.paper.circle(connectDim.x,connectDim.y,10)
+		c.attr(fill: '#FFF', stroke: '#6d76c1', 'stroke-width':2)
+		return c
+			
 
 window.dataSink = class dataSink extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
