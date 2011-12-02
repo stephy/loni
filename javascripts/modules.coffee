@@ -84,6 +84,13 @@ class baseModule
 		@c.translate(dx,dy)
 		for ele in @objs
 			ele.ztranslate(dx, dy)
+	zhide: =>
+		if @moduleGlow != ""
+			@moduleGlow.hide()
+		@c.hide()
+		for ele in @objs
+			ele.zhide()
+		
 			
 window.module = class module extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
@@ -108,6 +115,11 @@ window.module = class module extends baseModule
 				
 	
 window.groupmodule = class groupmodule extends baseModule
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
+		for e in @attr.elements
+			e.zhide()
+		
 	draw: ->
 		c = @disp.paper.rect(@prevCoord.x-(@dim.width/2), @prevCoord.y, @dim.width*3/5, @dim.height*7/4, 25)
 		c.attr({stroke: '#cdc9c9', fill:'120-#a4abd6-#8793c9:60-#8793c9', 'stroke-width': 25})
