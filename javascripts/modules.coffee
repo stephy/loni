@@ -85,7 +85,18 @@ class baseModule
 		for ele in @objs
 			ele.ztranslate(dx, dy)
 			
+window.moduleParam = class moduleParam extends baseModule
+	draw: ->
+		connectDim = {x: @dim.width +  @prevCoord.x , y:  @prevCoord.y}
+		c = @disp.paper.circle(connectDim.x,connectDim.y,10)
+		c.attr(fill: '#FFF', stroke: '#6d76c1', 'stroke-width':2)
+		return c
+		
+			
 window.module = class module extends baseModule
+	constructor: (@disp, @prevCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
+		@objs.push(new moduleParam(@disp, @prevCoord, {name:"Module Parameter"}))
 	
 window.groupmodule = class groupmodule extends baseModule
 	draw: ->

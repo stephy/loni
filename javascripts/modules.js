@@ -1,5 +1,5 @@
 (function() {
-  var baseModule, dataSink, dataSource, groupmodule, module, sink, source;
+  var baseModule, dataSink, dataSource, groupmodule, module, moduleParam, sink, source;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -144,10 +144,37 @@
     };
     return baseModule;
   })();
+  window.moduleParam = moduleParam = (function() {
+    __extends(moduleParam, baseModule);
+    function moduleParam() {
+      moduleParam.__super__.constructor.apply(this, arguments);
+    }
+    moduleParam.prototype.draw = function() {
+      var c, connectDim;
+      connectDim = {
+        x: this.dim.width + this.prevCoord.x,
+        y: this.prevCoord.y
+      };
+      c = this.disp.paper.circle(connectDim.x, connectDim.y, 10);
+      c.attr({
+        fill: '#FFF',
+        stroke: '#6d76c1',
+        'stroke-width': 2
+      });
+      return c;
+    };
+    return moduleParam;
+  })();
   window.module = module = (function() {
     __extends(module, baseModule);
-    function module() {
-      module.__super__.constructor.apply(this, arguments);
+    function module(disp, prevCoord, attr) {
+      this.disp = disp;
+      this.prevCoord = prevCoord;
+      this.attr = attr;
+      module.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
+      this.objs.push(new moduleParam(this.disp, this.prevCoord, {
+        name: "Module Parameter"
+      }));
     }
     return module;
   })();
