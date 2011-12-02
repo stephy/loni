@@ -75,7 +75,6 @@ $ ->
   	  executableVersion: module_exec_version,
   	  tags: module_tags,
   	  description: module_description,
-
   	  parameterName: parameter_name
     }
     clearModuleInputs()

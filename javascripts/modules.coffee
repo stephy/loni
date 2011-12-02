@@ -101,6 +101,11 @@ window.module = class module extends baseModule
 				@objs.push(new moduleParam(@disp, @prevCoord, newC, e))
 				console.log "CREATING PARAMS #{i}"
 				i +=1
+	deleteObject: ->
+		@c.remove()
+		for ele in @objs
+			ele.deleteObject()
+				
 	
 window.groupmodule = class groupmodule extends baseModule
 	draw: ->

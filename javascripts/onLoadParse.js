@@ -640,7 +640,7 @@
     };
     window.currentCanvas = canvasHash['canvas-1'];
     $('svg:last').attr('id', 'svg-canvas-1');
-	//grab cookie for filename
+	//Grab cookie for filename
 	//var filename = $.cookie("lonifilename");
 	//filename = "upload/" + filename;
 	//console.log("Filename: " + filename);
