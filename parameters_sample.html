@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<style type="text/css">
+
+
+#parameters-list-box{
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	height: 90px;
+	background-color: #9C0;
+	
+}
+#parameters-list-box table{
+	width:100%;
+	border:1px solid #999;
+}
+
+#parameters-list-box table, th{
+	border-left:1px solid #666;
+	
+}
+
+#parameters-list-box th{
+	background: rgb(255,255,255); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 50%, rgba(225,225,225,1) 51%, rgba(246,246,246,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* IE10+ */
+background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+	padding-left:2px;
+	font-weight:100;
+	border-bottom:1px solid #CCC;
+}
+#parameters-list-box td{
+	background-color:#FFF;
+}
+#parameters-list-box table tr:hover{
+	background-color:#03C;
+}
+#parameters-list-box input{
+	border:0px;
+}
+
+
+</style>
+<body>
+
+
+    <div id="parameters-list-box">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th width="42%" align="left" valign="top">Parameter Name</th>
+          <th width="20%" align="left" valign="top">Type</th>
+          <th width="12%" align="left" valign="top">State</th>
+          <th width="14%" align="left" valign="top">Required</th>
+          <th width="12%" align="left" valign="top">Input</th>
+        </tr>
+        <tr>
+          <td>
+          <input name="parameter_name" type="text" id="parameter_name" size="40"></td>
+          <td>
+            <select name="type" id="type">
+              <option value="File">File</option>
+              <option value="Directory">Directory</option>
+              <option value="String">String</option>
+              <option value="Number">Number</option>
+              <option value="Enumerated">Enumerated</option>
+              <option value="FlowControl">Flow Control</option>
+          </select></td>
+          <td><select name="state" id="state">
+            <option value="Enabled">Enabled</option>
+            <option value="Disabled">Disabled</option>
+            <option value="Exported">Exported</option>
+          </select></td>
+          <td><input type="checkbox" name="required" id="required"></td>
+          <td><input name="input" type="checkbox" id="input" checked></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    
+    
+    
+    </div>
+
+</body>
+</html>
