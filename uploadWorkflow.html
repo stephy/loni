@@ -5,11 +5,13 @@
   <title>LONI Pipeline Editor</title>
   <script src="javascripts/jquery-1.6.4.min.js" type="text/javascript"></script>
   <script src="javascripts/add_tabs.js" type="text/javascript"></script>
-  <script src="javascripts/onLoadParse.js" type="text/javascript"></script>
-	<script src="javascripts/jquery.cookie.js"></script>
+  
 	<script type="text/javascript" src='javascripts/raphael.js'></script>
   <script src="javascripts/popups.js" type="text/javascript"></script>
   
+	<script type="text/javascript" src='javascripts/onLoadParse.js'></script>
+	<script src="javascripts/jquery.cookie.js"></script>
+	
 	<script type="text/javascript" src='javascripts/modules.js'></script>
 	<script type="text/javascript" src='javascripts/graffle.js'></script>
 	<script type="text/javascript" src='javascripts/path.js'></script>
@@ -17,9 +19,13 @@
 	<script type="text/javascript" src='javascripts/graf.js'></script>
  	<script type="text/javascript" src='javascripts/rect.js'></script> 
 	<script type="text/javascript" src='javascripts/data_sync.js'></script>
+    <script type="text/javascript" src="javascripts/parameters.js"></script>
+
+
   <!-- Forms -->
   <link href="stylesheets/forms.css" rel="stylesheet" type="text/css">
 
+  <link href="stylesheets/parameters.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/menu.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/master.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/tabs.css" rel="stylesheet" type="text/css">
@@ -231,8 +237,137 @@
         
         <!--METADATA CONTENT AREA -->
         <div id="module-parameters" class="popup-tab" style="display:none">
-        	parameters
+
+        	    <div id="parameters-list-box" class="list-box list-box-par">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="parameters-table">
+        <tr>
+          <th width="42%" align="left" valign="top">Parameter Name</th>
+          <th width="20%" align="left" valign="top">Type</th>
+          <th width="12%" align="left" valign="top">State</th>
+          <th width="14%" align="left" valign="top">Required</th>
+          <th width="12%" align="left" valign="top">Input</th>
+        </tr>
+        
+        
+        <!-- new parameters will be inserted here -->
+        
+                  </table>
+    
+    
+    
+          </div> <!--end of parameters list box -->
+    <div id="parameters-controls">
+      <div id="cloneParameterButton"></div>
+      <div id="addParameterButton"></div>
+      <div id="removeParameterButton"></div>
+       <div style="clear:both"></div>
+    </div>
+
+   <div id="parameters-details" style="display:none">
+   
+  <!-- ######## START PARAMETERS DETAILS ######## -->
+   <ul class="tabs">
+                			<li id="mod-par-general-bt">General</li>
+                			<li id="mod-par-dependencies-bt">Depend.</li>
+                			<li id="mod-par-transformations-bt">Transf.</li>
+                            <li id="mod-par-metadata-bt">Metadata</li>
+           		  </ul>
+  
+  	<div class="popup-content">
+    
+    <!--START OF GENERAL TAB -->
+    <div id="mod-par-general" class="popup-tab popup-par-details-tab">
+     <div id="parameter-desc">
+    	 Description of the Parameter <br>
+         <textarea name="parameter-description"  id="paramter-description" size="30" class="module_input"></textarea>
+        
+       </div>
+   
+   <div id="parameter-args">
+           Number of parameter arguments<br>
+    
+    <input type="radio" name="par-args" id="parameter-arguments2" value="num-parameter-arguments" class="module_input">
+    <input name="num-args" type="number" id="num-args" value="1" min="0" size="8" class="module_input"/>
+    <input type="radio" name="par-args" id="parameter-arguments" value="unknown" class="module_input">Unknown
+    </div>
+    
+    
+    <div id="parameter-rem">
+	<div id="command-line"> 
+      <p>Command line prefix </p>
+        <input name="command-line-prefix" type="text" id="command-line-prefix" size="10">
+        
+     
+        <p><input type="checkbox" name="put-space" id="put-space">
+        Put space after prefix</p>
+        <input type="checkbox" name="put-prefix" id="put-prefix">
+      Prefix before each arg.
+	</div> 
+    
+    <div id="acceptable-files">
+    
+      <fieldset>
+        <legend>Acceptable File Types</legend>
+        <p><input type="button" value="Edit file types..." ></p>
+        <div id="search-box"></div>
+        <div class="list-box">
+          <table width="62%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th width="37%" align="left" valign="top">File Types</th>
+              <th width="30%" align="left" valign="top">Extensions</th>
+              <th width="33%" align="left" valign="top">Needs</th>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="warp" id="warp">
+              File</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="warp2" id="warp2">
+              0000.img</td>
+              <td>_0000.img</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="warp4" id="warp4">
+                1D File</td>
+              <td>1D</td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
         </div>
+      </fieldset>
+    </div>
+    <div style="clear:both"></div>
+</div>
+    
+    
+    </div> <!-- END OF GENERAL TAB -->
+    
+     <div id="mod-par-dependencies" class="popup-tab popup-par-details-tab">
+     dependencies!!!
+   
+    </div> <!-- END OF DEPENDENCIES TAB -->
+    
+    <div id="mod-par-transformations" class="popup-tab popup-par-details-tab">
+     transformations
+   
+    </div> <!-- END OF TRANSFORMATIONS TAB -->
+    
+     <div id="mod-par-metadata" class="popup-tab popup-par-details-tab">
+     metadata
+   
+    </div> <!-- END OF METADATA TAB -->
+  
+  </div> <!-- END OF POPUP CONTENT -->
+  
+  
+   </div> <!-- ###### END OF PARAMETERS DETAIL #########-->
+		
+        </div><!--END OF PARAMETERS TAB -->  
+            
+          
         
         <!--EXECUTION CONTENT AREA -->
         <div id="module-execution" class="popup-tab" style="display:none">
