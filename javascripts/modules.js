@@ -146,14 +146,18 @@
   })();
   window.moduleParam = moduleParam = (function() {
     __extends(moduleParam, baseModule);
-    function moduleParam() {
-      moduleParam.__super__.constructor.apply(this, arguments);
+    function moduleParam(disp, prevCoord, fixedCoord, attr) {
+      this.disp = disp;
+      this.prevCoord = prevCoord;
+      this.fixedCoord = fixedCoord;
+      this.attr = attr;
+      moduleParam.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
     }
     moduleParam.prototype.draw = function() {
       var c, connectDim;
       connectDim = {
-        x: this.dim.width + this.prevCoord.x,
-        y: this.prevCoord.y
+        x: this.fixedCoord.x,
+        y: this.fixedCoord.y
       };
       c = this.disp.paper.circle(connectDim.x, connectDim.y, 10);
       c.attr({
@@ -168,13 +172,26 @@
   window.module = module = (function() {
     __extends(module, baseModule);
     function module(disp, prevCoord, attr) {
+      var e, i, interval, newC, start, _ref;
       this.disp = disp;
       this.prevCoord = prevCoord;
       this.attr = attr;
       module.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
-      this.objs.push(new moduleParam(this.disp, this.prevCoord, {
-        name: "Module Parameter"
-      }));
+      if (this.attr.parameter.length > 0) {
+        interval = this.dim.width * 2 / this.attr.parameter.length;
+        start = 0;
+        i = 0;
+        for (e = 0, _ref = this.attr.parameter.length; 0 <= _ref ? e < _ref : e > _ref; 0 <= _ref ? e++ : e--) {
+          newC = {
+            x: this.prevCoord.x - this.dim.width + interval * i + interval / 2,
+            y: this.prevCoord.y - this.dim.height
+          };
+          console.log(newC);
+          this.objs.push(new moduleParam(this.disp, this.prevCoord, newC, e));
+          console.log("CREATING PARAMS " + i);
+          i += 1;
+        }
+      }
     }
     return module;
   })();

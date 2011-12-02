@@ -86,8 +86,10 @@ class baseModule
 			ele.ztranslate(dx, dy)
 			
 window.moduleParam = class moduleParam extends baseModule
+	constructor: (@disp, @prevCoord, @fixedCoord, @attr)->
+		super(@disp, @prevCoord, @attr)
 	draw: ->
-		connectDim = {x: @dim.width +  @prevCoord.x , y:  @prevCoord.y}
+		connectDim = {x: @fixedCoord.x, y:  @fixedCoord.y}
 		c = @disp.paper.circle(connectDim.x,connectDim.y,10)
 		c.attr(fill: '#FFF', stroke: '#6d76c1', 'stroke-width':2)
 		return c
@@ -96,7 +98,19 @@ window.moduleParam = class moduleParam extends baseModule
 window.module = class module extends baseModule
 	constructor: (@disp, @prevCoord, @attr)->
 		super(@disp, @prevCoord, @attr)
-		@objs.push(new moduleParam(@disp, @prevCoord, {name:"Module Parameter"}))
+		if(@attr.parameter.length > 0)
+			interval = @dim.width*2/@attr.parameter.length
+			start = 0
+			i = 0
+			for e in [0...@attr.parameter.length]
+				newC = {
+					x:@prevCoord.x-@dim.width + interval*i + interval/2,
+					y:@prevCoord.y-@dim.height
+				}
+				console.log newC
+				@objs.push(new moduleParam(@disp, @prevCoord, newC, e))
+				console.log "CREATING PARAMS #{i}"
+				i +=1
 	
 window.groupmodule = class groupmodule extends baseModule
 	draw: ->
