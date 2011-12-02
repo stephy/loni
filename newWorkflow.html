@@ -17,9 +17,13 @@
 	<script type="text/javascript" src='javascripts/graf.js'></script>
  	<script type="text/javascript" src='javascripts/rect.js'></script> 
 	<script type="text/javascript" src='javascripts/data_sync.js'></script>
+    <script type="text/javascript" src="javascripts/parameters.js"></script>
+
+
   <!-- Forms -->
   <link href="stylesheets/forms.css" rel="stylesheet" type="text/css">
 
+  <link href="stylesheets/parameters.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/menu.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/master.css" rel="stylesheet" type="text/css">
   <link href="stylesheets/tabs.css" rel="stylesheet" type="text/css">
@@ -231,8 +235,107 @@
         
         <!--METADATA CONTENT AREA -->
         <div id="module-parameters" class="popup-tab" style="display:none">
-        	parameters
+
+        	    <div id="parameters-list-box" class="list-box list-box-par">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="parameters-table">
+        <tr>
+          <th width="42%" align="left" valign="top">Parameter Name</th>
+          <th width="20%" align="left" valign="top">Type</th>
+          <th width="12%" align="left" valign="top">State</th>
+          <th width="14%" align="left" valign="top">Required</th>
+          <th width="12%" align="left" valign="top">Input</th>
+        </tr>
+        
+        
+        <!-- new parameters will be inserted here -->
+        
+                  </table>
+    
+    
+    
+          </div> <!--end of parameters list box -->
+    <div id="parameters-controls">
+      <div id="cloneParameterButton"></div>
+      <div id="addParameterButton"></div>
+      <div id="removeParameterButton"></div>
+       <div style="clear:both"></div>
+    </div>
+
+   
+    
+    <div id="parameters-type-details">
+      <div id="parameter-desc">
+    	 Description of the Parameter
+        <br><br>
+          <textarea name="parameter-description" cols="80%" id="paramter-description"></textarea>
+        
+       </div>
+   
+       <div id="parameter-args"></div>
+           Number of parameter arguments<br>
+    
+    <input type="radio" name="par-args" id="parameter-arguments2" value="num-parameter-arguments">
+    <input name="num-args" type="number" id="num-args" value="1" min="0"width="20px"/>
+    <input type="radio" name="par-args" id="parameter-arguments" value="unknown">Unknown
+    <br>
+    <br>
+<div id="parameter-rem">
+	<div id="command-line"> 
+      <p>Command line prefix </p>
+      <p>
+        <input name="command-line-prefix" type="text" id="command-line-prefix" size="20">
+        
+      </p>
+      <p>
+        <input type="checkbox" name="put-space" id="put-space">
+        <label for="put-space"></label>
+        Put space after prefix<br>
+        <input type="checkbox" name="put-space2" id="put-space2">
+      Prefix before each arg.</p>
+	</div> 
+    
+    <div id="acceptable-files">
+    
+      <fieldset>
+        <legend>Acceptable File Types</legend>
+        <p><input type="button" value="Edit file types..." ></p>
+        <div id="search-box"></div>
+        <div class="list-box">
+          <table width="80%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th width="42%" align="left" valign="top">File Types</th>
+              <th width="20%" align="left" valign="top">Extensions</th>
+              <th width="12%" align="left" valign="top">Needs</th>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="warp" id="warp">
+              File</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="warp2" id="warp2">
+              0000.img</td>
+              <td>_0000.img</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="warp4" id="warp4">
+                1D File</td>
+              <td>1D</td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
         </div>
+      </fieldset>
+    </div>
+    <div style="clear:both"></div>
+</div>
+    
+    </div>
+        </div>
+            
+          
         
         <!--EXECUTION CONTENT AREA -->
         <div id="module-execution" class="popup-tab" style="display:none">

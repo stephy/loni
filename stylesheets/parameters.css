@@ -1,0 +1,82 @@
+@charset "UTF-8";
+/* CSS Document */
+#module-parameters{
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.list-box-par{
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	height: 90px;
+	background-color: #FFF;
+	border:1px solid #CCC;
+	overflow:auto;
+	
+}
+.list-box table{
+	width:100%;
+}
+
+.list-box th{
+	border-left:1px solid #666;
+	
+}
+
+.list-box th{
+	background: rgb(255,255,255); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 50%, rgba(225,225,225,1) 51%, rgba(246,246,246,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* IE10+ */
+background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+	padding-left:2px;
+	font-weight:100;
+	border-bottom:1px solid #CCC;
+}
+.list-box td{
+	background-color:#FFF;
+}
+.list-box table tr:hover{
+	background-color:#03C;
+}
+.list-box input{
+	border:0px;
+	background-color:transparent;
+}
+.list-box input:focus{
+	color:#FFF;
+}
+.selectedRow td { 
+	background-color: #06C; 
+}
+#cloneParameterButton{
+	background-image:url(../images/button-clone-par-live-des.jpg);
+	width:76px;
+	height:25px;
+	float:left;
+	cursor:pointer;
+}
+#addParameterButton{
+	background-image:url(../images/button-add-par-live-des.jpg);
+	width:68px;
+	height:25px;
+	float: right;
+	cursor:pointer;
+}
+#removeParameterButton{
+	background-image:url(../images/button-remove-par-live-des.jpg);
+	width:89px;
+	height:25px;
+	float:right;
+	cursor:pointer;
+}
+
+#command-line{
+	float:left;
+}
+#acceptable-files{
+	float:right;
+}

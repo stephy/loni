@@ -57,20 +57,22 @@
       return data_sink_attr;
     };
     generate_module_attr = function() {
-      var module_attr, module_description, module_exec_version, module_name, module_package, module_pkg_version, module_tags;
+      var module_attr, module_description, module_exec_version, module_name, module_package, module_pkg_version, module_tags, parameter_name;
       module_name = $('input#module_name').val();
       module_package = $('input#module_package').val();
       module_pkg_version = $('input#module_pkg_version').val();
       module_exec_version = $('input#module_exec_version').val();
       module_tags = $('input#module_tags').val();
       module_description = $('textarea#module_description').val();
+      parameter_name = $('input#m_parameter_name1').val();
       module_attr = {
         name: module_name,
         package: module_package,
         version: module_pkg_version,
         executableVersion: module_exec_version,
         tags: module_tags,
-        description: module_description
+        description: module_description,
+        parameterName: parameter_name
       };
       clearModuleInputs();
       return module_attr;
