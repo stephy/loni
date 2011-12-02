@@ -26,7 +26,7 @@
       var a, nattr;
       nattr = $.extend(true, {}, attr);
       nattr['objectType'] = "module";
-      nattr['parameter'] = [1, 2, 3];
+      nattr['parameter'] = [1, 2, 3, 4, 5];
       a = new module(this, coord, nattr);
       this.holder.push(a);
       return a;

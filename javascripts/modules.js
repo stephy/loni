@@ -144,31 +144,6 @@
     };
     return baseModule;
   })();
-  window.moduleParam = moduleParam = (function() {
-    __extends(moduleParam, baseModule);
-    function moduleParam(disp, prevCoord, fixedCoord, attr) {
-      this.disp = disp;
-      this.prevCoord = prevCoord;
-      this.fixedCoord = fixedCoord;
-      this.attr = attr;
-      moduleParam.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
-    }
-    moduleParam.prototype.draw = function() {
-      var c, connectDim;
-      connectDim = {
-        x: this.fixedCoord.x,
-        y: this.fixedCoord.y
-      };
-      c = this.disp.paper.circle(connectDim.x, connectDim.y, 10);
-      c.attr({
-        fill: '#FFF',
-        stroke: '#6d76c1',
-        'stroke-width': 2
-      });
-      return c;
-    };
-    return moduleParam;
-  })();
   window.module = module = (function() {
     __extends(module, baseModule);
     function module(disp, prevCoord, attr) {
@@ -296,6 +271,31 @@
       return this.disp.translatePaths();
     };
     return sink;
+  })();
+  window.moduleParam = moduleParam = (function() {
+    __extends(moduleParam, sink);
+    function moduleParam(disp, prevCoord, fixedCoord, attr) {
+      this.disp = disp;
+      this.prevCoord = prevCoord;
+      this.fixedCoord = fixedCoord;
+      this.attr = attr;
+      moduleParam.__super__.constructor.call(this, this.disp, this.prevCoord, this.attr);
+    }
+    moduleParam.prototype.draw = function() {
+      var c, connectDim;
+      connectDim = {
+        x: this.fixedCoord.x,
+        y: this.fixedCoord.y
+      };
+      c = this.disp.paper.circle(connectDim.x, connectDim.y, 10);
+      c.attr({
+        fill: '#FFF',
+        stroke: '#6d76c1',
+        'stroke-width': 2
+      });
+      return c;
+    };
+    return moduleParam;
   })();
   window.dataSink = dataSink = (function() {
     __extends(dataSink, baseModule);

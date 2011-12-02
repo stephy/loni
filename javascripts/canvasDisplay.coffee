@@ -17,7 +17,7 @@ window.canvasDisplay = class canvasDisplay
 	newModule: (coord, attr)->
 		nattr = $.extend(true, {}, attr)
 		nattr['objectType'] = "module"
-		nattr['parameter'] = [1,2,3]
+		nattr['parameter'] = [1,2,3, 4, 5]
 		a = new module(@, coord, nattr)
 		@holder.push(a)
 		return a
