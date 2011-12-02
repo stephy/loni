@@ -32,6 +32,9 @@ jQuery(document).ready(function(){
 			$('#cloneParameterButton').css('background-image','url(images/button-clone-par-live.jpg)');
 			$('#removeParameterButton').css('background-image','url(images/button-remove-par-live.jpg)');
 		}
+		$('#parameters-details').show();
+		$('#mod-par-general-bt').addClass('tabSelected');
+		$('#mod-par-general').show();
 
 	}));
 	
@@ -49,6 +52,7 @@ jQuery(document).ready(function(){
 			if (idx <2){
 				$('#cloneParameterButton').css('background-image','url(images/button-clone-par-live-des.jpg)');
 				$('#removeParameterButton').css('background-image','url(images/button-remove-par-live-des.jpg)');
+				$('#parameters-details').hide();
 			}
 			
 

@@ -80,3 +80,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #acceptable-files{
 	float:right;
 }
+
+#command-line p{
+	line-height:.6em!important;
+}

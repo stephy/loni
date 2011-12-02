@@ -72,6 +72,24 @@ jQuery(document).ready(function(){
 	});
 
 	
+	$('#mod-par-general-bt').click(function(){
+		$('.popup-par-details-tab').hide();
+		$('#mod-par-general').show();
+	});
+
+	$('#mod-par-dependencies-bt').click(function(){
+		$('.popup-par-details-tab').hide();
+		$('#mod-par-dependencies').show();
+	});
+
+	$('#mod-par-transformations-bt').click(function(){
+		$('.popup-par-details-tab').hide();
+		$('#mod-par-transformations').show();
+	})
+	$('#mod-par-metadata-bt').click(function(){
+		$('.popup-par-details-tab').hide();
+		$('#mod-par-metadata').show();
+	})
 	// --------------------------------------
 	//SHOW AND HIDE TAGS FOR DATA SINK POPUP
 	// --------------------------------------

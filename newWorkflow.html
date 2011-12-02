@@ -261,37 +261,45 @@
        <div style="clear:both"></div>
     </div>
 
+   <div id="parameters-details" style="display:none">
    
+  <!-- ######## START PARAMETERS DETAILS ######## -->
+   <ul class="tabs">
+                			<li id="mod-par-general-bt">General</li>
+                			<li id="mod-par-dependencies-bt">Depend.</li>
+                			<li id="mod-par-transformations-bt">Transf.</li>
+                            <li id="mod-par-metadata-bt">Metadata</li>
+           		  </ul>
+  
+  	<div class="popup-content">
     
-    <div id="parameters-type-details">
-      <div id="parameter-desc">
-    	 Description of the Parameter
-        <br><br>
-          <textarea name="parameter-description"  id="paramter-description"></textarea>
+    <!--START OF GENERAL TAB -->
+    <div id="mod-par-general" class="popup-tab popup-par-details-tab">
+     <div id="parameter-desc">
+    	 Description of the Parameter <br>
+         <textarea name="parameter-description"  id="paramter-description" size="30" ></textarea>
         
        </div>
    
-       <div id="parameter-args"></div>
+   <div id="parameter-args">
            Number of parameter arguments<br>
     
     <input type="radio" name="par-args" id="parameter-arguments2" value="num-parameter-arguments">
-    <input name="num-args" type="number" id="num-args" value="1" min="0"width="20px"/>
+    <input name="num-args" type="number" id="num-args" value="1" min="0" size="8"/>
     <input type="radio" name="par-args" id="parameter-arguments" value="unknown">Unknown
-    <br>
-    <br>
-<div id="parameter-rem">
+    </div>
+    
+    
+    <div id="parameter-rem">
 	<div id="command-line"> 
       <p>Command line prefix </p>
-      <p>
-        <input name="command-line-prefix" type="text" id="command-line-prefix" size="20">
+        <input name="command-line-prefix" type="text" id="command-line-prefix" size="10">
         
-      </p>
-      <p>
-        <input type="checkbox" name="put-space" id="put-space">
-        <label for="put-space"></label>
-        Put space after prefix<br>
-        <input type="checkbox" name="put-space2" id="put-space2">
-      Prefix before each arg.</p>
+     
+        <p><input type="checkbox" name="put-space" id="put-space">
+        Put space after prefix</p>
+        <input type="checkbox" name="put-prefix" id="put-prefix">
+      Prefix before each arg.
 	</div> 
     
     <div id="acceptable-files">
@@ -301,11 +309,11 @@
         <p><input type="button" value="Edit file types..." ></p>
         <div id="search-box"></div>
         <div class="list-box">
-          <table width="80%" border="0" cellspacing="0" cellpadding="0">
+          <table width="62%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <th width="42%" align="left" valign="top">File Types</th>
-              <th width="20%" align="left" valign="top">Extensions</th>
-              <th width="12%" align="left" valign="top">Needs</th>
+              <th width="37%" align="left" valign="top">File Types</th>
+              <th width="30%" align="left" valign="top">Extensions</th>
+              <th width="33%" align="left" valign="top">Needs</th>
             </tr>
             <tr>
               <td><input type="checkbox" name="warp" id="warp">
@@ -332,8 +340,30 @@
     <div style="clear:both"></div>
 </div>
     
-    </div>
-        </div>
+    
+    </div> <!-- END OF GENERAL TAB -->
+    
+     <div id="mod-par-dependencies" class="popup-tab popup-par-details-tab">
+     dependencies!!!
+   
+    </div> <!-- END OF DEPENDENCIES TAB -->
+    
+    <div id="mod-par-transformations" class="popup-tab popup-par-details-tab">
+     transformations
+   
+    </div> <!-- END OF TRANSFORMATIONS TAB -->
+    
+     <div id="mod-par-metadata" class="popup-tab popup-par-details-tab">
+     metadata
+   
+    </div> <!-- END OF METADATA TAB -->
+  
+  </div> <!-- END OF POPUP CONTENT -->
+  
+  
+   </div> <!-- ###### END OF PARAMETERS DETAIL #########-->
+		
+        </div><!--END OF PARAMETERS TAB -->  
             
           
         
